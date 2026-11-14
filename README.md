@@ -1,81 +1,59 @@
 # Lunaria
 
-A transparent, NASA-data-driven comparison of six candidate lunar landing sites — built to recommend a first landing site and a pinpoint pad, while keeping measured evidence separate from analyst judgment.
+A NASA-data-driven screening of the lunar south pole from **80–90°S**. Lunaria evaluates 290,364 one-kilometre cells, clusters high-suitability regions, recomputes shortlisted terrain and visibility on the ~148 m source raster, and reports an exact **provisional** seed for higher-resolution investigation.
 
-**Current recommendation: Nobile Crater Rim / Connecting Ridge (84.2°S, 60.7°E), 81.1/100.**  
-**Pinpoint candidate: 84.2005°S, 60.7373°E** — 115 m from the supplied coordinate, pad slope p90 5.49°.  
-**Runner-up: Apollo 17 — Taurus-Littrow Valley, 64.4/100** (best low-risk crewed sortie).
+**Current screening winner:** `polar-region-r167-c278`, **61.42/100** weighted geometric score.<br>
+**Provisional seed:** **85.4342°S, 10.5273°W**, elevation 1,402 m.<br>
+**Important:** this is not a certified landing pad or hazard map.
 
-> Screening and decision support only. This is not a flight-certified landing site or a hazard map.
-
-## What it does
-
-- Fetches **NASA/JPL Horizons** topocentric Sun and Earth geometry for 2026-11-14 → 2027-11-14.
-- Samples **NASA Moon Trek / LRO LOLA and LROC** DEMs for terrain, slope, roughness, 5 km horizon profiles and a DEM-screened pinpoint pad.
-- Scores eight criteria: solar illumination, Earth link, terrain trafficability, ISRU/water-ice access, science, thermal, crew safety and data maturity.
-- Runs five mission profiles plus a **5,000-draw joint weight-and-score uncertainty model**.
-- Tracks **34 missing datasets** with AOIs, request specifications, acceptance tests and header-only placeholder files.
-
-## Quick start
+## Run it
 
 ```bash
 cd /home/yass/lunaria
+python3 -m pip install -r requirements-polar.txt
+python3 scripts/build_polar.py
+```
 
-# Rebuild from cached NASA data
-python3 scripts/build_tables.py
-python3 scripts/score_sites.py
-python3 scripts/build_dashboard.py
+The complete cached build takes about two minutes on the current machine. It rebuilds illumination/comms, scores and clusters the full cap, refines six regions, checks Sun and Earth geometry against JPL Horizons, generates the dashboard, compresses reusable metrics, and writes checksums.
 
-# Tests
-python3 -m unittest discover -s tests -v
+View the dashboard:
 
-# Dashboard
+```bash
 python3 -m http.server 8765 --directory web
 # open http://127.0.0.1:8765/
 ```
 
-Network refresh (optional; cached data already exists):
+Run the offline suite:
 
 ```bash
-python3 scripts/fetch_terrain.py
-python3 scripts/fetch_horizons.py
-python3 scripts/fetch_nasa.py
+python3 -B -m unittest discover -s tests -v
 ```
 
-The NASA API key is read from `.env` (`NASA_API_KEY=...`), which is gitignored and never written to outputs.
+## What the result says
 
-## Read more
+- The winning region's provisional seed has **48.5%** two-year solar illumination, **95.1%** direct Earth visibility above its terrain horizon, a **15.75-day** longest sampled dark run, ~**7.94°** local slope p90 at the available scale, and an approximate PSR edge **2.60 km** away.
+- The win is not decisive: it receives **44.4%** of top-rank outcomes under 1,000 Dirichlet weight draws; the runner-up receives **35.0%**.
+- The exact Artemis III region name is deliberately not assigned because authoritative 13-region polygons were not available.
+- Barker Site 01/04/07/11 validation remains **not validated** because the exact 5 m LDEMs, error layers, and valid-pixel masks are missing.
 
-- **[REPORT.md](REPORT.md)** — full analysis, ranking tables, per-site assessments, method, caveats and the exact LROC/LOLA request.
-- **[HANDOFF.md](HANDOFF.md)** — next-session status, commands, open questions and prioritized next steps.
-- **`web/index.html`** — self-contained static dashboard (works from the filesystem).
+## Two-stage method
 
-## Key results
+1. **Full-cap screen:** a 1 km grid uses the highest ~148 m source pixel in each cell as an optimistic ridge observer, terrain horizons to 60 km, and 2,925 six-hour samples from 2024-01-01 through 2026-01-01.
+2. **Shortlist refinement:** every source pixel inside the six baseline clusters gets a new fine-raster horizon and score. The best source pixel becomes a provisional seed—not a landing pad.
 
-| Rank | Site | Score | Solar | Earth >5° | Slope p90 | Relay |
-|---:|---|---:|---:|---:|---:|---|
-| 1 | Nobile Ridge | 81.07 | 71.8% | 63.0% | 5.78° | Yes |
-| 2 | Apollo 17 | 64.40 | 51.4% | 100% | 6.61° | No |
-| 3 | Marius Hills | 62.32 | 49.4% | 100% | 5.53° | No |
-| 4 | Shackleton | 60.21 | 49.6% | 92.8% | 34.52° | Yes |
-| 5 | Vallis Schröteri | 56.91 | 53.1% | 100% | 11.16° | No |
-| 6 | Von Kármán | 47.62 | 49.4% | 0% | 0.76° | Yes |
+The headline score is a weighted geometric mean of solar power, Earth visibility, terrain safety, approximate PSR access, a science proxy, and a thermal proxy. Sunlight continuity is reported but not weighted because it is correlated with illumination and dark-period metrics. Raster-valid coverage is displayed separately and is not native LOLA shot coverage.
 
-Nobile wins four of five mission profiles. Apollo 17 wins the low-risk crewed sortie (80.6 vs 80.1) and is the risk-averse alternative.
+## Key files
 
-## Repository layout
+- [`REPORT.md`](REPORT.md) — result, ranking, method, validation, caveats, and data request
+- [`HANDOFF.md`](HANDOFF.md) — exact state and next-session instructions
+- `web/` — polar dashboard with map layers, normalized weight sliders, and six-hour date status
+- `data/processed/polar_recommendation.json` — machine-readable verdict
+- `data/processed/polar_refined_region_ranking.csv` — final six-region ranking
+- `data/processed/polar_candidate_regions.geojson` — stage-one cluster geometry
+- `data/processed/polar_candidate_timeseries.csv` — date-aware Sun/Earth status
+- `data/processed/polar_cell_metrics.csv.gz` — compressed reusable measurements for 290,364 cells
+- `data/processed/polar_data_manifest.json` — SHA-256 integrity manifest
+- `data/processed/polar_data_gaps.csv` — exact missing-data requests and acceptance tests
 
-```
-config/          criteria, weights, sites, curated Tier C scores, provenance
-scripts/         fetch, geometry, table-building, scoring, dashboard generation
-data/raw/        cached NASA responses
-data/interim/    intermediate ephemeris and elevation data
-data/processed/  rankings, scores, sensitivity, gaps, GeoJSON, recommendation
-placeholders/    header-only schemas for missing LROC/LOLA/thermal/ISRU/relay data
-web/             static dashboard (HTML/CSS/JS + local imagery)
-tests/           offline regression tests
-```
-
-## Data attribution
-
-NASA/JPL Horizons; NASA Moon Trek (LRO LOLA/LROC, PSR catalogue); NASA Image and Video Library. NASA does not endorse this analysis. The "lightning" requirement is interpreted as **solar lighting/illumination**, because the Moon has no appreciable atmosphere and therefore no weather lightning.
+The previous six-site analysis is preserved under [`archive/six-site-analysis/`](archive/six-site-analysis/). The NASA API key remains only in gitignored `.env` and is not sent to public Moon Trek or Horizons endpoints.

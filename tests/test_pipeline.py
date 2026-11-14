@@ -213,9 +213,9 @@ class TestProcessedOutputs(unittest.TestCase):
 
 
 class TestDashboardPayload(unittest.TestCase):
-    def test_data_js_is_parseable_and_complete(self):
-        path = ROOT / "web" / "data.js"
-        self.assertTrue(path.exists(), "run scripts/build_dashboard.py first")
+    def test_archived_six_site_data_is_preserved(self):
+        path = ROOT / "archive" / "six-site-analysis" / "web" / "data.js"
+        self.assertTrue(path.exists(), "six-site dashboard archive is incomplete")
         text = path.read_text(encoding="utf-8")
         self.assertIn("window.LUNARIA_DATA = ", text)
         payload = text.split("window.LUNARIA_DATA = ", 1)[1].rstrip().rstrip(";")

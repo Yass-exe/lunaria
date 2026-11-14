@@ -24,6 +24,8 @@ The authoritative request list is `data/processed/data_gaps.csv`. Each gap has:
 | `mini_rf_cpr.csv` | Mini-RF / Mini-SAR CPR | `product_id`, `cpr`, `s1`, `incidence_deg`, `resolution_m`, `url` |
 | `relay_link_budget.csv` | Relay communications link budget | `relay_asset`, `orbit`, `data_rate_mbps`, `coverage_frac`, `worst_outage_h`, `latency_s` |
 | `ground_truth.csv` | Landed/ground-truth measurements | `source`, `product_id`, lat/lon/elevation, `measurement`, `value`, `unit`, `url` |
+| `artemis_iii_region_geometry.csv` | Official Artemis III region polygons | `region_id`, `region_name`, `geometry_wkt`, `crs`, `source_url`, `source_version` |
+| `barker_ldem_inventory.csv` | Barker LOLA LDEM product identifiers and coverage | `requested_site_id`, `product_id`, `resolution_m`, `crs`, bbox, error and coverage |
 
 ## Fill procedure
 
@@ -52,3 +54,15 @@ The authoritative request list is `data/processed/data_gaps.csv`. Each gap has:
 ## Important
 
 PSR proximity in `data/processed/psr_proximity.csv` is a centroid-and-area approximation, not an ice detection. Filling the LEND/Mini-RF placeholders is how that proxy gets replaced with actual volatile evidence.
+
+## South-polar screen
+
+The polar-first request ledger is `data/processed/polar_data_gaps.csv`. Its P0 AOI is generated from the current provisional seed and must be regenerated whenever the winner moves. The current request covers approximately 4×4 km around **85.4342°S, 10.5273°W**.
+
+The following remain deliberately header-only:
+
+- `barker_ldem_inventory.csv` until an exact 5 m product ID, error layer, shot-count layer, and valid/interpolated-pixel mask are supplied;
+- `artemis_iii_region_geometry.csv` until a versioned authoritative polygon layer for all 13 NASA names is supplied;
+- `lroc_nac_dtm.csv` and `lroc_nac_ortho.csv` until controlled products covering the provisional seed are delivered.
+
+Do not substitute the seven-feature `Site01_ROIs_SP` catalogue layer for the official 13-region Artemis geometry, and do not treat full coverage in a server-resampled raster as native LOLA shot coverage.

@@ -1,0 +1,125 @@
+{
+  "version": "1.0",
+  "scope": {
+    "latitude_min_deg": -90.0,
+    "latitude_max_deg": -80.0,
+    "target_cell_size_m": 1000,
+    "fine_dem_source": "NASA Moon Trek LRO LOLA south-polar DEM, 151 m resampled source",
+    "pinpoint_dem_sources": [
+      "Barker LOLA Site01",
+      "Barker LOLA Site04",
+      "Barker LOLA Site11",
+      "Barker LOLA Site23",
+      "Barker LOLA Site20v2"
+    ]
+  },
+  "assumptions": {
+    "slope_p90_limit_deg": 15.0,
+    "solar_illumination_min_fraction": 0.04,
+    "slope_threshold_type": "assumption; configurable; apply only to fine-resolution pinpoint slope",
+    "solar_threshold_type": "assumption; configurable; evaluated after other hard constraints",
+    "earth_visibility_hard_filter": false,
+    "relay_availability": "unknown; Earth visibility is graded, not disqualifying"
+  },
+  "utilities": {
+    "solar_illumination": {
+      "type": "linear_high",
+      "low": 0.04,
+      "high": 0.80,
+      "direction": "higher"
+    },
+    "longest_dark_period": {
+      "type": "linear_low",
+      "low_days": 0.0,
+      "high_days": 30.0,
+      "group": "solar_power",
+      "direction": "lower",
+      "description": "Utility reaches zero at approximately one full synodic lunar night."
+    },
+    "sunlight_continuity": {
+      "type": "identity_fraction",
+      "description": "Fraction of candidate 6.5-day mission windows meeting continuous-light requirement",
+      "report_only": true,
+      "weighted": false,
+      "direction": "higher"
+    },
+    "earth_visibility": {
+      "type": "linear_high",
+      "low": 0.0,
+      "high": 0.99,
+      "hard_filter": false,
+      "direction": "higher"
+    },
+    "regional_terrain_roughness": {
+      "type": "inverse_threshold",
+      "full_below": 5.0,
+      "zero_above": 15.0,
+      "unit": "degrees",
+      "label": "1 km terrain-roughness proxy; not landing slope"
+    },
+    "pinpoint_slope": {
+      "type": "inverse_threshold",
+      "full_below": 5.0,
+      "zero_above": 15.0,
+      "unit": "degrees",
+      "label": "5 m Barker LDEM slope p90; report valid-data coverage and uncertainty"
+    },
+    "isru_access": {
+      "type": "exponential_distance",
+      "scale_km": 10.0,
+      "description": "Distance to mapped PSR edge is a volatile-access proxy, not ice detection"
+    },
+    "science_value": {
+      "type": "provided_proxy",
+      "label": "Tier C science/geodiversity proxy; not a measurement"
+    },
+    "thermal_stability": {
+      "type": "provided_proxy",
+      "label": "Tier C poleward-stability proxy until Diviner data is ingested",
+      "description": "Linear latitude proxy: 1 at 90 S and 0 at 80 S; not a temperature measurement."
+    },
+    "crew_safety": {
+      "type": "alias",
+      "source": "terrain_safety",
+      "weighted_separately": false,
+      "description": "Shown for transparency but folded into terrain_safety to prevent double counting"
+    },
+    "data_maturity": {
+      "type": "coverage_fraction",
+      "weighted_separately": false,
+      "label": "Raster-valid coverage",
+      "description": "Fraction of valid pixels in the server-resampled export; not native LOLA shot coverage or overall data maturity, and not part of mission suitability"
+    }
+  },
+  "weights": {
+    "solar_power": 0.24,
+    "earth_visibility": 0.20,
+    "terrain_safety": 0.20,
+    "isru_access": 0.16,
+    "science_value": 0.10,
+    "thermal_stability": 0.10
+  },
+  "scoring": {
+    "weighted_sum": true,
+    "weighted_geometric_mean": true,
+    "headline": "weighted_geometric_mean",
+    "solar_group_aggregation": "geometric_mean",
+    "terrain_group_aggregation": "geometric_mean",
+    "geometric_floor": 0.01,
+    "sensitivity_method": "Dirichlet(1,...,1)",
+    "sensitivity_draws": 1000,
+    "random_seed": 42,
+    "cluster_connectivity": 8,
+    "cluster_cell_score_min": 0.60,
+    "cluster_min_cells": 3,
+    "cluster_selection_note": "Operational tunables for forming contiguous map candidates, not mission safety thresholds."
+  },
+  "validation": {
+    "reference": "Barker et al. 2021, DOI 10.1016/j.pss.2020.105119",
+    "reference_window_start": "2024-01-01",
+    "reference_window_end": "2026-01-01",
+    "reference_site": "Site01 / Connecting Ridge",
+    "expected_ranking": "Site01 has the highest average illumination among Barker Sites 01, 04, 07, and 11",
+    "pass_rule": "Site01 ranks first by computed average illumination; report FAIL if exact Barker ROI elevations/ephemeris and solar-disk method are not available"
+  }
+}

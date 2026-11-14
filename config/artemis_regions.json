@@ -1,0 +1,20 @@
+{
+  "source": "NASA Artemis III candidate regions announcement",
+  "source_url": "https://www.nasa.gov/news-release/nasa-identifies-candidate-regions-for-landing-next-americans-on-moon/",
+  "geometry_status": "unavailable",
+  "regions": [
+    {"region_id": "faustini-rim-a", "name": "Faustini Rim A"},
+    {"region_id": "peak-near-shackleton", "name": "Peak Near Shackleton"},
+    {"region_id": "connecting-ridge", "name": "Connecting Ridge"},
+    {"region_id": "connecting-ridge-extension", "name": "Connecting Ridge Extension"},
+    {"region_id": "de-gerlache-rim-1", "name": "de Gerlache Rim 1"},
+    {"region_id": "de-gerlache-rim-2", "name": "de Gerlache Rim 2"},
+    {"region_id": "de-gerlache-kocher-massif", "name": "de Gerlache-Kocher Massif"},
+    {"region_id": "haworth", "name": "Haworth"},
+    {"region_id": "malapert-massif", "name": "Malapert Massif"},
+    {"region_id": "leibnitz-beta-plateau", "name": "Leibnitz Beta Plateau"},
+    {"region_id": "nobile-rim-1", "name": "Nobile Rim 1"},
+    {"region_id": "nobile-rim-2", "name": "Nobile Rim 2"},
+    {"region_id": "amundsen-rim", "name": "Amundsen Rim"}
+  ]
+}

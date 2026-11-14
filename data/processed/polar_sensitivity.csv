@@ -1,0 +1,7 @@
+candidate_id,top1_probability,draws,method,seed
+polar-region-r167-c278,0.444,1000,Dirichlet(1),42
+polar-region-r268-c418,0.35,1000,Dirichlet(1),42
+polar-region-r165-c419,0.007,1000,Dirichlet(1),42
+polar-region-r169-c425,0.145,1000,Dirichlet(1),42
+polar-region-r178-c423,0.054,1000,Dirichlet(1),42
+polar-region-r166-c266,0.0,1000,Dirichlet(1),42

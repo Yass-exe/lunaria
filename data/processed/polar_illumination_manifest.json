@@ -1,0 +1,58 @@
+{
+  "cells": 290364,
+  "azimuth_bins": 96,
+  "horizon_km": 60.0,
+  "observer_elevation": "max",
+  "ephemeris_samples": 2925,
+  "ephemeris_step_hours": 6,
+  "continuity_window_samples": 26,
+  "illumination_median": 0.3083760683760684,
+  "illumination_p90": 0.4458119658119658,
+  "earth_visibility_median": 0.22256410256410256,
+  "data_coverage_median": 1.0,
+  "caveats": [
+    "1 km screening values; not landing-pad slope or hazard certification.",
+    "Horizon rays use the highest ~148 m source pixel in each 1 km cell as an optimistic screening observer and maximum-elevation obstacles out to 60 km.",
+    "Solar/Earth geometry uses Horizons sub-solar/sub-Earth selenographic points at 6 h sampling, 2024-01-01..2026-01-01.",
+    "Earth visibility assumes no relay; it is graded, never a hard failure."
+  ],
+  "benchmarks": [
+    {
+      "site_id": "nobile_connecting_ridge",
+      "lat_deg": -84.2,
+      "lon_deg": 60.7,
+      "nearest_cell_offset_km": 1.2998368250103765,
+      "solar_illumination_fraction": 0.2153846153846154
+    },
+    {
+      "site_id": "shackleton_rim",
+      "lat_deg": -89.9,
+      "lon_deg": 0.0,
+      "nearest_cell_offset_km": 2.423568696945476,
+      "solar_illumination_fraction": 0.3360683760683761
+    }
+  ],
+  "validation": {
+    "reference": "Barker et al. 2021, DOI 10.1016/j.pss.2020.105119",
+    "expected_ranking": "Site01 highest average illumination among Sites 01, 04, 07, 11",
+    "pass": null,
+    "status": "not_validated",
+    "reason": "Barker Site 01/04/07/11 ROI coordinates, 5 m LDEMs and solar-disk method are not in the repository. The legacy Nobile (-84.2 S) point is not Barker Site 01 (Connecting Ridge, near the pole), so it cannot be used as a substitute.",
+    "legacy_points": {
+      "nobile_connecting_ridge": {
+        "site_id": "nobile_connecting_ridge",
+        "lat_deg": -84.2,
+        "lon_deg": 60.7,
+        "nearest_cell_offset_km": 1.2998368250103765,
+        "solar_illumination_fraction": 0.2153846153846154
+      },
+      "shackleton_rim": {
+        "site_id": "shackleton_rim",
+        "lat_deg": -89.9,
+        "lon_deg": 0.0,
+        "nearest_cell_offset_km": 2.423568696945476,
+        "solar_illumination_fraction": 0.3360683760683761
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "source_dem": "data/raw/rasters/south_pole_lola_dem_4096.tif",
+  "output_raster": "data/processed/polar_terrain_1km.tif",
+  "source_resolution_m": 148.4375,
+  "target_cell_size_m": 1000.0,
+  "latitude_min_deg": -90.0,
+  "latitude_max_deg": -80.0,
+  "valid_polar_cells": 290364,
+  "slope_p90_median_deg": 10.352729797363281,
+  "slope_p90_max_deg": 43.20761489868164,
+  "pinpoint_slope_status": "not available from this regional DEM"
+}

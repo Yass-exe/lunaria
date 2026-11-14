@@ -1,0 +1,88 @@
+{
+  "generated_at": "2026-11-14T21:54:53Z",
+  "pipeline": "two-stage south-polar screen",
+  "metrics_package": {
+    "path": "data/processed/polar_cell_metrics.csv.gz",
+    "rows": 290364,
+    "bytes": 11229893,
+    "sha256": "ab9175c8d8d0e806165839b3bec15c9f01e7706f7c3e86c656f5519320facac8",
+    "compression": "gzip-9; mtime=0; no embedded filename"
+  },
+  "files": [
+    {
+      "path": "data/interim/polar_ephemeris.csv",
+      "bytes": 339496,
+      "sha256": "f4a68ad15774208c3f133bd980b61842492dbc967e634222de6a226af8f88f01"
+    },
+    {
+      "path": "data/processed/polar_cell_metrics.csv.gz",
+      "bytes": 11229893,
+      "sha256": "ab9175c8d8d0e806165839b3bec15c9f01e7706f7c3e86c656f5519320facac8"
+    },
+    {
+      "path": "data/processed/polar_terrain_1km.tif",
+      "bytes": 1909606,
+      "sha256": "aca5ef5aebd19a71989a078a88e74a6d5fd1286d1b0401492b0bd888afb4ec41"
+    },
+    {
+      "path": "data/processed/polar_illumination_1km.tif",
+      "bytes": 3092924,
+      "sha256": "368ea793700af13f2c1c7f23c344a22d473390ad9aa92ac7dd62c2abdc7a2ac6"
+    },
+    {
+      "path": "data/processed/polar_region_ranking.csv",
+      "bytes": 1927,
+      "sha256": "f86965a8e428cb5ded4a4bd81b9076527a73a1a8e66ab788d6461d93fa09e26f"
+    },
+    {
+      "path": "data/processed/polar_candidate_regions.geojson",
+      "bytes": 19850,
+      "sha256": "151ed879168af7feec07db414ff2b297e00313aba09802864e8b4a34716b10e2"
+    },
+    {
+      "path": "data/processed/polar_refined_region_ranking.csv",
+      "bytes": 2257,
+      "sha256": "d63bd25e3ba630652c056ef725f5f34f249eeb3fc869bb1b58a5fa65e8777d80"
+    },
+    {
+      "path": "data/processed/polar_refined_cells.csv",
+      "bytes": 530762,
+      "sha256": "01bea00f6b5caa496fd9d025564b88254e7b0dc9443768bdee4ac839f7e07d39"
+    },
+    {
+      "path": "data/processed/polar_candidate_timeseries.csv",
+      "bytes": 3005472,
+      "sha256": "cca39eb6e13609d2311677283805020633a94c24fafad91f4fcaf595258170ac"
+    },
+    {
+      "path": "data/processed/polar_data_gaps.csv",
+      "bytes": 3687,
+      "sha256": "e8690a78cd3f33eaf3a50841ec5533a8e0ad6c73753996e26efe53ab6b7a06a9"
+    },
+    {
+      "path": "data/processed/polar_sensitivity.csv",
+      "bytes": 345,
+      "sha256": "f4e187f789b2d1c1eb98eace4afa69083649c41c556d7e4416885e478c157a2d"
+    },
+    {
+      "path": "data/processed/polar_recommendation.json",
+      "bytes": 2601,
+      "sha256": "000b59c7eac920a88d7828fe3c0cb93b865c9bef298a427d4d45a253e17a33e8"
+    },
+    {
+      "path": "data/processed/polar_benchmark.json",
+      "bytes": 4129,
+      "sha256": "53a36adef1b87e087d2933c1ee242fa1dd886a06cd01fc6940f7685ed6d52fc9"
+    },
+    {
+      "path": "data/processed/polar_terrain_manifest.json",
+      "bytes": 438,
+      "sha256": "3d75b89e8279b0d1ef6808bc53839e3a79d9ac5cbcf40a1fe19fc94b44a9b538"
+    },
+    {
+      "path": "data/processed/polar_illumination_manifest.json",
+      "bytes": 2239,
+      "sha256": "c9e4cd1465c2cbd06e7d2dfeb807ca39971733f2833ff582c30675df9e205cf7"
+    }
+  ]
+}

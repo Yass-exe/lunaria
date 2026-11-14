@@ -1,0 +1,70 @@
+{
+  "status": "ranked",
+  "winner": "polar-region-r167-c278",
+  "winner_score": 0.6142448195450867,
+  "region_count": 6,
+  "rank_agreement": {
+    "top_rank_match": 1,
+    "exact_order_match": 1,
+    "spearman_rho": 1.0
+  },
+  "weights": {
+    "solar_power": 0.24,
+    "earth_visibility": 0.2,
+    "terrain_safety": 0.2,
+    "isru_access": 0.16,
+    "science_value": 0.1,
+    "thermal_stability": 0.1
+  },
+  "provisional_seed": {
+    "candidate_id": "polar-region-r167-c278-fine-r1130-c1877",
+    "region_id": "polar-region-r167-c278",
+    "fine_row": 1130,
+    "fine_col": 1877,
+    "lat_deg": -85.43422161934835,
+    "lon_deg": -10.527251933427245,
+    "elevation_m": 1402.4227294921875,
+    "source_resolution_m": 148.4375,
+    "solar_illumination_fraction": 0.48512820512820515,
+    "longest_dark_days": 15.75,
+    "sunlight_continuity_fraction": 0.2713793103448276,
+    "earth_visibility_fraction": 0.9507692307692308,
+    "regional_slope_p90_deg": 7.935044288635254,
+    "pinpoint_slope_p90_deg": null,
+    "psr_edge_km": 2.597745923147516,
+    "science_proxy": 0.5290029525756836,
+    "thermal_proxy": 0.543422161934835,
+    "data_coverage_fraction": 1.0,
+    "solar_power": 0.5274515410965525,
+    "earth_visibility": 0.9603729603729604,
+    "terrain_safety": 0.7064955711364747,
+    "isru_access_proxy": 0.7712254063462365,
+    "crew_safety": 0.7064955711364747,
+    "data_maturity": 1.0,
+    "weighted_sum": 0.6906006526315094,
+    "weighted_geometric_mean": 0.6721129231218693,
+    "hard_failures": "",
+    "disqualified": false,
+    "status": "provisional_148m_seed",
+    "hazard_certified": false,
+    "required_data": "5 m Barker/LOLA LDEM or 1-2 m LROC NAC stereo DTM with error layer"
+  },
+  "refinement": {
+    "stage1_cell_size_m": 1000,
+    "stage2_source_resolution_m": 148.4375,
+    "horizon_km": 60.0,
+    "azimuth_bins": 96,
+    "pinpoint_status": "provisional_148m_seed_not_hazard_certified"
+  },
+  "barker_validation": {
+    "status": "not_validated",
+    "reason": "Exact Barker ROI LDEMs, error layers, and valid-pixel masks are absent."
+  },
+  "caveats": [
+    "Screening result, not a flight-certified landing site or hazard map.",
+    "The provisional seed uses a server-resampled ~148 m LOLA product; 5 m Barker/LOLA or 1-2 m LROC NAC terrain is required.",
+    "PSR edge distance uses an equivalent-circle approximation from catalogue centroid and area; it is not an ice detection.",
+    "Science and thermal values are visibly labelled proxies, not measurements.",
+    "Earth visibility is graded because relay availability is unknown; it is not a hard filter."
+  ]
+}

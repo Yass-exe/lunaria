@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A transparent NASA-data comparison of six candidate lunar landing sites, with a recommended pinpoint pad.">
+  <title>Lunaria — Six lunar sites, one landing recommendation</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#verdict">Skip to the verdict</a>
+  <div class="sky" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Lunaria home">
+      <span class="brand-mark" aria-hidden="true">◐</span>
+      <span>LUNARIA</span>
+    </a>
+    <nav aria-label="Section navigation">
+      <a href="#verdict">Verdict</a>
+      <a href="#ranking">Ranking</a>
+      <a href="#matrix">Matrix</a>
+      <a href="#profiles">Profiles</a>
+      <a href="#terrain">Terrain</a>
+      <a href="#data">Data</a>
+      <a href="#method">Method</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">LUNAR LANDING-SITE ANALYSIS · 2026–27 WINDOW</p>
+        <h1>Six sites.<br><span>One defensible landing bet.</span></h1>
+        <p class="lede">
+          A NASA-data comparison of terrain, solar power, Earth visibility,
+          science, ISRU access and operational risk — built to separate what we
+          measured from what we merely believe.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="#verdict">Read the verdict</a>
+          <a class="button ghost" href="#method">How the score works</a>
+        </div>
+        <p class="hero-footnote" id="hero-footnote"></p>
+      </div>
+      <aside class="winner-card" id="winner-card" aria-live="polite"></aside>
+    </section>
+
+    <section class="stat-strip" id="stat-strip" aria-label="Analysis at a glance"></section>
+
+    <section class="section" id="verdict">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">01 · THE VERDICT</p>
+          <h2>Nobile Ridge wins the balanced mission.</h2>
+        </div>
+        <p class="section-note">
+          Baseline profile: a first sustained crewed presence with polar ISRU
+          access and science return. Apollo 17 remains the low-risk sortie.
+        </p>
+      </div>
+
+      <div class="verdict-grid">
+        <article class="panel winner-panel" id="winner-panel"></article>
+        <article class="panel runner-panel" id="runner-panel"></article>
+      </div>
+
+      <div class="why-grid" id="why-grid"></div>
+
+      <div class="pinpoint-banner panel" id="pinpoint-banner"></div>
+    </section>
+
+    <section class="section" id="ranking">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">02 · RANKING</p>
+          <h2>Switch the mission, watch the winner move.</h2>
+        </div>
+        <p class="section-note">
+          Weight sets are explicit. The measured criteria stay the same; only
+          their relative importance changes.
+        </p>
+      </div>
+
+      <div class="profile-tabs" id="profile-tabs" role="tablist" aria-label="Mission profiles"></div>
+
+      <div class="panel ranking-panel">
+        <div class="ranking-head">
+          <h3 id="ranking-title">Balanced polar base</h3>
+          <p id="ranking-description"></p>
+        </div>
+        <div class="bars" id="ranking-bars"></div>
+        <p class="note" id="ranking-note"></p>
+      </div>
+
+      <div class="chart-grid">
+        <div class="panel chart-panel">
+          <div class="chart-head">
+            <h3>Power versus comms</h3>
+            <p>Annual sunlight above terrain vs. Earth &gt;5° above terrain</p>
+          </div>
+          <div id="tradeoff-chart" class="chart"></div>
+        </div>
+        <div class="panel chart-panel">
+          <div class="chart-head">
+            <h3>How robust is the win?</h3>
+            <p>5,000 draws: weights ±50%, Tier A/B scores ±3 pts, Tier C ±10 pts</p>
+          </div>
+          <div id="sensitivity-chart" class="chart"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="matrix">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">03 · CRITERIA MATRIX</p>
+          <h2>Every score, every site, no hidden judgment.</h2>
+        </div>
+        <p class="section-note">
+          Hover or focus a cell for its raw value and rationale. Tier A/B is
+          measured or well-documented; Tier C is analyst judgment.
+        </p>
+      </div>
+
+      <div class="panel matrix-wrap">
+        <table id="score-matrix" class="matrix"></table>
+      </div>
+      <div class="legend" id="matrix-legend"></div>
+    </section>
+
+    <section class="section" id="profiles">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">04 · MISSION PROFILES</p>
+          <h2>The answer depends on the mission — until it doesn’t.</h2>
+        </div>
+        <p class="section-note">
+          Nobile Ridge wins four of five profiles. Apollo 17 wins only the
+          low-risk crewed sortie, where direct Earth links and abortability
+          dominate.
+        </p>
+      </div>
+      <div class="profile-grid" id="profile-grid"></div>
+    </section>
+
+    <section class="section" id="terrain">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">05 · TERRAIN &amp; PINPOINT PADS</p>
+          <h2>A coordinate is not a landing pad.</h2>
+        </div>
+        <p class="section-note">
+          Each site was screened on its best available NASA DEM. The pinpoint
+          pad is a 1 km DEM-screened candidate, not a certified hazard map.
+        </p>
+      </div>
+      <div class="site-grid" id="site-cards"></div>
+    </section>
+
+    <section class="section" id="data">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">06 · EVIDENCE &amp; GAPS</p>
+          <h2>What we know, and what we still need.</h2>
+        </div>
+        <p class="section-note">
+          Missing datasets are first-class citizens here: each gap has an AOI,
+          a resolution target and an acceptance test.
+        </p>
+      </div>
+
+      <div class="data-grid">
+        <div class="panel ledger-panel">
+          <h3>Evidence ledger</h3>
+          <div id="gap-summary"></div>
+        </div>
+        <div class="panel">
+          <h3>Priority P0 requests</h3>
+          <div id="gap-list" class="gap-list"></div>
+        </div>
+      </div>
+
+      <div class="panel photo-panel">
+        <div class="chart-head">
+          <h3>NASA Image Library context</h3>
+          <p>Presentation imagery only — it never feeds a score.</p>
+        </div>
+        <div class="photo-strip" id="photo-strip"></div>
+      </div>
+    </section>
+
+    <section class="section" id="method">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">07 · METHOD &amp; CAVEATS</p>
+          <h2>Transparent enough to argue with.</h2>
+        </div>
+        <p class="section-note">
+          Eight criteria, explicit weights, published provenance and an
+          uncertainty model. The output is a screening recommendation, not a
+          flight-certified site.
+        </p>
+      </div>
+
+      <div class="method-grid">
+        <article class="panel">
+          <h3>The score</h3>
+          <div class="formula" aria-label="Weighted sum formula">
+            <span>S</span>
+            <sub>site</sub>
+            <span class="equals">=</span>
+            <span class="sum">Σ</span>
+            <span>w<sub>i</sub> · s<sub>i</sub></span>
+          </div>
+          <p class="small">
+            Each criterion is normalised to 0–100 with a documented scale, then
+            multiplied by its profile weight. Weights sum to 1. The result is a
+            relative decision score, not a probability of mission success.
+          </p>
+          <div id="weights-chart" class="weights"></div>
+        </article>
+        <article class="panel">
+          <h3>Evidence tiers</h3>
+          <ul class="tier-list">
+            <li><span class="tier tier-a">A</span><div><strong>Ground truth.</strong> Apollo 17 surface data and traverse validation.</div></li>
+            <li><span class="tier tier-b">B</span><div><strong>Measured / documented.</strong> DEM terrain, Horizons ephemerides, PSR catalogue.</div></li>
+            <li><span class="tier tier-c">C</span><div><strong>Analyst judgment.</strong> Science value, thermal, safety and data-maturity rubrics.</div></li>
+          </ul>
+          <p class="small">
+            Tier C scores are the weakest link. The sensitivity chart samples
+            them at ±10 points to show how much the ranking could move.
+          </p>
+        </article>
+        <article class="panel">
+          <h3>Lighting, not lightning</h3>
+          <p class="small">
+            The brief said “lightning.” The Moon has no appreciable atmosphere,
+            so there is no weather lightning. This analysis interprets the term
+            as <strong>solar lighting / illumination</strong>: the fraction of
+            the year the Sun clears the local terrain horizon. Electrostatic
+            dust lofting is a separate, real phenomenon and is not modelled.
+          </p>
+          <h3 class="spaced">Hard caveats</h3>
+          <ul class="caveat-list" id="caveat-list"></ul>
+        </article>
+      </div>
+
+      <div class="panel sources-panel">
+        <div class="chart-head">
+          <h3>Source registry</h3>
+          <p id="source-count"></p>
+        </div>
+        <div class="table-scroll">
+          <table class="sources" id="source-table"></table>
+        </div>
+      </div>
+
+      <div class="panel downloads">
+        <h3>Reusable outputs</h3>
+        <div class="download-grid">
+          <a href="../data/processed/site_ranking.csv">site_ranking.csv</a>
+          <a href="../data/processed/site_scores.csv">site_scores.csv</a>
+          <a href="../data/processed/criteria_scores.csv">criteria_scores.csv</a>
+          <a href="../data/processed/sensitivity.csv">sensitivity.csv</a>
+          <a href="../data/processed/recommendation.json">recommendation.json</a>
+          <a href="../data/processed/sites.geojson">sites.geojson</a>
+          <a href="../data/processed/pinpoints.geojson">pinpoints.geojson</a>
+          <a href="../data/processed/data_gaps.csv">data_gaps.csv</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>
+      <span class="brand-mark" aria-hidden="true">◐</span>
+      <strong>LUNARIA</strong>
+      <span>· decision support, not flight certification.</span>
+    </div>
+    <p id="footer-meta"></p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
