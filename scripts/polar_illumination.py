@@ -311,7 +311,7 @@ def compute_cell_metrics(
     earth_lit = 0
     max_dark = np.zeros(n_cells, dtype=np.int32)
     dark_run = np.zeros(n_cells, dtype=np.int32)
-    window_len = max(1, int(round(continuity_days * 4)))  # 6 h samples
+    window_len = continuity_window_samples(continuity_days, step_hours=6.0)
     history = np.zeros((window_len, n_cells), dtype=bool)
     window_count = np.zeros(n_cells, dtype=np.int16)
     lit_windows = np.zeros(n_cells, dtype=np.int32)
@@ -377,7 +377,7 @@ def compute_cell_metrics(
     slope = np.where(slope == NODATA, np.nan, slope)
 
     psr_distance = psr_edge_distance(x_grid, y_grid, flat_idx)
-    science = np.clip(np.nan_to_num(slope, nan=0.0) / 15.0, 0.0, 1.0)
+    science = science_value_proxy(slope)
     thermal = thermal_stability_proxy(lat)
     coverage = aggregate["coverage"].ravel()[flat_idx].astype(np.float64)
 
@@ -475,6 +475,12 @@ def thermal_stability_proxy(latitude_deg: np.ndarray | float) -> np.ndarray:
     return np.clip(-(latitude + 80.0) / 10.0, 0.0, 1.0)
 
 
+def science_value_proxy(reference_values: np.ndarray | float) -> np.ndarray:
+    """Neutral placeholder until independent geology/spectral data is ingested."""
+    values = np.asarray(reference_values, dtype=float)
+    return np.full(values.shape, 0.5, dtype=float)
+
+
 def sampled_run_duration_days(
     run_samples: np.ndarray | int,
     *,
@@ -489,6 +495,16 @@ def sampled_run_duration_days(
         raise ValueError("run lengths must be finite and non-negative")
     capped = np.minimum(runs, max(0, sample_count - 1))
     return capped * step_hours / 24.0
+
+
+def continuity_window_samples(days: float, *, step_hours: float) -> int:
+    """Number of point samples spanning a duration, including both endpoints."""
+    if not math.isfinite(days) or days <= 0:
+        raise ValueError("continuity duration must be finite and positive")
+    if not math.isfinite(step_hours) or step_hours <= 0:
+        raise ValueError("step_hours must be finite and positive")
+    intervals = int(round(days * 24.0 / step_hours))
+    return max(2, intervals + 1)
 
 
 def topocentric_direction_components(
@@ -630,10 +646,10 @@ def validate_benchmarks(metrics: dict) -> dict:
     check = {
         "reference": "Barker et al. 2021, DOI 10.1016/j.pss.2020.105119",
         "expected_ranking": "Site01 highest average illumination among Sites 01, 04, 07, 11",
-        "pass": None,
-        "status": "not_validated",
+        "pass": False,
+        "status": "blocked",
         "reason": (
-            "Barker Site 01/04/07/11 ROI coordinates, 5 m LDEMs and solar-disk "
+            "FAIL/BLOCKED: Barker Site 01/04/07/11 ROI coordinates, 5 m LDEMs and solar-disk "
             "method are not in the repository. The legacy Nobile (-84.2 S) point is "
             "not Barker Site 01 (Connecting Ridge, near the pole), so it cannot be "
             "used as a substitute."

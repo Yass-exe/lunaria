@@ -24,9 +24,11 @@ try:
     from .common import CONFIG_DIR, INTERIM_DIR, PROCESSED_DIR, read_csv, write_csv, write_json
     from .polar_illumination import (
         equivalent_circle_edge_distance,
+        continuity_window_samples,
         lat_lon_from_xy,
         load_ephemeris,
         sampled_run_duration_days,
+        science_value_proxy,
         thermal_stability_proxy,
         topocentric_direction_components,
         xy_from_lat_lon,
@@ -43,9 +45,11 @@ except ImportError:
     from common import CONFIG_DIR, INTERIM_DIR, PROCESSED_DIR, read_csv, write_csv, write_json
     from polar_illumination import (
         equivalent_circle_edge_distance,
+        continuity_window_samples,
         lat_lon_from_xy,
         load_ephemeris,
         sampled_run_duration_days,
+        science_value_proxy,
         thermal_stability_proxy,
         topocentric_direction_components,
         xy_from_lat_lon,
@@ -194,7 +198,7 @@ def evaluate_observers(
     earth_count = np.zeros(len(lat), dtype=np.int32)
     dark_run = np.zeros(len(lat), dtype=np.int32)
     max_dark = np.zeros(len(lat), dtype=np.int32)
-    window_len = max(1, int(round(continuity_days * 4)))
+    window_len = continuity_window_samples(continuity_days, step_hours=6.0)
     history = np.zeros((window_len, len(lat)), dtype=bool)
     window_count = np.zeros(len(lat), dtype=np.int16)
     lit_windows = np.zeros(len(lat), dtype=np.int32)
@@ -533,7 +537,7 @@ def run(
                 "regional_slope_p90_deg": float(local_slope[index]),
                 "pinpoint_slope_p90_deg": None,
                 "psr_edge_km": float(psr_distance[index]),
-                "science_proxy": float(np.clip(local_slope[index] / 15.0, 0.0, 1.0)),
+                "science_proxy": float(science_value_proxy(local_slope[index])),
                 "thermal_proxy": float(thermal_stability_proxy(latitude[index])),
                 "data_coverage_fraction": 1.0,
             }
@@ -712,14 +716,15 @@ def run(
             "pinpoint_status": "provisional_148m_seed_not_hazard_certified",
         },
         "barker_validation": {
-            "status": "not_validated",
-            "reason": "Exact Barker ROI LDEMs, error layers, and valid-pixel masks are absent.",
+            "pass": False,
+            "status": "blocked",
+            "reason": "FAIL/BLOCKED: exact Barker ROI LDEMs, error layers, and valid-pixel masks are absent.",
         },
         "caveats": [
             "Screening result, not a flight-certified landing site or hazard map.",
             "The provisional seed uses a server-resampled ~148 m LOLA product; 5 m Barker/LOLA or 1-2 m LROC NAC terrain is required.",
             "PSR edge distance uses an equivalent-circle approximation from catalogue centroid and area; it is not an ice detection.",
-            "Science and thermal values are visibly labelled proxies, not measurements.",
+            "Science is a neutral placeholder and thermal is a visibly labelled proxy; neither is a measurement.",
             "Earth visibility is graded because relay availability is unknown; it is not a hard filter.",
         ],
     }

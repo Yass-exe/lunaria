@@ -1,12 +1,12 @@
 {
   "status": "ranked",
   "winner": "polar-region-r167-c278",
-  "winner_score": 0.6142448195450867,
+  "winner_score": 0.6014883108177393,
   "region_count": 6,
   "rank_agreement": {
     "top_rank_match": 1,
-    "exact_order_match": 1,
-    "spearman_rho": 1.0
+    "exact_order_match": 0,
+    "spearman_rho": 0.9428571428571428
   },
   "weights": {
     "solar_power": 0.24,
@@ -27,12 +27,12 @@
     "source_resolution_m": 148.4375,
     "solar_illumination_fraction": 0.48512820512820515,
     "longest_dark_days": 15.75,
-    "sunlight_continuity_fraction": 0.2713793103448276,
+    "sunlight_continuity_fraction": 0.26319420489824075,
     "earth_visibility_fraction": 0.9507692307692308,
     "regional_slope_p90_deg": 7.935044288635254,
     "pinpoint_slope_p90_deg": null,
     "psr_edge_km": 2.597745923147516,
-    "science_proxy": 0.5290029525756836,
+    "science_proxy": 0.5,
     "thermal_proxy": 0.543422161934835,
     "data_coverage_fraction": 1.0,
     "solar_power": 0.5274515410965525,
@@ -41,8 +41,8 @@
     "isru_access_proxy": 0.7712254063462365,
     "crew_safety": 0.7064955711364747,
     "data_maturity": 1.0,
-    "weighted_sum": 0.6906006526315094,
-    "weighted_geometric_mean": 0.6721129231218693,
+    "weighted_sum": 0.687700357373941,
+    "weighted_geometric_mean": 0.6683338173461293,
     "hard_failures": "",
     "disqualified": false,
     "status": "provisional_148m_seed",
@@ -57,14 +57,15 @@
     "pinpoint_status": "provisional_148m_seed_not_hazard_certified"
   },
   "barker_validation": {
-    "status": "not_validated",
-    "reason": "Exact Barker ROI LDEMs, error layers, and valid-pixel masks are absent."
+    "pass": false,
+    "status": "blocked",
+    "reason": "FAIL/BLOCKED: exact Barker ROI LDEMs, error layers, and valid-pixel masks are absent."
   },
   "caveats": [
     "Screening result, not a flight-certified landing site or hazard map.",
     "The provisional seed uses a server-resampled ~148 m LOLA product; 5 m Barker/LOLA or 1-2 m LROC NAC terrain is required.",
     "PSR edge distance uses an equivalent-circle approximation from catalogue centroid and area; it is not an ice detection.",
-    "Science and thermal values are visibly labelled proxies, not measurements.",
+    "Science is a neutral placeholder and thermal is a visibly labelled proxy; neither is a measurement.",
     "Earth visibility is graded because relay availability is unknown; it is not a hard filter."
   ]
 }

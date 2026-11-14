@@ -8,14 +8,23 @@ import numpy as np
 
 from scripts.polar_illumination import (
     equivalent_circle_edge_distance,
+    continuity_window_samples,
     load_ephemeris,
     sampled_run_duration_days,
+    science_value_proxy,
     thermal_stability_proxy,
     topocentric_direction_components,
 )
 
 
 class PolarIlluminationUtilityTests(unittest.TestCase):
+    def test_six_and_half_day_window_includes_both_endpoints(self):
+        self.assertEqual(continuity_window_samples(6.5, step_hours=6.0), 27)
+
+    def test_science_proxy_is_neutral_until_independent_geology_is_ingested(self):
+        actual = science_value_proxy(np.asarray([0.0, 7.5, 30.0]))
+        np.testing.assert_allclose(actual, [0.5, 0.5, 0.5])
+
     def test_topocentric_earth_direction_includes_surface_parallax(self):
         upward, eastward, northward = topocentric_direction_components(
             np.asarray([0.0]),

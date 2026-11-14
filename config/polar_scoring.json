@@ -71,7 +71,8 @@
     },
     "science_value": {
       "type": "provided_proxy",
-      "label": "Tier C science/geodiversity proxy; not a measurement"
+      "label": "Neutral Tier C science placeholder",
+      "description": "Fixed at 0.5 until an independent geology or spectral layer is ingested; deliberately not derived from terrain slope"
     },
     "thermal_stability": {
       "type": "provided_proxy",

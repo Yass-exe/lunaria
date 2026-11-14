@@ -335,8 +335,9 @@ def main() -> None:
         "scoring_consistency": scoring_consistency(metrics),
         "legacy_comparison": legacy_comparison(metrics),
         "barker_validation": {
-            "status": "not_validated",
-            "reason": "Exact Barker Site 01/04/07/11 ROI coordinates and 5 m LDEMs are absent.",
+            "pass": False,
+            "status": "blocked",
+            "reason": "FAIL/BLOCKED: exact Barker Site 01/04/07/11 ROI coordinates and 5 m LDEMs are absent.",
         },
     }
     write_json(PROCESSED_DIR / "polar_benchmark.json", report)
@@ -375,7 +376,7 @@ def main() -> None:
     for row in report["legacy_comparison"]:
         print(f"     {row['site_id']:<24} model={row['model_illumination']:.3f}  "
               f"legacy={row['legacy_reported']}  offset={row['offset_km']:.2f} km  {row['note']}")
-    print("6. Barker validation          NOT VALIDATED (exact ROIs/5 m LDEMs absent)")
+    print("6. Barker validation          FAIL/BLOCKED (exact ROIs/5 m LDEMs absent)")
     print("=" * 78)
     print(f"Wrote {PROCESSED_DIR / 'polar_benchmark.json'}")
 

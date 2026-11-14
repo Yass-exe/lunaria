@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-11-14T21:54:53Z",
+  "generated_at": "2026-11-14T22:25:24Z",
   "pipeline": "two-stage south-polar screen",
   "metrics_package": {
     "path": "data/processed/polar_cell_metrics.csv.gz",
     "rows": 290364,
-    "bytes": 11229893,
-    "sha256": "ab9175c8d8d0e806165839b3bec15c9f01e7706f7c3e86c656f5519320facac8",
+    "bytes": 10586600,
+    "sha256": "39350cbad1a2a9faeb4b9e6cbbf8aa6bf9444e6ae212fa3c5c4b1f1a743807a3",
     "compression": "gzip-9; mtime=0; no embedded filename"
   },
   "files": [
@@ -16,8 +16,8 @@
     },
     {
       "path": "data/processed/polar_cell_metrics.csv.gz",
-      "bytes": 11229893,
-      "sha256": "ab9175c8d8d0e806165839b3bec15c9f01e7706f7c3e86c656f5519320facac8"
+      "bytes": 10586600,
+      "sha256": "39350cbad1a2a9faeb4b9e6cbbf8aa6bf9444e6ae212fa3c5c4b1f1a743807a3"
     },
     {
       "path": "data/processed/polar_terrain_1km.tif",
@@ -26,33 +26,33 @@
     },
     {
       "path": "data/processed/polar_illumination_1km.tif",
-      "bytes": 3092924,
-      "sha256": "368ea793700af13f2c1c7f23c344a22d473390ad9aa92ac7dd62c2abdc7a2ac6"
+      "bytes": 3092824,
+      "sha256": "a767b5c690409f938bd4c3e714b16b201a0f5a2ebd4100d762e137617ec03f8f"
     },
     {
       "path": "data/processed/polar_region_ranking.csv",
-      "bytes": 1927,
-      "sha256": "f86965a8e428cb5ded4a4bd81b9076527a73a1a8e66ab788d6461d93fa09e26f"
+      "bytes": 1878,
+      "sha256": "dbc3ed1e45c68ada49aad46d51131cf339b1db49048f70b0cf5fef7e0f93af2b"
     },
     {
       "path": "data/processed/polar_candidate_regions.geojson",
-      "bytes": 19850,
-      "sha256": "151ed879168af7feec07db414ff2b297e00313aba09802864e8b4a34716b10e2"
+      "bytes": 19226,
+      "sha256": "4a9a42c0b2972f78e5d67695a428509a7904cc09d688c6f10dd61ebb72a826e6"
     },
     {
       "path": "data/processed/polar_refined_region_ranking.csv",
-      "bytes": 2257,
-      "sha256": "d63bd25e3ba630652c056ef725f5f34f249eeb3fc869bb1b58a5fa65e8777d80"
+      "bytes": 2153,
+      "sha256": "cb7a449d6cc2f56e069cd72414cb2a27d3529e871f1b309003d85a53c0426d95"
     },
     {
       "path": "data/processed/polar_refined_cells.csv",
-      "bytes": 530762,
-      "sha256": "01bea00f6b5caa496fd9d025564b88254e7b0dc9443768bdee4ac839f7e07d39"
+      "bytes": 489460,
+      "sha256": "576c77917650fd2f04102764e0e57f272ec913332773ffbeb96a94a01fed7f66"
     },
     {
       "path": "data/processed/polar_candidate_timeseries.csv",
-      "bytes": 3005472,
-      "sha256": "cca39eb6e13609d2311677283805020633a94c24fafad91f4fcaf595258170ac"
+      "bytes": 3011487,
+      "sha256": "a3769b584dcba1196a504e401e9463d3d3f248110f387454ec6a9f652f0e5089"
     },
     {
       "path": "data/processed/polar_data_gaps.csv",
@@ -62,17 +62,17 @@
     {
       "path": "data/processed/polar_sensitivity.csv",
       "bytes": 345,
-      "sha256": "f4e187f789b2d1c1eb98eace4afa69083649c41c556d7e4416885e478c157a2d"
+      "sha256": "f5c83718075e87c81faab01ecb709000aa962d3cfb85e530f853022078850491"
     },
     {
       "path": "data/processed/polar_recommendation.json",
-      "bytes": 2601,
-      "sha256": "000b59c7eac920a88d7828fe3c0cb93b865c9bef298a427d4d45a253e17a33e8"
+      "bytes": 2653,
+      "sha256": "16160fedc8ed13a28391d5ae0a73789eaff4efcafb655bb2ff141d7cf1400b44"
     },
     {
       "path": "data/processed/polar_benchmark.json",
-      "bytes": 4129,
-      "sha256": "53a36adef1b87e087d2933c1ee242fa1dd886a06cd01fc6940f7685ed6d52fc9"
+      "bytes": 4156,
+      "sha256": "e22cb930998e58738b430f9533c502e4cbbed91244e99ed4148255a460788f92"
     },
     {
       "path": "data/processed/polar_terrain_manifest.json",
@@ -81,8 +81,8 @@
     },
     {
       "path": "data/processed/polar_illumination_manifest.json",
-      "bytes": 2239,
-      "sha256": "c9e4cd1465c2cbd06e7d2dfeb807ca39971733f2833ff582c30675df9e205cf7"
+      "bytes": 2248,
+      "sha256": "ddcb287e419a6c7839008153f70077d7c0b864f2f11d1499083d895a793f4374"
     }
   ]
 }

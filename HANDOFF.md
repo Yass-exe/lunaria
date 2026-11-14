@@ -7,12 +7,12 @@
 ## Result snapshot
 
 - **Winner:** `polar-region-r167-c278`
-- **Refined region WGM:** 0.614245 (61.42/100)
+- **Refined region WGM:** 0.601488 (60.15/100)
 - **Provisional seed:** **85.4342216°S, 10.5272519°W**
 - **Elevation/source:** 1,402.42 m; 148.4375 m/px server-resampled LOLA export
 - **Seed metrics:** solar 48.51%; Earth visibility 95.08%; longest dark 15.75 d; local slope p90 7.94°; equivalent-area PSR edge 2.60 km
-- **Sensitivity:** winner 44.4% top-1; runner-up 35.0% under 1,000 Dirichlet weight draws
-- **Barker validation:** **not validated**, because exact ROI/LDEM/error/mask inputs are absent
+- **Sensitivity:** winner 39.0% top-1; runner-up 38.5% under 1,000 Dirichlet weight draws
+- **Barker validation:** **FAIL/BLOCKED**, because exact ROI/LDEM/error/mask inputs are absent
 - **Certification:** none; this is a provisional source-pixel seed, not a landing pad
 
 ## One command

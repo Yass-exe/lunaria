@@ -86,6 +86,16 @@ def build_payload(processed_dir: Path = PROCESSED_DIR) -> dict:
                 "dimensions": {
                     key: _float(row[key], 0.0) for key in SCORE_DIMENSIONS
                 },
+                "indicators": {
+                    "solar_power": _float(row["solar_power"], 0.0),
+                    "earth_visibility": _float(row["earth_visibility"], 0.0),
+                    "terrain_safety": _float(row["terrain_safety"], 0.0),
+                    "isru_access_proxy": _float(row["isru_access"], 0.0),
+                    "science_proxy": _float(row["science_value"], 0.0),
+                    "thermal_proxy": _float(row["thermal_stability"], 0.0),
+                    "crew_safety": _float(row["terrain_safety"], 0.0),
+                    "data_maturity": _float(row["data_maturity"], 0.0),
+                },
                 "stage1_cells": stage1_cells,
                 "seed": {
                     "id": row["provisional_seed_id"],
@@ -148,6 +158,11 @@ def build_payload(processed_dir: Path = PROCESSED_DIR) -> dict:
         },
         "recommendation": recommendation,
         "weights": config["weights"],
+        "scoring": {
+            "headline": config["scoring"]["headline"],
+            "geometric_floor": config["scoring"]["geometric_floor"],
+            "continuity_weighted": False,
+        },
         "dimensions": list(SCORE_DIMENSIONS),
         "regions": regions,
         "timestamps": timestamps,
