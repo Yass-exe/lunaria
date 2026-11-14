@@ -1,0 +1,147 @@
+{
+  "generated_at": "2026-11-14T13:56:11Z",
+  "primary_mode": "site",
+  "winner": {
+    "site_id": "nobile_connecting_ridge",
+    "name": "Nobile Crater Rim / Connecting Ridge",
+    "lat_deg": -84.2,
+    "lon_deg": 60.7,
+    "score": 81.068,
+    "top1_prob": 0.9996,
+    "pinpoint_lat_deg": "-84.200469",
+    "pinpoint_lon_deg": "60.737255",
+    "pinpoint_offset_km": "0.115",
+    "pinpoint_slope_p90_deg": "5.494",
+    "elevation_m": 1116.0,
+    "solar_illumination_pct": "0.718183",
+    "earth_link_gt5_pct": "0.630065",
+    "psr_edge_km_approx": "3.096"
+  },
+  "runner_up": {
+    "site_id": "apollo17",
+    "name": "Apollo 17 — Taurus-Littrow Valley",
+    "score": 64.402,
+    "margin": 16.666
+  },
+  "pinpoint_mode_winner": {
+    "site_id": "nobile_connecting_ridge",
+    "name": "Nobile Crater Rim / Connecting Ridge",
+    "score": 82.688
+  },
+  "profile_winners": {
+    "site:baseline": "nobile_connecting_ridge",
+    "site:polar_isru": "nobile_connecting_ridge",
+    "site:crewed_sortie": "apollo17",
+    "site:science_geology": "nobile_connecting_ridge",
+    "site:comms_first": "nobile_connecting_ridge",
+    "pinpoint:baseline": "nobile_connecting_ridge",
+    "pinpoint:polar_isru": "nobile_connecting_ridge",
+    "pinpoint:crewed_sortie": "nobile_connecting_ridge",
+    "pinpoint:science_geology": "nobile_connecting_ridge",
+    "pinpoint:comms_first": "nobile_connecting_ridge"
+  },
+  "rationale": [
+    "Nobile Crater Rim / Connecting Ridge ranks first at 81.1/100 under the balanced profile.",
+    "Leading baseline strengths: terrain_trafficability 96/100 (B); isru_water_ice 94/100 (C); science_value 90/100 (C).",
+    "Runner-up Apollo 17 — Taurus-Littrow Valley scores 64.4; it leads on earth_link, crew_safety, data_maturity.",
+    "Top-1 probability under joint weight and score perturbation: 100.0% (weights only: 100.0%)."
+  ],
+  "caveats": [
+    "The illumination and Earth-link fractions use a 5 km terrain horizon and a 1-year Horizons window; terrain beyond 5 km and the 18.6-year libration cycle are not fully modelled.",
+    "Terrain scores come from 5-118 m/px DEMs sampled on a 32x32 grid; they are screening products, not landing-hazard certification.",
+    "Science, thermal, safety and data-maturity scores are analyst judgments (Tier C), not measurements.",
+    "PSR edge distance is approximated from a centroid-and-area catalogue, not PSR polygons.",
+    "A direct-to-Earth fraction below 99% means a relay is required for continuous communications. No relay link budget was ingested."
+  ],
+  "data_requests": [
+    {
+      "site_id": "nobile_connecting_ridge",
+      "dataset": "LROC NAC stereo DTM",
+      "aoi": "-84.2660..-84.1340 N, 60.0472..61.3528 E (~4x4 km, center -84.2000, +60.7000)",
+      "request_spec": "NAC stereo pair + controlled DTM + orthophoto, 4x4 km, 1-2 m/px, plus error map",
+      "request_from": "NASA LROC team / PDS Geosciences"
+    },
+    {
+      "site_id": "nobile_connecting_ridge",
+      "dataset": "LROC NAC orthophoto",
+      "aoi": "-84.2660..-84.1340 N, 60.0472..61.3528 E (~4x4 km, center -84.2000, +60.7000)",
+      "request_spec": "Radiometrically calibrated NAC orthomosaic, 0.5-1 m/px",
+      "request_from": "NASA LROC team / PDS"
+    },
+    {
+      "site_id": "von_karman",
+      "dataset": "LROC NAC stereo DTM",
+      "aoi": "-45.5660..-45.4340 N, 177.5059..177.6941 E (~4x4 km, center -45.5000, +177.6000)",
+      "request_spec": "NAC stereo pair + controlled DTM + orthophoto, 4x4 km, 1-2 m/px, plus error map",
+      "request_from": "NASA LROC team / PDS Geosciences"
+    },
+    {
+      "site_id": "von_karman",
+      "dataset": "LOLA 5-20 m DEM",
+      "aoi": "-45.5660..-45.4340 N, 177.5059..177.6941 E (~4x4 km, center -45.5000, +177.6000)",
+      "request_spec": "LOLA 5 m/px DEM clip + shot-count/error layer for the AOI",
+      "request_from": "NASA LOLA team / PDS Geosciences"
+    },
+    {
+      "site_id": "von_karman",
+      "dataset": "LROC NAC orthophoto",
+      "aoi": "-45.5660..-45.4340 N, 177.5059..177.6941 E (~4x4 km, center -45.5000, +177.6000)",
+      "request_spec": "Radiometrically calibrated NAC orthomosaic, 0.5-1 m/px",
+      "request_from": "NASA LROC team / PDS"
+    },
+    {
+      "site_id": "vallis_schroteri",
+      "dataset": "LROC NAC stereo DTM",
+      "aoi": "23.4340..23.5660 N, -48.2719..-48.1281 E (~4x4 km, center +23.5000, -48.2000)",
+      "request_spec": "NAC stereo pair + controlled DTM + orthophoto, 4x4 km, 1-2 m/px, plus error map",
+      "request_from": "NASA LROC team / PDS Geosciences"
+    },
+    {
+      "site_id": "vallis_schroteri",
+      "dataset": "LOLA 5-20 m DEM",
+      "aoi": "23.4340..23.5660 N, -48.2719..-48.1281 E (~4x4 km, center +23.5000, -48.2000)",
+      "request_spec": "LOLA 5 m/px DEM clip + shot-count/error layer for the AOI",
+      "request_from": "NASA LOLA team / PDS Geosciences"
+    },
+    {
+      "site_id": "vallis_schroteri",
+      "dataset": "LROC NAC orthophoto",
+      "aoi": "23.4340..23.5660 N, -48.2719..-48.1281 E (~4x4 km, center +23.5000, -48.2000)",
+      "request_spec": "Radiometrically calibrated NAC orthomosaic, 0.5-1 m/px",
+      "request_from": "NASA LROC team / PDS"
+    }
+  ],
+  "method": {
+    "criteria": [
+      "solar_illumination",
+      "earth_link",
+      "terrain_trafficability",
+      "isru_water_ice",
+      "science_value",
+      "thermal_stability",
+      "crew_safety",
+      "data_maturity"
+    ],
+    "baseline_weights": {
+      "solar_illumination": 0.2,
+      "earth_link": 0.18,
+      "terrain_trafficability": 0.16,
+      "science_value": 0.14,
+      "isru_water_ice": 0.12,
+      "thermal_stability": 0.08,
+      "crew_safety": 0.07,
+      "data_maturity": 0.05
+    },
+    "monte_carlo_draws": 5000,
+    "monte_carlo_seed": 42,
+    "uncertainty_model": {
+      "weights": "+/-50% multiplicative, renormalised",
+      "tier_A_B_scores_sd_points": 3.0,
+      "tier_C_scores_sd_points": 10.0,
+      "scores_clipped": [
+        0,
+        100
+      ]
+    }
+  }
+}

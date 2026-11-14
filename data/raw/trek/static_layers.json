@@ -1,0 +1,195 @@
+{
+  "Layers": [
+    {
+      "UUID": "",
+      "productLabel": "nomenclature_eq",
+      "title": "Nomenclature",
+      "subtitle": "",
+      "mission": "",
+      "instrument": "",
+      "productCat1": "FeatureLabel",
+      "layerProjection": "urn:ogc:def:crs:EPSG::104903",
+      "thumbnailImage": "",
+      "bounding": {
+        "leftbc": -180,
+        "rightbc": 180,
+        "topbc": 90,
+        "bottombc": -90
+      },
+      "legend": "",
+      "colorbar": "",
+      "description": {
+        "url": "jpl/assets/layers/nomenclature.html"
+      },
+      "services": [
+        {
+          "serviceType": "Feature",
+          "protocol": "ArcGISFeature",
+          "mode": "rest",
+          "endPoint": "https://trek.nasa.gov/moon/trekarcgis/rest/services/CombinedNomenclature/MapServer/0",
+          "layerId": "",
+          "tileMatrixSet": "",
+          "format": ""
+        }
+      ]
+    },
+    {
+      "UUID": "",
+      "productLabel": "nomenclature_np",
+      "title": "Nomenclature",
+      "subtitle": "",
+      "mission": "",
+      "instrument": "",
+      "productCat1": "FeatureLabel",
+      "layerProjection": "urn:ogc:def:crs:IAU2000::30118",
+      "thumbnailImage": "",
+      "bounding": {
+        "leftbc": -180,
+        "rightbc": 180,
+        "topbc": 90,
+        "bottombc": -90
+      },
+      "legend": "",
+      "colorbar": "",
+      "description": "jpl/assets/layers/nomenclature.html",
+      "services": [
+        {
+          "serviceType": "Feature",
+          "protocol": "ArcGISFeature",
+          "mode": "rest",
+          "endPoint": "https://trek.nasa.gov/moon/trekarcgis/rest/services/CombinedNomenclatureN/MapServer/0",
+          "layerId": "",
+          "tileMatrixSet": "",
+          "format": ""
+        }
+      ]
+    },
+    {
+      "UUID": "",
+      "productLabel": "nomenclature_sp",
+      "title": "Nomenclature",
+      "subtitle": "",
+      "mission": "",
+      "instrument": "",
+      "productCat1": "FeatureLabel",
+      "layerProjection": "urn:ogc:def:crs:IAU2000::30120",
+      "thumbnailImage": "",
+      "bounding": {
+        "leftbc": -180,
+        "rightbc": 180,
+        "topbc": 90,
+        "bottombc": -90
+      },
+      "legend": "",
+      "colorbar": "",
+      "description": "jpl/assets/layers/nomenclature.html",
+      "services": [
+        {
+          "serviceType": "Feature",
+          "protocol": "ArcGISFeature",
+          "mode": "rest",
+          "endPoint": "https://trek.nasa.gov/moon/trekarcgis/rest/services/CombinedNomenclatureS/MapServer/0",
+          "layerId": "",
+          "tileMatrixSet": "",
+          "format": ""
+        }
+      ]
+    },
+    {
+      "UUID": "",
+      "productLabel": "graticule_eq",
+      "title": "Graticule",
+      "subtitle": "",
+      "mission": "",
+      "instrument": "",
+      "productCat1": "featureLayer",
+      "layerProjection": "urn:ogc:def:crs:EPSG::104903",
+      "thumbnailImage": "",
+      "bounding": {
+        "leftbc": -180,
+        "rightbc": 180,
+        "topbc": 90,
+        "bottombc": -90
+      },
+      "legend": "",
+      "colorbar": "",
+      "description": "",
+      "services": [
+        {
+          "serviceType": "Mosaic",
+          "protocol": "ArcGISDynamic",
+          "mode": "rest",
+          "endPoint": "https://trek.nasa.gov/moon/trekarcgis/rest/services/ERGraticule/MapServer",
+          "imageFormat": "png32",
+          "layerId": "",
+          "tileMatrixSet": "",
+          "format": ""
+        }
+      ]
+    },
+    {
+      "UUID": "",
+      "productLabel": "graticule_np",
+      "title": "Graticule",
+      "subtitle": "",
+      "mission": "",
+      "instrument": "",
+      "productCat1": "featureLayer",
+      "layerProjection": "urn:ogc:def:crs:IAU2000::30118",
+      "thumbnailImage": "",
+      "bounding": {
+        "leftbc": -1095700,
+        "rightbc": 1095700,
+        "topbc": 1095700,
+        "bottombc": -1095700
+      },
+      "legend": "",
+      "colorbar": "",
+      "description": "",
+      "services": [
+        {
+          "serviceType": "Mosaic",
+          "protocol": "ArcGISDynamic",
+          "mode": "rest",
+          "endPoint": "https://trek.nasa.gov/moon/trekarcgis/rest/services/NPolarGraticule/MapServer",
+          "imageFormat": "png32",
+          "layerId": "",
+          "tileMatrixSet": "",
+          "format": ""
+        }
+      ]
+    },
+    {
+      "UUID": "",
+      "productLabel": "graticule_sp",
+      "title": "Graticule",
+      "subtitle": "",
+      "mission": "",
+      "instrument": "",
+      "productCat1": "featureLayer",
+      "layerProjection": "urn:ogc:def:crs:IAU2000::30120",
+      "thumbnailImage": "",
+      "bounding": {
+        "leftbc": -1095700,
+        "rightbc": 1095700,
+        "topbc": 1095700,
+        "bottombc": -1095700
+      },
+      "legend": "",
+      "colorbar": "",
+      "description": "",
+      "services": [
+        {
+          "serviceType": "Mosaic",
+          "protocol": "ArcGISDynamic",
+          "mode": "rest",
+          "endPoint": "https://trek.nasa.gov/moon/trekarcgis/rest/services/SPolarGraticule/MapServer",
+          "imageFormat": "png32",
+          "layerId": "",
+          "tileMatrixSet": "",
+          "format": ""
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "profiles": {
+    "baseline": {
+      "label": "Balanced polar base",
+      "description": "Default decision profile for a first sustained crewed presence with polar ISRU access and science return.",
+      "weights": {
+        "solar_illumination": 0.20,
+        "earth_link": 0.18,
+        "terrain_trafficability": 0.16,
+        "science_value": 0.14,
+        "isru_water_ice": 0.12,
+        "thermal_stability": 0.08,
+        "crew_safety": 0.07,
+        "data_maturity": 0.05
+      }
+    },
+    "polar_isru": {
+      "label": "Polar ISRU priority",
+      "description": "Power and volatile access dominate; communications can be solved with a relay.",
+      "weights": {
+        "solar_illumination": 0.24,
+        "isru_water_ice": 0.22,
+        "earth_link": 0.15,
+        "terrain_trafficability": 0.13,
+        "science_value": 0.10,
+        "thermal_stability": 0.06,
+        "crew_safety": 0.06,
+        "data_maturity": 0.04
+      }
+    },
+    "crewed_sortie": {
+      "label": "Low-risk crewed sortie",
+      "description": "Short-duration near-side mission: communications, trafficability, and abortability outweigh ISRU.",
+      "weights": {
+        "earth_link": 0.25,
+        "terrain_trafficability": 0.20,
+        "crew_safety": 0.18,
+        "science_value": 0.12,
+        "solar_illumination": 0.10,
+        "data_maturity": 0.07,
+        "thermal_stability": 0.05,
+        "isru_water_ice": 0.03
+      }
+    },
+    "science_geology": {
+      "label": "Science / geology priority",
+      "description": "Maximise unique geology and sample context; infrastructure is secondary.",
+      "weights": {
+        "science_value": 0.30,
+        "terrain_trafficability": 0.15,
+        "earth_link": 0.15,
+        "data_maturity": 0.12,
+        "solar_illumination": 0.10,
+        "crew_safety": 0.08,
+        "isru_water_ice": 0.05,
+        "thermal_stability": 0.05
+      }
+    },
+    "comms_first": {
+      "label": "Communications first",
+      "description": "Continuous direct-to-Earth communications are the hard constraint.",
+      "weights": {
+        "earth_link": 0.35,
+        "solar_illumination": 0.15,
+        "terrain_trafficability": 0.15,
+        "crew_safety": 0.10,
+        "science_value": 0.10,
+        "data_maturity": 0.05,
+        "isru_water_ice": 0.05,
+        "thermal_stability": 0.05
+      }
+    }
+  }
+}

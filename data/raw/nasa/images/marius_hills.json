@@ -1,0 +1,64 @@
+{
+  "site_id": "marius_hills",
+  "searches": [
+    {
+      "query": "Marius Hills Moon",
+      "match_type": "direct",
+      "total_hits": 2
+    },
+    {
+      "query": "Marius Hills",
+      "match_type": "regional",
+      "total_hits": 3
+    },
+    {
+      "query": "lunar lava tube",
+      "match_type": "context",
+      "total_hits": 1
+    }
+  ],
+  "items": [
+    {
+      "site_id": "marius_hills",
+      "nasa_id": "PIA12954",
+      "title": "Marius Hills Pit -- Lava Tube Skylight?",
+      "date_created": "2010-03-01T01:09:16Z",
+      "center": "JPL",
+      "photographer": "",
+      "description": "The Marius Hills pit is a possible skylight in a lava tube in an ancient volcanic region of the Moon called the Marius Hills. This image was taken by NASA Lunar Reconnaissance Orbiter.",
+      "keywords": "Moon; Lunar Reconnaissance Orbiter LRO",
+      "preview_url": "https://images-assets.nasa.gov/image/PIA12954/PIA12954~small.jpg",
+      "source_query": "Marius Hills Moon",
+      "match_type": "direct",
+      "source_id": "SRC-IMG-01"
+    },
+    {
+      "site_id": "marius_hills",
+      "nasa_id": "art002e012114",
+      "title": "A Cross Section of Lunar Geology",
+      "date_created": "2026-04-06T00:00:00Z",
+      "center": "JSC",
+      "photographer": "NASA",
+      "description": "art002e012114 (April 6, 2026) - A diverse set of lunar features is visible in this view, including the brightly colored Aristarchus crater, whose high reflectivity stands out against the surrounding terrain. Nearby, the Marius Hills region reveals a field of volcanic domes and cones, evidence of past lunar volcanism. The sinuous Reiner Gamma swirl contrasts with the darker mare surface, while rays from Glushko crater streak across the plains. At the bottom of the frame, the dark-floored Grimaldi crater anchors the scene.",
+      "keywords": "Artemis; Artemis II; Moon; Lunar; Lunar Flyby; Marius Hills; Glushko crater",
+      "preview_url": "https://images-assets.nasa.gov/image/art002e012114/art002e012114~large.jpg",
+      "source_query": "Marius Hills Moon",
+      "match_type": "direct",
+      "source_id": "SRC-IMG-01"
+    },
+    {
+      "site_id": "marius_hills",
+      "nasa_id": "PIA13179",
+      "title": "Marius Hills Constellation Region of Interest",
+      "date_created": "2010-06-01T20:52:48Z",
+      "center": "JPL",
+      "photographer": "",
+      "description": "Marius Hills Constellation Region of Interest",
+      "keywords": "Moon; Lunar Reconnaissance Orbiter LRO",
+      "preview_url": "https://images-assets.nasa.gov/image/PIA13179/PIA13179~small.jpg",
+      "source_query": "Marius Hills",
+      "match_type": "regional",
+      "source_id": "SRC-IMG-01"
+    }
+  ]
+}

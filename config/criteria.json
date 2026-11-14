@@ -1,0 +1,103 @@
+{
+  "criteria": [
+    {
+      "id": "solar_illumination",
+      "label": "Solar illumination",
+      "short_label": "Solar",
+      "unit": "fraction of year with Sun above local horizon",
+      "method": "ephemeris_horizon",
+      "metric": "sun_up_terrain_frac",
+      "scale": [0.4, 0.85],
+      "tier": "B",
+      "source_id": "SRC-EPH-01",
+      "description": "Fraction of the 12-month planning window in which the Sun is above the local terrain horizon modelled from LOLA. Values near 0.5 indicate a normal day/night cycle; polar peaks can exceed 0.8. Terrain shadowing is modelled only to a 5 km radius.",
+      "caveat": "Upper-bound where terrain beyond 5 km or unresolved at 30-118 m blocks low Sun."
+    },
+    {
+      "id": "earth_link",
+      "label": "Direct-to-Earth link",
+      "short_label": "Earth link",
+      "unit": "fraction of year with Earth >5° above local horizon",
+      "method": "ephemeris_horizon",
+      "metric": "earth_up5_terrain_frac",
+      "scale": [0.0, 0.8],
+      "tier": "B",
+      "source_id": "SRC-EPH-01",
+      "description": "Fraction of the year with the Earth at least 5° above the terrain horizon, a conservative proxy for a usable direct-to-Earth radio link. Far-side sites score zero and require a relay.",
+      "caveat": "A real link also needs a ground station, clear aperture, and link budget; 5° is a screening threshold, not a link-budget result."
+    },
+    {
+      "id": "terrain_trafficability",
+      "label": "Terrain trafficability",
+      "short_label": "Terrain",
+      "unit": "slope p90 (deg) and roughness (m)",
+      "method": "dem_slope",
+      "slope_metric": "slope_p90_deg",
+      "slope_scale": [30.0, 5.0],
+      "roughness_metric": "roughness_m",
+      "roughness_scale": [25.0, 0.0],
+      "blend": [0.85, 0.15],
+      "tier": "B",
+      "source_id": "SRC-DEM-01",
+      "description": "DEM-derived slope and residual roughness near the site. Lower slope and roughness are better. Uses the best available NASA Moon Trek DEM for each site (2-118 m/px), not a landed-vehicle-scale DTM.",
+      "caveat": "Coarse compared with a lander footprint; boulders and metre-scale hazards are unresolved."
+    },
+    {
+      "id": "isru_water_ice",
+      "label": "ISRU / water-ice access",
+      "short_label": "ISRU",
+      "unit": "approx. distance to nearest mapped PSR edge (km)",
+      "method": "psr_proximity",
+      "metric": "psr_edge_km_approx",
+      "scale": [20.0, 2.0],
+      "tier": "C",
+      "source_id": "SRC-PSR-01",
+      "description": "Proximity to a mapped permanently shadowed region (PSR), used as a screening proxy for access to cold-trapped volatiles. The PSR layer is a centroid-and-area catalogue, so edge distance is approximate. Non-polar sites fall back to a documented analyst score.",
+      "caveat": "PSR proximity is not proof of ice. LEND hydrogen, Mini-RF CPR, and Diviner temperature data are still required."
+    },
+    {
+      "id": "science_value",
+      "label": "Science value",
+      "short_label": "Science",
+      "unit": "analyst rubric (0-100)",
+      "method": "curated",
+      "tier": "C",
+      "source_id": "SRC-PUB-01",
+      "description": "Relative scientific return of the site for a first crewed campaign: uniquely preserved material, process diversity, ground truth, and sample context.",
+      "caveat": "Analyst judgment, not a measured quantity; the ranking sensitivity report shows how much it matters."
+    },
+    {
+      "id": "thermal_stability",
+      "label": "Thermal environment",
+      "short_label": "Thermal",
+      "unit": "analyst rubric (0-100)",
+      "method": "curated",
+      "tier": "C",
+      "source_id": "SRC-PUB-02",
+      "description": "Screening assessment of the thermal environment for crews and equipment: stable polar temperatures versus the 14-day equatorial day/night swing, and proximity to cryogenic PSRs.",
+      "caveat": "No Diviner temperature time series was ingested; this is a qualitative screen."
+    },
+    {
+      "id": "crew_safety",
+      "label": "Crew safety / operations",
+      "short_label": "Safety",
+      "unit": "analyst rubric (0-100)",
+      "method": "curated",
+      "tier": "C",
+      "source_id": "SRC-PUB-01",
+      "description": "Non-slope operational hazards: cliffs, rilles, boulder fields, navigation in shadow, abort paths, and communications blackouts. Slope itself is scored separately under terrain.",
+      "caveat": "Qualitative; requires a site-specific hazard map and LROC NAC imagery."
+    },
+    {
+      "id": "data_maturity",
+      "label": "Data maturity / ground truth",
+      "short_label": "Data",
+      "unit": "analyst rubric (0-100)",
+      "method": "curated",
+      "tier": "C",
+      "source_id": "SRC-PUB-02",
+      "description": "How well the site is already mapped and, where applicable, ground-truthed. Higher scores mean lower mapping risk and better algorithm validation.",
+      "caveat": "A high score means more existing data, not a better mission site."
+    }
+  ]
+}

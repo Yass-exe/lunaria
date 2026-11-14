@@ -1,0 +1,15 @@
+{
+  "objectId": 0,
+  "name": "Pixel",
+  "value": "-5927",
+  "location": {
+    "x": 177.6,
+    "y": -45.5,
+    "spatialReference": {
+      "wkt": "GEOGCS[\"GCS_MOON\",DATUM[\"D_MOON\",SPHEROID[\"MOON_2000\",1737400.0,0.0]],PRIMEM[\"Reference_Meridian\",0.0],UNIT[\"Degree\",0.0174532925199433]]"
+    }
+  },
+  "properties": null,
+  "catalogItems": null,
+  "catalogItemVisibilities": []
+}

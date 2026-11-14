@@ -1,0 +1,53 @@
+{
+  "generated_at": "2026-11-14T13:55:45Z",
+  "sites": {
+    "shackleton_rim": {
+      "elevation_m": 622.5,
+      "elevation_source": "identify",
+      "dem_service": "LRO_LOLA_DEM_SPole875_5mp_v04",
+      "dem_label": "LOLA south-pole 87.5°S+ mosaic, 5 m/px",
+      "dem_res_m": 5,
+      "projection": "polar_stereographic"
+    },
+    "nobile_connecting_ridge": {
+      "elevation_m": 1116.0,
+      "elevation_source": "identify",
+      "dem_service": "LRO_LOLA_DEM_SPole75_30mp_v04",
+      "dem_label": "LOLA south-pole 75°S+ mosaic, 30 m/px",
+      "dem_res_m": 30,
+      "projection": "polar_stereographic"
+    },
+    "von_karman": {
+      "elevation_m": -5927.0,
+      "elevation_source": "identify",
+      "dem_service": "LRO_LOLA_DEM_Global_256ppd_v06",
+      "dem_label": "LOLA global mosaic, 256 ppd (~118 m/px)",
+      "dem_res_m": 118,
+      "projection": "geographic"
+    },
+    "marius_hills": {
+      "elevation_m": -1193.07,
+      "elevation_source": "identify",
+      "dem_service": "LRO_NAC_DEM_14N304E_2mp",
+      "dem_label": "LROC NAC stereo DTM, 2 m/px",
+      "dem_res_m": 2,
+      "projection": "geographic"
+    },
+    "vallis_schroteri": {
+      "elevation_m": 472.0,
+      "elevation_source": "identify",
+      "dem_service": "LRO_LOLA_DEM_Global_256ppd_v06",
+      "dem_label": "LOLA global mosaic, 256 ppd (~118 m/px)",
+      "dem_res_m": 118,
+      "projection": "geographic"
+    },
+    "apollo17": {
+      "elevation_m": -2639.59,
+      "elevation_source": "identify",
+      "dem_service": "NAC_DTM_APOLLO17",
+      "dem_label": "LROC NAC DTM, Apollo 17, 5 m/px",
+      "dem_res_m": 5,
+      "projection": "equirect_cm180_sp20"
+    }
+  }
+}

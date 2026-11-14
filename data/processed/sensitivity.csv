@@ -1,0 +1,13 @@
+mode,site_id,mean_score,p10_score,p90_score,top1_prob,top1_prob_weight_only,mean_rank,modal_rank,baseline_score,baseline_rank
+site,shackleton_rim,59.594,53.657,65.625,0.0,0.0,3.826,4,60.212,4
+site,nobile_connecting_ridge,80.654,77.448,83.793,0.9996,1.0,1.0,1,81.068,1
+site,von_karman,47.444,41.008,53.896,0.0,0.0,5.882,6,47.622,6
+site,marius_hills,61.939,56.039,67.77,0.0,0.0,3.168,3,62.322,3
+site,vallis_schroteri,56.795,51.156,62.307,0.0,0.0,4.664,5,56.91,5
+site,apollo17,64.286,58.426,70.141,0.0004,0.0,2.459,2,64.402,2
+pinpoint,shackleton_rim,59.78,53.871,65.772,0.0,0.0,3.527,4,60.397,4
+pinpoint,nobile_connecting_ridge,82.27,79.148,85.282,1.0,1.0,1.0,1,82.688,1
+pinpoint,von_karman,47.45,41.016,53.902,0.0,0.0,5.776,6,47.63,6
+pinpoint,marius_hills,62.065,56.152,67.917,0.0,0.0,2.945,3,62.492,3
+pinpoint,vallis_schroteri,53.766,48.284,59.149,0.0,0.0,5.045,5,53.862,5
+pinpoint,apollo17,62.868,57.146,68.54,0.0,0.0,2.707,2,62.972,2

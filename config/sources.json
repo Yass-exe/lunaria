@@ -1,0 +1,194 @@
+{
+  "sources": [
+    {
+      "source_id": "SRC-API-01",
+      "name": "NASA API portal (api.nasa.gov)",
+      "type": "API",
+      "url": "https://api.nasa.gov/",
+      "status": "used",
+      "accessed": "2026-11-14",
+      "credit": "NASA",
+      "notes": "Authenticated APOD request verified the key path. api.nasa.gov is the keyed NASA API gateway; lunar products are hosted by NASA subdomains below."
+    },
+    {
+      "source_id": "SRC-IMG-01",
+      "name": "NASA Image and Video Library",
+      "type": "API",
+      "url": "https://images-api.nasa.gov/",
+      "status": "used",
+      "accessed": "2026-11-14",
+      "credit": "NASA",
+      "notes": "Site image metadata and thumbnails. Coverage is sparse for some small polar features."
+    },
+    {
+      "source_id": "SRC-EPH-01",
+      "name": "NASA/JPL Horizons",
+      "type": "API",
+      "url": "https://ssd.jpl.nasa.gov/horizons/",
+      "status": "used",
+      "accessed": "2026-11-14",
+      "credit": "NASA/JPL",
+      "notes": "Topocentric Sun and Earth apparent azimuth/elevation for a user-defined site on the Moon (body 301), 2026-11-14 to 2027-11-14, 1 h step."
+    },
+    {
+      "source_id": "SRC-DEM-01",
+      "name": "LOLA south-pole 87.5°S+ DEM, 5 m/px",
+      "type": "DEM",
+      "url": "https://trek.nasa.gov/moon/trekarcgis/rest/services/LRO_LOLA_DEM_SPole875_5mp_v04/ImageServer",
+      "status": "used",
+      "accessed": "2026-11-14",
+      "credit": "NASA LRO LOLA / NASA Moon Trek",
+      "notes": "Used for Shackleton elevation, local slope, 5 km horizon model, and hillshade."
+    },
+    {
+      "source_id": "SRC-DEM-02",
+      "name": "LOLA south-pole 75°S+ DEM, 30 m/px",
+      "type": "DEM",
+      "url": "https://trek.nasa.gov/moon/trekarcgis/rest/services/LRO_LOLA_DEM_SPole75_30mp_v04/ImageServer",
+      "status": "used",
+      "accessed": "2026-11-14",
+      "credit": "NASA LRO LOLA / NASA Moon Trek",
+      "notes": "Used for Nobile/Connecting Ridge elevation, local slope, 5 km horizon model, and hillshade."
+    },
+    {
+      "source_id": "SRC-DEM-03",
+      "name": "LOLA global DEM, 256 ppd (~118 m/px)",
+      "type": "DEM",
+      "url": "https://trek.nasa.gov/moon/trekarcgis/rest/services/LRO_LOLA_DEM_Global_256ppd_v06/ImageServer",
+      "status": "used",
+      "accessed": "2026-11-14",
+      "credit": "NASA LRO LOLA / NASA Moon Trek",
+      "notes": "Used for Von Kármán and Vallis Schröteri. Resolution is unsuitable for landing-hazard certification."
+    },
+    {
+      "source_id": "SRC-DEM-04",
+      "name": "LROC NAC stereo DTM, Marius Hills, 2 m/px",
+      "type": "DEM",
+      "url": "https://trek.nasa.gov/moon/trekarcgis/rest/services/LRO_NAC_DEM_14N304E_2mp/ImageServer",
+      "status": "used",
+      "accessed": "2026-11-14",
+      "credit": "NASA LRO LROC / NASA Moon Trek",
+      "notes": "Covers 13.21-14.20°N, 55.64-56.14°W; the 14.0°N, 56.0°W site lies inside."
+    },
+    {
+      "source_id": "SRC-DEM-05",
+      "name": "LROC NAC DTM, Apollo 17, 5 m/px",
+      "type": "DEM",
+      "url": "https://trek.nasa.gov/moon/trekarcgis/rest/services/NAC_DTM_APOLLO17/ImageServer",
+      "status": "used",
+      "accessed": "2026-11-14",
+      "credit": "NASA LRO LROC / NASA Moon Trek",
+      "notes": "Covers the Taurus-Littrow valley; used for elevation, slope, horizon, and hillshade."
+    },
+    {
+      "source_id": "SRC-PSR-01",
+      "name": "Moon Trek south-polar PSR catalogue",
+      "type": "vector",
+      "url": "https://trek.nasa.gov/moon/trekarcgis/rest/services/PSR_SP/MapServer/0",
+      "status": "used",
+      "accessed": "2026-11-14",
+      "credit": "NASA Moon Trek",
+      "notes": "Centroid/area catalogue, not polygons. PSR edge distance is therefore an equivalent-area approximation."
+    },
+    {
+      "source_id": "SRC-BASE-01",
+      "name": "LRO WAC global and south-polar mosaics",
+      "type": "basemap",
+      "url": "https://trek.nasa.gov/moon/",
+      "status": "used",
+      "accessed": "2026-11-14",
+      "credit": "NASA LRO LROC / NASA Moon Trek",
+      "notes": "Basemap images for the local dashboard."
+    },
+    {
+      "source_id": "SRC-PUB-01",
+      "name": "Artemis candidate-region and lunar landing-site literature",
+      "type": "publication",
+      "url": "https://www.nasa.gov/news-release/nasa-identifies-candidate-regions-for-landing-next-americans-on-moon/",
+      "status": "reference",
+      "accessed": "2026-11-14",
+      "credit": "NASA",
+      "notes": "Context for Nobile/Connecting Ridge and polar site trade studies. Curated scores are analyst judgments informed by this literature, not measurements."
+    },
+    {
+      "source_id": "SRC-PUB-02",
+      "name": "NASA/LROC mission and site documentation",
+      "type": "publication",
+      "url": "https://lroc.sese.asu.edu/",
+      "status": "reference",
+      "accessed": "2026-11-14",
+      "credit": "NASA / LROC team",
+      "notes": "Site geology and data-availability context. Curated scores are analyst judgments."
+    },
+    {
+      "source_id": "SRC-PH-LROC",
+      "name": "LROC NAC stereo DTM / orthophoto (placeholder)",
+      "type": "placeholder",
+      "url": "",
+      "status": "not_ingested",
+      "accessed": "",
+      "credit": "NASA LRO LROC",
+      "notes": "Needed at 1-2 m/px for final hazard and pinpoint certification."
+    },
+    {
+      "source_id": "SRC-PH-LOLA5",
+      "name": "LOLA 5-20 m DEM outside the south-pole cap (placeholder)",
+      "type": "placeholder",
+      "url": "",
+      "status": "not_ingested",
+      "accessed": "",
+      "credit": "NASA LRO LOLA",
+      "notes": "Needed for Von Kármán and Vallis Schröteri; the global 256 ppd DEM is too coarse for landing hazards."
+    },
+    {
+      "source_id": "SRC-PH-LEND",
+      "name": "LEND water-equivalent hydrogen (placeholder)",
+      "type": "placeholder",
+      "url": "",
+      "status": "not_ingested",
+      "accessed": "",
+      "credit": "NASA LRO LEND",
+      "notes": "Needed to turn PSR proximity into an ice-probability estimate."
+    },
+    {
+      "source_id": "SRC-PH-DIVINER",
+      "name": "Diviner thermal maps / temperature time series (placeholder)",
+      "type": "placeholder",
+      "url": "",
+      "status": "not_ingested",
+      "accessed": "",
+      "credit": "NASA LRO Diviner",
+      "notes": "Needed to replace the qualitative thermal score."
+    },
+    {
+      "source_id": "SRC-PH-MINIRF",
+      "name": "Mini-RF CPR / radar roughness (placeholder)",
+      "type": "placeholder",
+      "url": "",
+      "status": "not_ingested",
+      "accessed": "",
+      "credit": "NASA LRO Mini-RF / Chandrayaan-1 Mini-SAR",
+      "notes": "Needed to test whether PSR surfaces contain ice-bearing regolith."
+    },
+    {
+      "source_id": "SRC-PH-GT",
+      "name": "Ground truth and traverse data (placeholder)",
+      "type": "placeholder",
+      "url": "",
+      "status": "not_ingested",
+      "accessed": "",
+      "credit": "NASA Apollo / CNSA Chang'e-4",
+      "notes": "Apollo 17 traverse profiles and Chang'e-4/Yutu-2 data for algorithm validation."
+    },
+    {
+      "source_id": "SRC-PH-RELAY",
+      "name": "Relay communications link budget (placeholder)",
+      "type": "placeholder",
+      "url": "",
+      "status": "not_ingested",
+      "accessed": "",
+      "credit": "Mission architecture",
+      "notes": "Needed for Nobile/Shackleton and mandatory for Von Kármán."
+    }
+  ]
+}

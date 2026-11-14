@@ -1,0 +1,107 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.094649,
+          -89.903275
+        ]
+      },
+      "properties": {
+        "site_id": "shackleton_rim",
+        "name": "Shackleton Crater Rim",
+        "offset_km": "0.235",
+        "slope_p90_deg": "33.907",
+        "horizon_mean_deg": "0.684"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          60.737255,
+          -84.200469
+        ]
+      },
+      "properties": {
+        "site_id": "nobile_connecting_ridge",
+        "name": "Nobile Crater Rim / Connecting Ridge",
+        "offset_km": "0.115",
+        "slope_p90_deg": "5.494",
+        "horizon_mean_deg": "-3.436"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          177.599038,
+          -45.500654
+        ]
+      },
+      "properties": {
+        "site_id": "von_karman",
+        "name": "Von Kármán Crater",
+        "offset_km": "0.028",
+        "slope_p90_deg": "0.758",
+        "horizon_mean_deg": "0.005"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -55.999051,
+          14.002276
+        ]
+      },
+      "properties": {
+        "site_id": "marius_hills",
+        "name": "Marius Hills",
+        "offset_km": "0.074",
+        "slope_p90_deg": "5.198",
+        "horizon_mean_deg": "-0.014"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.195668,
+          23.501397
+        ]
+      },
+      "properties": {
+        "site_id": "vallis_schroteri",
+        "name": "Vallis Schröteri & Cobra Head",
+        "offset_km": "0.128",
+        "slope_p90_deg": "16.537",
+        "horizon_mean_deg": "-3.115"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          30.798143,
+          20.197477
+        ]
+      },
+      "properties": {
+        "site_id": "apollo17",
+        "name": "Apollo 17 — Taurus-Littrow Valley",
+        "offset_km": "0.091",
+        "slope_p90_deg": "8.93",
+        "horizon_mean_deg": "0.027"
+      }
+    }
+  ]
+}

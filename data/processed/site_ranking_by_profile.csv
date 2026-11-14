@@ -1,0 +1,61 @@
+mode,profile_id,profile_label,rank,site_id,name,score,delta_to_best
+site,baseline,Balanced polar base,1,nobile_connecting_ridge,Nobile Crater Rim / Connecting Ridge,81.068,0.0
+site,baseline,Balanced polar base,2,apollo17,Apollo 17 — Taurus-Littrow Valley,64.402,16.666
+site,baseline,Balanced polar base,3,marius_hills,Marius Hills,62.322,18.746
+site,baseline,Balanced polar base,4,shackleton_rim,Shackleton Crater Rim,60.212,20.856
+site,baseline,Balanced polar base,5,vallis_schroteri,Vallis Schröteri & Cobra Head,56.91,24.158
+site,baseline,Balanced polar base,6,von_karman,Von Kármán Crater,47.622,33.446
+site,polar_isru,Polar ISRU priority,1,nobile_connecting_ridge,Nobile Crater Rim / Connecting Ridge,81.76,0.0
+site,polar_isru,Polar ISRU priority,2,shackleton_rim,Shackleton Crater Rim,60.173,21.587
+site,polar_isru,Polar ISRU priority,3,apollo17,Apollo 17 — Taurus-Littrow Valley,54.163,27.597
+site,polar_isru,Polar ISRU priority,4,marius_hills,Marius Hills,53.589,28.171
+site,polar_isru,Polar ISRU priority,5,vallis_schroteri,Vallis Schröteri & Cobra Head,48.141,33.619
+site,polar_isru,Polar ISRU priority,6,von_karman,Von Kármán Crater,40.225,41.535
+site,crewed_sortie,Low-risk crewed sortie,1,apollo17,Apollo 17 — Taurus-Littrow Valley,80.551,0.0
+site,crewed_sortie,Low-risk crewed sortie,2,nobile_connecting_ridge,Nobile Crater Rim / Connecting Ridge,80.128,0.423
+site,crewed_sortie,Low-risk crewed sortie,3,marius_hills,Marius Hills,74.059,6.492
+site,crewed_sortie,Low-risk crewed sortie,4,vallis_schroteri,Vallis Schröteri & Cobra Head,64.87,15.681
+site,crewed_sortie,Low-risk crewed sortie,5,shackleton_rim,Shackleton Crater Rim,60.966,19.585
+site,crewed_sortie,Low-risk crewed sortie,6,von_karman,Von Kármán Crater,55.899,24.652
+site,science_geology,Science / geology priority,1,nobile_connecting_ridge,Nobile Crater Rim / Connecting Ridge,83.305,0.0
+site,science_geology,Science / geology priority,2,apollo17,Apollo 17 — Taurus-Littrow Valley,76.874,6.431
+site,science_geology,Science / geology priority,3,marius_hills,Marius Hills,72.859,10.446
+site,science_geology,Science / geology priority,4,shackleton_rim,Shackleton Crater Rim,69.49,13.815
+site,science_geology,Science / geology priority,5,vallis_schroteri,Vallis Schröteri & Cobra Head,67.7,15.605
+site,science_geology,Science / geology priority,6,von_karman,Von Kármán Crater,64.384,18.921
+site,comms_first,Communications first,1,nobile_connecting_ridge,Nobile Crater Rim / Connecting Ridge,79.943,0.0
+site,comms_first,Communications first,2,apollo17,Apollo 17 — Taurus-Littrow Valley,76.846,3.097
+site,comms_first,Communications first,3,marius_hills,Marius Hills,73.1,6.843
+site,comms_first,Communications first,4,vallis_schroteri,Vallis Schröteri & Cobra Head,67.508,12.435
+site,comms_first,Communications first,5,shackleton_rim,Shackleton Crater Rim,65.803,14.14
+site,comms_first,Communications first,6,von_karman,Von Kármán Crater,42.233,37.71
+pinpoint,baseline,Balanced polar base,1,nobile_connecting_ridge,Nobile Crater Rim / Connecting Ridge,82.688,0.0
+pinpoint,baseline,Balanced polar base,2,apollo17,Apollo 17 — Taurus-Littrow Valley,62.972,19.716
+pinpoint,baseline,Balanced polar base,3,marius_hills,Marius Hills,62.492,20.196
+pinpoint,baseline,Balanced polar base,4,shackleton_rim,Shackleton Crater Rim,60.397,22.291
+pinpoint,baseline,Balanced polar base,5,vallis_schroteri,Vallis Schröteri & Cobra Head,53.862,28.826
+pinpoint,baseline,Balanced polar base,6,von_karman,Von Kármán Crater,47.63,35.058
+pinpoint,polar_isru,Polar ISRU priority,1,nobile_connecting_ridge,Nobile Crater Rim / Connecting Ridge,83.624,0.0
+pinpoint,polar_isru,Polar ISRU priority,2,shackleton_rim,Shackleton Crater Rim,60.39,23.234
+pinpoint,polar_isru,Polar ISRU priority,3,marius_hills,Marius Hills,53.722,29.902
+pinpoint,polar_isru,Polar ISRU priority,4,apollo17,Apollo 17 — Taurus-Littrow Valley,53.005,30.619
+pinpoint,polar_isru,Polar ISRU priority,5,vallis_schroteri,Vallis Schröteri & Cobra Head,45.702,37.922
+pinpoint,polar_isru,Polar ISRU priority,6,von_karman,Von Kármán Crater,40.233,43.391
+pinpoint,crewed_sortie,Low-risk crewed sortie,1,nobile_connecting_ridge,Nobile Crater Rim / Connecting Ridge,81.11,0.0
+pinpoint,crewed_sortie,Low-risk crewed sortie,2,apollo17,Apollo 17 — Taurus-Littrow Valley,78.756,2.354
+pinpoint,crewed_sortie,Low-risk crewed sortie,3,marius_hills,Marius Hills,74.282,6.828
+pinpoint,crewed_sortie,Low-risk crewed sortie,4,shackleton_rim,Shackleton Crater Rim,61.068,20.042
+pinpoint,crewed_sortie,Low-risk crewed sortie,5,vallis_schroteri,Vallis Schröteri & Cobra Head,60.987,20.123
+pinpoint,crewed_sortie,Low-risk crewed sortie,6,von_karman,Von Kármán Crater,55.904,25.206
+pinpoint,science_geology,Science / geology priority,1,nobile_connecting_ridge,Nobile Crater Rim / Connecting Ridge,84.197,0.0
+pinpoint,science_geology,Science / geology priority,2,apollo17,Apollo 17 — Taurus-Littrow Valley,75.529,8.668
+pinpoint,science_geology,Science / geology priority,3,marius_hills,Marius Hills,73.025,11.172
+pinpoint,science_geology,Science / geology priority,4,shackleton_rim,Shackleton Crater Rim,69.588,14.609
+pinpoint,science_geology,Science / geology priority,5,vallis_schroteri,Vallis Schröteri & Cobra Head,64.799,19.398
+pinpoint,science_geology,Science / geology priority,6,von_karman,Von Kármán Crater,64.388,19.809
+pinpoint,comms_first,Communications first,1,nobile_connecting_ridge,Nobile Crater Rim / Connecting Ridge,81.3,0.0
+pinpoint,comms_first,Communications first,2,apollo17,Apollo 17 — Taurus-Littrow Valley,75.503,5.797
+pinpoint,comms_first,Communications first,3,marius_hills,Marius Hills,73.262,8.038
+pinpoint,comms_first,Communications first,4,shackleton_rim,Shackleton Crater Rim,65.944,15.356
+pinpoint,comms_first,Communications first,5,vallis_schroteri,Vallis Schröteri & Cobra Head,64.633,16.667
+pinpoint,comms_first,Communications first,6,von_karman,Von Kármán Crater,42.239,39.061

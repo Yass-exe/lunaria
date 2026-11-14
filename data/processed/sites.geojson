@@ -1,0 +1,161 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.0,
+          -89.9
+        ]
+      },
+      "properties": {
+        "site_id": "shackleton_rim",
+        "name": "Shackleton Crater Rim",
+        "rank": 4,
+        "score": 60.212,
+        "top1_prob": 0.0,
+        "key_strength": "earth_link (100)",
+        "key_weakness": "solar_illumination (21)",
+        "solar_score": 21.27,
+        "earth_score": 100.0,
+        "terrain_score": 11.56,
+        "science_score": 95.0,
+        "isru_score": 87.57,
+        "pinpoint_lat_deg": "-89.903275",
+        "pinpoint_lon_deg": "-4.094649"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          60.7,
+          -84.2
+        ]
+      },
+      "properties": {
+        "site_id": "nobile_connecting_ridge",
+        "name": "Nobile Crater Rim / Connecting Ridge",
+        "rank": 1,
+        "score": 81.068,
+        "top1_prob": 0.9996,
+        "key_strength": "terrain_trafficability (96)",
+        "key_weakness": "solar_illumination (71)",
+        "solar_score": 70.71,
+        "earth_score": 78.76,
+        "terrain_score": 95.5,
+        "science_score": 90.0,
+        "isru_score": 93.91,
+        "pinpoint_lat_deg": "-84.200469",
+        "pinpoint_lon_deg": "60.737255"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          177.6,
+          -45.5
+        ]
+      },
+      "properties": {
+        "site_id": "von_karman",
+        "name": "Von Kármán Crater",
+        "rank": 6,
+        "score": 47.622,
+        "top1_prob": 0.0,
+        "key_strength": "terrain_trafficability (100)",
+        "key_weakness": "earth_link (0)",
+        "solar_score": 20.99,
+        "earth_score": 0.0,
+        "terrain_score": 99.9,
+        "science_score": 96.0,
+        "isru_score": 10.0,
+        "pinpoint_lat_deg": "-45.500654",
+        "pinpoint_lon_deg": "177.599038"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.0,
+          14.0
+        ]
+      },
+      "properties": {
+        "site_id": "marius_hills",
+        "name": "Marius Hills",
+        "rank": 3,
+        "score": 62.322,
+        "top1_prob": 0.0,
+        "key_strength": "earth_link (100)",
+        "key_weakness": "solar_illumination (21)",
+        "solar_score": 20.81,
+        "earth_score": 100.0,
+        "terrain_score": 97.19,
+        "science_score": 85.0,
+        "isru_score": 18.0,
+        "pinpoint_lat_deg": "14.002276",
+        "pinpoint_lon_deg": "-55.999051"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.2,
+          23.5
+        ]
+      },
+      "properties": {
+        "site_id": "vallis_schroteri",
+        "name": "Vallis Schröteri & Cobra Head",
+        "rank": 5,
+        "score": 56.91,
+        "top1_prob": 0.0,
+        "key_strength": "earth_link (100)",
+        "key_weakness": "solar_illumination (29)",
+        "solar_score": 29.18,
+        "earth_score": 100.0,
+        "terrain_score": 77.21,
+        "science_score": 88.0,
+        "isru_score": 5.0,
+        "pinpoint_lat_deg": "23.501397",
+        "pinpoint_lon_deg": "-48.195668"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          30.8,
+          20.2
+        ]
+      },
+      "properties": {
+        "site_id": "apollo17",
+        "name": "Apollo 17 — Taurus-Littrow Valley",
+        "rank": 2,
+        "score": 64.402,
+        "top1_prob": 0.0004,
+        "key_strength": "earth_link (100)",
+        "key_weakness": "solar_illumination (25)",
+        "solar_score": 25.43,
+        "earth_score": 100.0,
+        "terrain_score": 93.54,
+        "science_score": 80.0,
+        "isru_score": 5.0,
+        "pinpoint_lat_deg": "20.197477",
+        "pinpoint_lon_deg": "30.798143"
+      }
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+site_id,nearest_psr_id,nearest_psr_feature,psr_centroid_lat_deg,psr_centroid_lon_deg,psr_area_km2,psr_equivalent_radius_km,centroid_distance_km,psr_edge_km_approx,method,source_id
+shackleton_rim,SP_896450_1282030,Shackleton Crater,-89.6449999999995,128.203,233.698,8.625,12.863,4.238,centroid minus equivalent-area radius; approximate,SRC-PSR-01
+nobile_connecting_ridge,SP_845510_0602900,Nobile Crater Amundsen Crater,-84.551,60.29,182.268,7.617,10.713,3.096,centroid minus equivalent-area radius; approximate,SRC-PSR-01
+von_karman,SP_819860_1568660,Braude Crater,-81.986,156.866,10.732,1.848,1124.738,1122.89,centroid minus equivalent-area radius; approximate,SRC-PSR-01
+marius_hills,SP_804590_3088780,Cabeus A Cabeus B,-80.459,-51.12199999999999,15.011,2.186,2865.329,2863.143,centroid minus equivalent-area radius; approximate,SRC-PSR-01
+vallis_schroteri,SP_804590_3088780,Cabeus A Cabeus B,-80.459,-51.12199999999999,15.011,2.186,3152.739,3150.553,centroid minus equivalent-area radius; approximate,SRC-PSR-01
+apollo17,SP_802260_0424290,Scott E Scott,-80.226,42.42900000000001,99.558,5.629,3051.032,3045.402,centroid minus equivalent-area radius; approximate,SRC-PSR-01

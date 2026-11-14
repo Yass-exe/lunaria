@@ -1,0 +1,124 @@
+{
+  "site_id": "nobile_connecting_ridge",
+  "searches": [
+    {
+      "query": "lunar south pole",
+      "match_type": "direct",
+      "total_hits": 162
+    }
+  ],
+  "items": [
+    {
+      "site_id": "nobile_connecting_ridge",
+      "nasa_id": "PIA13523",
+      "title": "The Lunar South Pole",
+      "date_created": "2010-09-27T22:24:40Z",
+      "center": "JPL",
+      "photographer": "",
+      "description": "The Lunar South Pole",
+      "keywords": "Moon; Lunar Reconnaissance Orbiter LRO",
+      "preview_url": "https://images-assets.nasa.gov/image/PIA13523/PIA13523~medium.jpg",
+      "source_query": "lunar south pole",
+      "match_type": "direct",
+      "source_id": "SRC-IMG-01"
+    },
+    {
+      "site_id": "nobile_connecting_ridge",
+      "nasa_id": "PIA12905",
+      "title": "Lunar South Pole - Out of the Shadows",
+      "date_created": "2009-09-17T01:08:27Z",
+      "center": "JPL",
+      "photographer": "",
+      "description": "NASA Lunar Reconnaissance Orbiter captured this image of the ejecta blanket and rim of Timocharis crater in southeastern Mare Imbrium.",
+      "keywords": "Moon; Lunar Reconnaissance Orbiter LRO",
+      "preview_url": "https://images-assets.nasa.gov/image/PIA12905/PIA12905~thumb.jpg",
+      "source_query": "lunar south pole",
+      "match_type": "direct",
+      "source_id": "SRC-IMG-01"
+    },
+    {
+      "site_id": "nobile_connecting_ridge",
+      "nasa_id": "PIA00001",
+      "title": "South Pole Region of the Moon as Seen by Clementine",
+      "date_created": "1996-06-03T15:15:49Z",
+      "center": "JPL",
+      "photographer": "",
+      "description": "Lunar mosaic of ~1500 Clementine images of the south polar region of the moon. The projection is orthographic, centered on the south pole. The Schrodinger Basin (320 km in diameter) is located in the lower right of the mosaic. Amundsen-Ganswindt is the more subdued circular basin between Schrodinger and the pole. The polar regions of the moon are of special interest because of the postulated occurrence of ice in permanently shadowed areas. The south pole is of greater interest because the area that remains in shadow is much larger than that at the north pole. http://photojournal.jpl.nasa.gov/catalog/PIA00001",
+      "keywords": "Moon; Deep Space Program Science Experiment DSPSE; Clementine",
+      "preview_url": "https://images-assets.nasa.gov/image/PIA00001/PIA00001~medium.jpg",
+      "source_query": "lunar south pole",
+      "match_type": "direct",
+      "source_id": "SRC-IMG-01"
+    },
+    {
+      "site_id": "nobile_connecting_ridge",
+      "nasa_id": "jsc2025e075711",
+      "title": "Carbothermal Reduction Demonstration (CaRD) Project Testing",
+      "date_created": "2025-08-07T00:00:00Z",
+      "center": "JSC",
+      "photographer": "Michael Rushing",
+      "description": "The Carbothermal Reduction Demonstration (CaRD) project aims to demonstrate the carbothermal reduction of lunar regolith to produce oxygen on the Lunar South Pole. For this test, the team integrated the solar concentrator, mirrors, and software and confirmed the production of carbon monoxide.",
+      "keywords": "Carbothermal Reduction Demonstration (CaRD)",
+      "preview_url": "https://images-assets.nasa.gov/image/jsc2025e075711/jsc2025e075711~large.jpg",
+      "source_query": "lunar south pole",
+      "match_type": "direct",
+      "source_id": "SRC-IMG-01"
+    },
+    {
+      "site_id": "nobile_connecting_ridge",
+      "nasa_id": "PIA00002",
+      "title": "North Pole Region of the Moon as Seen by Clementine",
+      "date_created": "1996-06-03T15:28:18Z",
+      "center": "JPL",
+      "photographer": "",
+      "description": "Lunar mosaic of ~1500 Clementine images of the north polar region of the moon. The projection is orthographic centered on the north pole. The polar regions of the moon are of special interest because of the postulated occurrence of ice in permanently shadowed areas. The north pole of the moon is absent of the very rugged terrain seen at the south pole. http://photojournal.jpl.nasa.gov/catalog/PIA00002",
+      "keywords": "Moon; Deep Space Program Science Experiment DSPSE; Clementine",
+      "preview_url": "https://images-assets.nasa.gov/image/PIA00002/PIA00002~medium.jpg",
+      "source_query": "lunar south pole",
+      "match_type": "direct",
+      "source_id": "SRC-IMG-01"
+    },
+    {
+      "site_id": "nobile_connecting_ridge",
+      "nasa_id": "PROMISE - 4",
+      "title": "Artist’s Rendering of NASA’s PROMISE Lunar Rover",
+      "date_created": "2026-11-07T00:00:00Z",
+      "center": "HQ",
+      "photographer": "",
+      "description": "Artist’s rendering of NASA’s Polar Rover for Observation, Mapping, and In-Situ Exploration (PROMISE) on the lunar surface. The nuclear-powered rover is being developed to explore the Moon’s South Pole region, where it will investigate the lunar surface and subsurface, assess potential resources, and conduct scientific observations in challenging environments, including permanently shadowed regions.",
+      "keywords": "",
+      "preview_url": "https://images-assets.nasa.gov/image/PROMISE - 4/PROMISE - 4~large.jpg",
+      "source_query": "lunar south pole",
+      "match_type": "direct",
+      "source_id": "SRC-IMG-01"
+    },
+    {
+      "site_id": "nobile_connecting_ridge",
+      "nasa_id": "PROMISE - 6",
+      "title": "Artist’s Rendering of NASA’s PROMISE Lunar Rover",
+      "date_created": "2026-11-07T00:00:00Z",
+      "center": "HQ",
+      "photographer": "",
+      "description": "Artist’s rendering of NASA’s Polar Rover for Observation, Mapping, and In-Situ Exploration (PROMISE) on the lunar surface. The nuclear-powered rover is being developed to explore the Moon’s South Pole region, where it will investigate the lunar surface and subsurface, assess potential resources, and conduct scientific observations in challenging environments, including permanently shadowed regions.",
+      "keywords": "",
+      "preview_url": "https://images-assets.nasa.gov/image/PROMISE - 6/PROMISE - 6~large.jpg",
+      "source_query": "lunar south pole",
+      "match_type": "direct",
+      "source_id": "SRC-IMG-01"
+    },
+    {
+      "site_id": "nobile_connecting_ridge",
+      "nasa_id": "art002e009283",
+      "title": "Ready for a Close Up",
+      "date_created": "2026-04-06T00:00:00Z",
+      "center": "JSC",
+      "photographer": "NASA",
+      "description": "art002e009283 (April 6, 2026) – Captured by the Artemis II crew, the heavily cratered terrain of the eastern edge of the South Pole-Aitken basin is seen with the shadowed terminator – the boundary between lunar day and night – at the top of the image. The South Pole-Aitken basin is the largest and oldest basin on the Moon, providing a glimpse into an ancient geologic history built up over billions of years.",
+      "keywords": "",
+      "preview_url": "https://images-assets.nasa.gov/image/art002e009283/art002e009283~large.jpg",
+      "source_query": "lunar south pole",
+      "match_type": "direct",
+      "source_id": "SRC-IMG-01"
+    }
+  ]
+}

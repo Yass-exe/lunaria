@@ -1,0 +1,124 @@
+{
+  "site_id": "apollo17",
+  "searches": [
+    {
+      "query": "Apollo 17",
+      "match_type": "direct",
+      "total_hits": 573
+    }
+  ],
+  "items": [
+    {
+      "site_id": "apollo17",
+      "nasa_id": "as17-162-24050",
+      "title": "Apollo 17,Eugene A. Cernan inside the Command Module",
+      "date_created": "1972-12-07T00:00:00Z",
+      "center": "JSC",
+      "photographer": "",
+      "description": "AS17-162-24050 (7-19 Dec. 1972) --- Astronaut Eugene A. Cernan appears to be relaxing in this candid photograph taken by a fellow crewman aboard the Apollo 17 spacecraft during the final lunar landing mission in NASA's Apollo program. Also, aboard Apollo 17 were astronaut Ronald E. Evans, command module pilot, and scientist-astronaut Harrison H. \"Jack\" Schmitt, lunar module pilot. Cernan was the mission commander.",
+      "keywords": "Apollo; Apollo 17",
+      "preview_url": "https://images-assets.nasa.gov/image/as17-162-24050/as17-162-24050~medium.jpg",
+      "source_query": "Apollo 17",
+      "match_type": "direct",
+      "source_id": "SRC-IMG-01"
+    },
+    {
+      "site_id": "apollo17",
+      "nasa_id": "as17-152-23392",
+      "title": "Apollo 17,Evans perfroms EVA",
+      "date_created": "1972-12-17T00:00:00Z",
+      "center": "JSC",
+      "photographer": "",
+      "description": "AS17-152-23392 (17 Dec. 1972) --- Astronaut Ronald E. Evans is photographed performing extravehicular activity during the Apollo 17 spacecraft's trans-Earth coast. During his EVA, command module pilot Evans retrieved film cassettes from the Lunar Sounder, Mapping Camera, and Panoramic Camera. The cylindrical object at Evans' left side is the Mapping Camera cassette. The total time for the trans-Earth EVA was one hour seven minutes 18 seconds, starting at ground elapsed time of 257:25 (2:28 p.m.) and ending at ground elapsed timed of 258:42 (3:35 p.m.) on Sunday, Dec. 17, 1972.",
+      "keywords": "Apollo; Apollo 17",
+      "preview_url": "https://images-assets.nasa.gov/image/as17-152-23392/as17-152-23392~medium.jpg",
+      "source_query": "Apollo 17",
+      "match_type": "direct",
+      "source_id": "SRC-IMG-01"
+    },
+    {
+      "site_id": "apollo17",
+      "nasa_id": "as17-152-23272",
+      "title": "Apollo 17, Earthrise over Moon",
+      "date_created": "1972-12-07T00:00:00Z",
+      "center": "JSC",
+      "photographer": "",
+      "description": "AS17-152-23272 (7-19 Dec. 1972) --- The crescent Earth rises above the lunar horizon in this photograph taken from the Apollo 17 spacecraft in lunar orbit during National Aeronautics and Space Administration's (NASA) final lunar landing mission in the Apollo program. While astronauts Eugene A. Cernan, commander, and Harrison H. Schmitt, lunar module pilot, descended in the Lunar Module (LM) \"Challenger\" to explore the Taurus-Littrow region of the moon, astronaut Ronald E. Evans, command module pilot, remained with the Command and Service Modules (CSM) \"America\" in lunar orbit.",
+      "keywords": "Apollo; Apollo 17",
+      "preview_url": "https://images-assets.nasa.gov/image/as17-152-23272/as17-152-23272~medium.jpg",
+      "source_query": "Apollo 17",
+      "match_type": "direct",
+      "source_id": "SRC-IMG-01"
+    },
+    {
+      "site_id": "apollo17",
+      "nasa_id": "as17-140-21497",
+      "title": "Apollo 17 Mission image - Sta 6,Panoramic,LMP",
+      "date_created": "1972-12-13T00:00:00Z",
+      "center": "JSC",
+      "photographer": "",
+      "description": "AS17-140-21497 (13 Dec. 1972) --- Scientist-astronaut Harrison H. Schmitt is photographed standing next to a huge, split lunar boulder during the third Apollo 17 extravehicular activity (EVA) at the Taurus-Littrow landing site. Schmitt is the Apollo 17 lunar module pilot. This picture was taken by astronaut Eugene A. Cernan, commander. While Cernan and Schmitt descended in the Lunar Module (LM) \"Challenger\" to explore the Taurus-Littrow region of the moon, astronaut Ronald E. Evans, command module pilot, remained with the Apollo 17 Command and Service Modules (CSM) \"America\" in lunar orbit.",
+      "keywords": "Apollo; Apollo 17",
+      "preview_url": "https://images-assets.nasa.gov/image/as17-140-21497/as17-140-21497~medium.jpg",
+      "source_query": "Apollo 17",
+      "match_type": "direct",
+      "source_id": "SRC-IMG-01"
+    },
+    {
+      "site_id": "apollo17",
+      "nasa_id": "as17-148-22687",
+      "title": "Apollo 17, SIVB as Lunar Module approaches for docking",
+      "date_created": "1972-12-07T00:00:00Z",
+      "center": "JSC",
+      "photographer": "",
+      "description": "AS17-148-22687 (7-19 Dec. 1972) --- View of the Lunar Module from the Apollo 17 spacecraft after transposition/docking maneuvers. The white dots surrounding the Lunar Module are debris from the Saturn S-IVB stage separation.",
+      "keywords": "Apollo; Apollo 17",
+      "preview_url": "https://images-assets.nasa.gov/image/as17-148-22687/as17-148-22687~medium.jpg",
+      "source_query": "Apollo 17",
+      "match_type": "direct",
+      "source_id": "SRC-IMG-01"
+    },
+    {
+      "site_id": "apollo17",
+      "nasa_id": "AS17-140-21493",
+      "title": "Apollo 17 Mission image - Sta 6,Panoramic,LRV",
+      "date_created": "1972-12-13T00:00:00Z",
+      "center": "JSC",
+      "photographer": "",
+      "description": "AS17-140-21493 (13 Dec. 1972) --- The Apollo 17 Lunar Roving Vehicle (LRV) is photographed near a large lunar boulder during the third Apollo 17 extravehicular activity (EVA) at the Taurus-Littrow landing site. About half of the boulder is captured in this scene, photographed by astronaut Eugene A. Cernan, mission commander. While astronauts Cernan and Harrison H. Schmitt descended in the Lunar Module (LM) \"Challenger\" to explore the lunar surface, astronaut Ronald E. Evans, command module pilot, remained with the Command and Service Modules (CSM) in lunar orbit.",
+      "keywords": "Apollo; Apollo 17",
+      "preview_url": "https://images-assets.nasa.gov/image/AS17-140-21493/AS17-140-21493~medium.jpg",
+      "source_query": "Apollo 17",
+      "match_type": "direct",
+      "source_id": "SRC-IMG-01"
+    },
+    {
+      "site_id": "apollo17",
+      "nasa_id": "as17-137-20972",
+      "title": "Apollo 17 Mission image - STA 2,SPL 2415,2435-36,40,60, Tongs",
+      "date_created": "1972-12-07T00:00:00Z",
+      "center": "JSC",
+      "photographer": "",
+      "description": "AS17-137-20972 (7-19 Dec. 1972) --- This is a close-up view of a lunar rock, showing multi-colored clasts embedded in larger rock. This picture was taken by one of the Apollo 17 astronauts during an extravehicular activity (EVA) on the moon surface.",
+      "keywords": "Apollo; Apollo 17",
+      "preview_url": "https://images-assets.nasa.gov/image/as17-137-20972/as17-137-20972~medium.jpg",
+      "source_query": "Apollo 17",
+      "match_type": "direct",
+      "source_id": "SRC-IMG-01"
+    },
+    {
+      "site_id": "apollo17",
+      "nasa_id": "as17-153-23572",
+      "title": "Apollo 17,Manilius F,Aratus A",
+      "date_created": "1972-12-15T00:00:00Z",
+      "center": "JSC",
+      "photographer": "",
+      "description": "AS17-153-23572 (15 Dec. 1972) --- An oblique view of the Sulpicius Gallus region on the southwestern edge of the Sea of Serenity looking westward across the Haemus Mountains, as photographed from the Apollo 17 Command and Service Modules during its 65th revolution of the moon. This photograph shows the slight orange cast which was identified by astronaut Ronald E. Evans, command module pilot. The region shown in the picture is about 600 kilometers (360 statute miles) west across Mare Serentatis from the Taurus-Littrow landing site where scientist-astronaut Harrison H. \"Jack\" Schmitt, lunar module pilot, discovered an orange soil sample composed of fine glass particles rich in iron and titani",
+      "keywords": "Apollo; Apollo 17",
+      "preview_url": "https://images-assets.nasa.gov/image/as17-153-23572/as17-153-23572~medium.jpg",
+      "source_query": "Apollo 17",
+      "match_type": "direct",
+      "source_id": "SRC-IMG-01"
+    }
+  ]
+}

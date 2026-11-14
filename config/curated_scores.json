@@ -1,0 +1,198 @@
+{
+  "sites": {
+    "shackleton_rim": {
+      "science_value": {
+        "score": 95,
+        "rationale": "Direct access to a classic polar PSR, impact-melt and regolith records, and one of the best-known Peaks of Eternal Light settings. High unique-sample potential.",
+        "tier": "C",
+        "source_id": "SRC-PUB-01"
+      },
+      "thermal_stability": {
+        "score": 55,
+        "rationale": "Polar surface temperatures are relatively stable, but the site sits beside cryogenic PSR terrain with extreme gradients over short distances.",
+        "tier": "C",
+        "source_id": "SRC-PUB-02"
+      },
+      "crew_safety": {
+        "score": 45,
+        "rationale": "Steep crater-rim slopes, shadow navigation, and intermittent direct-to-Earth geometry complicate aborts and surface operations.",
+        "tier": "C",
+        "source_id": "SRC-PUB-01"
+      },
+      "data_maturity": {
+        "score": 95,
+        "rationale": "Exceptionally dense LOLA coverage (5 m polar DEM used here), LROC NAC stereo, and LEND hydrogen mapping.",
+        "tier": "B",
+        "source_id": "SRC-DEM-01"
+      },
+      "isru_water_ice": {
+        "score": 90,
+        "rationale": "PSR access is excellent; LEND hydrogen anomalies and mapped cold traps make this a prime volatile-prospecting target.",
+        "tier": "C",
+        "source_id": "SRC-PSR-01"
+      },
+      "psr_context": "Mapped Shackleton PSR centroid is ~12.9 km away; equivalent-area edge is ~4.2 km from the rim point."
+    },
+    "nobile_connecting_ridge": {
+      "science_value": {
+        "score": 90,
+        "rationale": "Polar highland stratigraphy, adjacent PSRs, and a well-studied Artemis candidate region with diverse impact and volatile processes.",
+        "tier": "C",
+        "source_id": "SRC-PUB-01"
+      },
+      "thermal_stability": {
+        "score": 60,
+        "rationale": "Stable polar environment with slightly more benign ridge exposure than the Shackleton rim, but still adjacent to cryogenic terrain.",
+        "tier": "C",
+        "source_id": "SRC-PUB-02"
+      },
+      "crew_safety": {
+        "score": 65,
+        "rationale": "Rolling highland terrain and PSR margins are manageable, and direct-to-Earth geometry is better than at the pole; relay coverage is still prudent.",
+        "tier": "C",
+        "source_id": "SRC-PUB-01"
+      },
+      "data_maturity": {
+        "score": 85,
+        "rationale": "Dense LOLA 30 m polar DEM used here, LROC stereo coverage, and dedicated Artemis III candidate-region studies.",
+        "tier": "B",
+        "source_id": "SRC-DEM-02"
+      },
+      "isru_water_ice": {
+        "score": 95,
+        "rationale": "Several mapped PSRs lie within a few kilometres of the ridge, giving excellent volatile-access potential.",
+        "tier": "C",
+        "source_id": "SRC-PSR-01"
+      },
+      "psr_context": "Nearest mapped PSR centroid is ~10.7 km away; equivalent-area edge is ~3.1 km from the ridge point."
+    },
+    "von_karman": {
+      "science_value": {
+        "score": 96,
+        "rationale": "Exposes deep SPA basin material and has Chang'e-4/Yutu-2 ground truth in the same crater; outstanding far-side crustal and volatile science.",
+        "tier": "C",
+        "source_id": "SRC-PUB-02"
+      },
+      "thermal_stability": {
+        "score": 40,
+        "rationale": "Normal equatorial far-side day/night cycle with a roughly 14-day night; large thermal swings for equipment and crews.",
+        "tier": "C",
+        "source_id": "SRC-PUB-02"
+      },
+      "crew_safety": {
+        "score": 80,
+        "rationale": "Broad, relatively flat basin floor is trafficable; the dominant operational risk is the lack of direct Earth visibility and reliance on a relay.",
+        "tier": "C",
+        "source_id": "SRC-PUB-01"
+      },
+      "data_maturity": {
+        "score": 80,
+        "rationale": "Global LOLA coverage, LROC imagery, and unique Chang'e-4 surface data; no high-resolution NASA NAC DTM at this exact point.",
+        "tier": "B",
+        "source_id": "SRC-DEM-03"
+      },
+      "isru_water_ice": {
+        "score": 10,
+        "rationale": "No polar PSR access. Any ice would be subsurface or in cold traps at higher latitude; unproven at this site.",
+        "tier": "C",
+        "source_id": "SRC-PSR-01"
+      }
+    },
+    "marius_hills": {
+      "science_value": {
+        "score": 85,
+        "rationale": "A premier volcanic province with domes, sinuous rilles, and lava-tube skylights; exceptional for volcanology and subsurface access.",
+        "tier": "C",
+        "source_id": "SRC-PUB-02"
+      },
+      "thermal_stability": {
+        "score": 40,
+        "rationale": "Equatorial day/night cycle with large surface-temperature swings; lava tubes offer local shielding but are an engineering challenge.",
+        "tier": "C",
+        "source_id": "SRC-PUB-02"
+      },
+      "crew_safety": {
+        "score": 55,
+        "rationale": "Flat plains are interrupted by skylights, rilles, and boulder fields; subsurface operations add complexity.",
+        "tier": "C",
+        "source_id": "SRC-PUB-01"
+      },
+      "data_maturity": {
+        "score": 70,
+        "rationale": "LROC NAC DTM (2 m used here), Kaguya Terrain Camera, and M3 spectral coverage; no landed ground truth.",
+        "tier": "B",
+        "source_id": "SRC-DEM-04"
+      },
+      "isru_water_ice": {
+        "score": 18,
+        "rationale": "No polar PSR access; lava-tube cold traps are a possible but unverified volatile target.",
+        "tier": "C",
+        "source_id": "SRC-PSR-01"
+      }
+    },
+    "vallis_schroteri": {
+      "science_value": {
+        "score": 88,
+        "rationale": "The Moon's largest sinuous rille and Cobra Head vent, adjacent to young Aristarchus ejecta; outstanding volcanic and spectral science.",
+        "tier": "C",
+        "source_id": "SRC-PUB-02"
+      },
+      "thermal_stability": {
+        "score": 35,
+        "rationale": "Equatorial plateau with large day/night swings; deep rille walls create local thermal and lighting extremes.",
+        "tier": "C",
+        "source_id": "SRC-PUB-02"
+      },
+      "crew_safety": {
+        "score": 25,
+        "rationale": "Extreme relief, cliffs exceeding 1 km, and rille-edge hazards make landing and surface mobility difficult.",
+        "tier": "C",
+        "source_id": "SRC-PUB-01"
+      },
+      "data_maturity": {
+        "score": 65,
+        "rationale": "Global LOLA and LROC imagery, plus a 10 m Aristarchus DTM that stops just east of the exact site; a dedicated NAC DTM is missing.",
+        "tier": "B",
+        "source_id": "SRC-DEM-03"
+      },
+      "isru_water_ice": {
+        "score": 5,
+        "rationale": "No polar PSR access and no verified local volatile trap.",
+        "tier": "C",
+        "source_id": "SRC-PSR-01"
+      }
+    },
+    "apollo17": {
+      "science_value": {
+        "score": 80,
+        "rationale": "Unmatched ground truth, sample context, and operational heritage; scientifically mature rather than frontier, but ideal for validating terrain and planning algorithms.",
+        "tier": "C",
+        "source_id": "SRC-PUB-02"
+      },
+      "thermal_stability": {
+        "score": 45,
+        "rationale": "Equatorial valley with a 14-day day/night cycle; massif shadowing modifies local temperatures.",
+        "tier": "C",
+        "source_id": "SRC-PUB-02"
+      },
+      "crew_safety": {
+        "score": 85,
+        "rationale": "Well-characterised valley floor, benign trafficability, excellent Earth visibility, and extensive operational heritage.",
+        "tier": "C",
+        "source_id": "SRC-PUB-02"
+      },
+      "data_maturity": {
+        "score": 100,
+        "rationale": "Complete Apollo 17 surface photography, traverse profiles, soil mechanics, and a 5 m NAC DTM used here; the best-validated site in the set.",
+        "tier": "A",
+        "source_id": "SRC-DEM-05"
+      },
+      "isru_water_ice": {
+        "score": 5,
+        "rationale": "No polar PSR access and no verified local ice resource.",
+        "tier": "C",
+        "source_id": "SRC-PSR-01"
+      }
+    }
+  }
+}

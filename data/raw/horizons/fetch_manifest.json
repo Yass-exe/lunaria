@@ -1,0 +1,126 @@
+{
+  "fetched_at": "2026-11-14T13:03:55Z",
+  "requests": [
+    {
+      "scenario": "primary",
+      "site_id": "shackleton_rim",
+      "body": "sun",
+      "start": "2026-11-14",
+      "stop": "2027-11-14",
+      "step": "1 h",
+      "altitude_km": 0.6225,
+      "rows": 8761
+    },
+    {
+      "scenario": "primary",
+      "site_id": "shackleton_rim",
+      "body": "earth",
+      "start": "2026-11-14",
+      "stop": "2027-11-14",
+      "step": "1 h",
+      "altitude_km": 0.6225,
+      "rows": 8761
+    },
+    {
+      "scenario": "primary",
+      "site_id": "nobile_connecting_ridge",
+      "body": "sun",
+      "start": "2026-11-14",
+      "stop": "2027-11-14",
+      "step": "1 h",
+      "altitude_km": 1.116,
+      "rows": 8761
+    },
+    {
+      "scenario": "primary",
+      "site_id": "nobile_connecting_ridge",
+      "body": "earth",
+      "start": "2026-11-14",
+      "stop": "2027-11-14",
+      "step": "1 h",
+      "altitude_km": 1.116,
+      "rows": 8761
+    },
+    {
+      "scenario": "primary",
+      "site_id": "von_karman",
+      "body": "sun",
+      "start": "2026-11-14",
+      "stop": "2027-11-14",
+      "step": "1 h",
+      "altitude_km": -5.927,
+      "rows": 8761
+    },
+    {
+      "scenario": "primary",
+      "site_id": "von_karman",
+      "body": "earth",
+      "start": "2026-11-14",
+      "stop": "2027-11-14",
+      "step": "1 h",
+      "altitude_km": -5.927,
+      "rows": 8761
+    },
+    {
+      "scenario": "primary",
+      "site_id": "marius_hills",
+      "body": "sun",
+      "start": "2026-11-14",
+      "stop": "2027-11-14",
+      "step": "1 h",
+      "altitude_km": -1.1930699999999999,
+      "rows": 8761
+    },
+    {
+      "scenario": "primary",
+      "site_id": "marius_hills",
+      "body": "earth",
+      "start": "2026-11-14",
+      "stop": "2027-11-14",
+      "step": "1 h",
+      "altitude_km": -1.1930699999999999,
+      "rows": 8761
+    },
+    {
+      "scenario": "primary",
+      "site_id": "vallis_schroteri",
+      "body": "sun",
+      "start": "2026-11-14",
+      "stop": "2027-11-14",
+      "step": "1 h",
+      "altitude_km": 0.472,
+      "rows": 8761
+    },
+    {
+      "scenario": "primary",
+      "site_id": "vallis_schroteri",
+      "body": "earth",
+      "start": "2026-11-14",
+      "stop": "2027-11-14",
+      "step": "1 h",
+      "altitude_km": 0.472,
+      "rows": 8761
+    },
+    {
+      "scenario": "primary",
+      "site_id": "apollo17",
+      "body": "sun",
+      "start": "2026-11-14",
+      "stop": "2027-11-14",
+      "step": "1 h",
+      "altitude_km": -2.63959,
+      "rows": 8761
+    },
+    {
+      "scenario": "primary",
+      "site_id": "apollo17",
+      "body": "earth",
+      "start": "2026-11-14",
+      "stop": "2027-11-14",
+      "step": "1 h",
+      "altitude_km": -2.63959,
+      "rows": 8761
+    }
+  ],
+  "row_count": 105132
+}

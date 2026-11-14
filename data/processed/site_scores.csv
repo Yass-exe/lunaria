@@ -1,0 +1,13 @@
+mode,site_id,name,weighted_total,rank,top1_prob,evidence_grade,measured_criteria,judgment_criteria,solar_illumination_score,earth_link_score,terrain_trafficability_score,isru_water_ice_score,science_value_score,thermal_stability_score,crew_safety_score,data_maturity_score
+site,shackleton_rim,Shackleton Crater Rim,60.212,4,0.0,B,4,4,21.27,100.0,11.56,87.57,95.0,55.0,45.0,95.0
+site,nobile_connecting_ridge,Nobile Crater Rim / Connecting Ridge,81.068,1,0.9996,B,4,4,70.71,78.76,95.5,93.91,90.0,60.0,65.0,85.0
+site,von_karman,Von Kármán Crater,47.622,6,0.0,B,4,4,20.99,0.0,99.9,10.0,96.0,40.0,80.0,80.0
+site,marius_hills,Marius Hills,62.322,3,0.0,B,4,4,20.81,100.0,97.19,18.0,85.0,40.0,55.0,70.0
+site,vallis_schroteri,Vallis Schröteri & Cobra Head,56.91,5,0.0,B,4,4,29.18,100.0,77.21,5.0,88.0,35.0,25.0,65.0
+site,apollo17,Apollo 17 — Taurus-Littrow Valley,64.402,2,0.0004,B,4,4,25.43,100.0,93.54,5.0,80.0,45.0,85.0,100.0
+pinpoint,shackleton_rim,Shackleton Crater Rim,60.397,4,0.0,B,4,4,22.13,100.0,11.64,87.57,95.0,55.0,45.0,95.0
+pinpoint,nobile_connecting_ridge,Nobile Crater Rim / Connecting Ridge,82.688,1,1.0,B,4,4,77.76,79.33,96.17,93.91,90.0,60.0,65.0,85.0
+pinpoint,von_karman,Von Kármán Crater,47.63,6,0.0,B,4,4,21.02,0.0,99.91,10.0,96.0,40.0,80.0,80.0
+pinpoint,marius_hills,Marius Hills,62.492,3,0.0,B,4,4,20.74,100.0,98.34,18.0,85.0,40.0,55.0,70.0
+pinpoint,vallis_schroteri,Vallis Schröteri & Cobra Head,53.862,5,0.0,B,4,4,29.67,100.0,57.55,5.0,88.0,35.0,25.0,65.0
+pinpoint,apollo17,Apollo 17 — Taurus-Littrow Valley,62.972,2,0.0,B,4,4,25.48,100.0,84.54,5.0,80.0,45.0,85.0,100.0

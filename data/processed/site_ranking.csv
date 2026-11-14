@@ -1,0 +1,13 @@
+mode,rank,site_id,name,score,delta_to_best,top1_prob,key_strength,key_weakness
+site,1,nobile_connecting_ridge,Nobile Crater Rim / Connecting Ridge,81.068,0.0,0.9996,terrain_trafficability (96),solar_illumination (71)
+site,2,apollo17,Apollo 17 — Taurus-Littrow Valley,64.402,16.666,0.0004,earth_link (100),solar_illumination (25)
+site,3,marius_hills,Marius Hills,62.322,18.746,0.0,earth_link (100),solar_illumination (21)
+site,4,shackleton_rim,Shackleton Crater Rim,60.212,20.856,0.0,earth_link (100),solar_illumination (21)
+site,5,vallis_schroteri,Vallis Schröteri & Cobra Head,56.91,24.158,0.0,earth_link (100),solar_illumination (29)
+site,6,von_karman,Von Kármán Crater,47.622,33.446,0.0,terrain_trafficability (100),earth_link (0)
+pinpoint,1,nobile_connecting_ridge,Nobile Crater Rim / Connecting Ridge,82.688,0.0,1.0,solar_illumination (78),solar_illumination (78)
+pinpoint,2,apollo17,Apollo 17 — Taurus-Littrow Valley,62.972,19.716,0.0,earth_link (100),solar_illumination (25)
+pinpoint,3,marius_hills,Marius Hills,62.492,20.196,0.0,earth_link (100),solar_illumination (21)
+pinpoint,4,shackleton_rim,Shackleton Crater Rim,60.397,22.291,0.0,earth_link (100),solar_illumination (22)
+pinpoint,5,vallis_schroteri,Vallis Schröteri & Cobra Head,53.862,28.826,0.0,earth_link (100),solar_illumination (30)
+pinpoint,6,von_karman,Von Kármán Crater,47.63,35.058,0.0,terrain_trafficability (100),earth_link (0)

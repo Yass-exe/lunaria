@@ -1,0 +1,104 @@
+{
+  "currentVersion": 10.61,
+  "serviceDescription": "LRO_LOLA_DEM_SPole75_30mp_v04",
+  "name": "LRO_LOLA_DEM_SPole75_30mp_v04",
+  "description": "",
+  "extent": {
+    "xmin": -457440,
+    "ymin": -457440,
+    "xmax": 457440,
+    "ymax": 457440,
+    "spatialReference": {
+      "wkt": "PROJCS[\"Moon2000_spole\",GEOGCS[\"GCS_Moon\",DATUM[\"D_Moon_2000\",SPHEROID[\"Moon_2000_IAU_IAG\",1737400.0,0.0]],PRIMEM[\"Reference_Meridian\",0.0],UNIT[\"Degree\",0.0174532925199433]],PROJECTION[\"Stereographic_South_Pole\"],PARAMETER[\"false_easting\",0.0],PARAMETER[\"false_northing\",0.0],PARAMETER[\"central_meridian\",0.0],PARAMETER[\"standard_parallel_1\",-90.0],UNIT[\"Meter\",1.0]]"
+    }
+  },
+  "initialExtent": {
+    "xmin": -457440,
+    "ymin": -457440,
+    "xmax": 457440,
+    "ymax": 457440,
+    "spatialReference": {
+      "wkt": "PROJCS[\"Moon2000_spole\",GEOGCS[\"GCS_Moon\",DATUM[\"D_Moon_2000\",SPHEROID[\"Moon_2000_IAU_IAG\",1737400.0,0.0]],PRIMEM[\"Reference_Meridian\",0.0],UNIT[\"Degree\",0.0174532925199433]],PROJECTION[\"Stereographic_South_Pole\"],PARAMETER[\"false_easting\",0.0],PARAMETER[\"false_northing\",0.0],PARAMETER[\"central_meridian\",0.0],PARAMETER[\"standard_parallel_1\",-90.0],UNIT[\"Meter\",1.0]]"
+    }
+  },
+  "fullExtent": {
+    "xmin": -457440,
+    "ymin": -457440,
+    "xmax": 457440,
+    "ymax": 457440,
+    "spatialReference": {
+      "wkt": "PROJCS[\"Moon2000_spole\",GEOGCS[\"GCS_Moon\",DATUM[\"D_Moon_2000\",SPHEROID[\"Moon_2000_IAU_IAG\",1737400.0,0.0]],PRIMEM[\"Reference_Meridian\",0.0],UNIT[\"Degree\",0.0174532925199433]],PROJECTION[\"Stereographic_South_Pole\"],PARAMETER[\"false_easting\",0.0],PARAMETER[\"false_northing\",0.0],PARAMETER[\"central_meridian\",0.0],PARAMETER[\"standard_parallel_1\",-90.0],UNIT[\"Meter\",1.0]]"
+    }
+  },
+  "pixelSizeX": 30,
+  "pixelSizeY": 30,
+  "bandCount": 1,
+  "pixelType": "F32",
+  "minPixelSize": 0,
+  "maxPixelSize": 0,
+  "copyrightText": "",
+  "serviceDataType": "esriImageServiceDataTypeGeneric",
+  "minValues": [
+    -7762
+  ],
+  "maxValues": [
+    7027
+  ],
+  "meanValues": [
+    -1338.3425840113
+  ],
+  "stdvValues": [
+    2346.2724715563
+  ],
+  "objectIdField": "",
+  "fields": [],
+  "capabilities": "Image,Metadata,Mensuration",
+  "defaultMosaicMethod": "Center",
+  "allowedMosaicMethods": "",
+  "sortField": "",
+  "sortValue": null,
+  "mosaicOperator": "First",
+  "defaultCompressionQuality": 75,
+  "defaultResamplingMethod": "Bilinear",
+  "maxImageHeight": 4100,
+  "maxImageWidth": 15000,
+  "allowRasterFunction": true,
+  "rasterFunctionInfos": [
+    {
+      "name": "None",
+      "description": "",
+      "help": ""
+    }
+  ],
+  "rasterTypeInfos": [
+    {
+      "name": "Raster Dataset",
+      "description": "Supports all ArcGIS Raster Datasets",
+      "help": ""
+    }
+  ],
+  "mensurationCapabilities": "Basic",
+  "hasHistograms": false,
+  "hasColormap": false,
+  "hasRasterAttributeTable": false,
+  "minScale": 0,
+  "maxScale": 0,
+  "exportTilesAllowed": false,
+  "hasMultidimensions": false,
+  "supportsStatistics": false,
+  "supportsAdvancedQueries": false,
+  "editFieldsInfo": null,
+  "ownershipBasedAccessControlForRasters": null,
+  "allowComputeTiePoints": false,
+  "useStandardizedQueries": true,
+  "advancedQueryCapabilities": {
+    "useStandardizedQueries": true,
+    "supportsStatistics": false,
+    "supportsOrderBy": false,
+    "supportsDistinct": false,
+    "supportsPagination": false
+  },
+  "spatialReference": {
+    "wkt": "PROJCS[\"Moon2000_spole\",GEOGCS[\"GCS_Moon\",DATUM[\"D_Moon_2000\",SPHEROID[\"Moon_2000_IAU_IAG\",1737400.0,0.0]],PRIMEM[\"Reference_Meridian\",0.0],UNIT[\"Degree\",0.0174532925199433]],PROJECTION[\"Stereographic_South_Pole\"],PARAMETER[\"false_easting\",0.0],PARAMETER[\"false_northing\",0.0],PARAMETER[\"central_meridian\",0.0],PARAMETER[\"standard_parallel_1\",-90.0],UNIT[\"Meter\",1.0]]"
+  }
+}

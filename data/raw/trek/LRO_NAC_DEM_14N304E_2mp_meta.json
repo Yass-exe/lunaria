@@ -1,0 +1,108 @@
+{
+  "currentVersion": 10.61,
+  "serviceDescription": "LRO_NAC_DEM_14N304E_2mp",
+  "name": "LRO_NAC_DEM_14N304E_2mp",
+  "description": "",
+  "extent": {
+    "xmin": -56.13637631204415,
+    "ymin": 13.213044122054388,
+    "xmax": -55.64169256880119,
+    "ymax": 14.196452370160687,
+    "spatialReference": {
+      "wkid": 104903,
+      "latestWkid": 104903
+    }
+  },
+  "initialExtent": {
+    "xmin": -56.13637631204415,
+    "ymin": 13.213044122054388,
+    "xmax": -55.64169256880119,
+    "ymax": 14.196452370160687,
+    "spatialReference": {
+      "wkid": 104903,
+      "latestWkid": 104903
+    }
+  },
+  "fullExtent": {
+    "xmin": -56.13637631204415,
+    "ymin": 13.213044122054388,
+    "xmax": -55.64169256880119,
+    "ymax": 14.196452370160687,
+    "spatialReference": {
+      "wkid": 104903,
+      "latestWkid": 104903
+    }
+  },
+  "pixelSizeX": 6.69577346024579e-05,
+  "pixelSizeY": 6.695773460245789e-05,
+  "bandCount": 1,
+  "pixelType": "F32",
+  "minPixelSize": 0,
+  "maxPixelSize": 0,
+  "copyrightText": "",
+  "serviceDataType": "esriImageServiceDataTypeGeneric",
+  "minValues": [
+    -1424.4669189453
+  ],
+  "maxValues": [
+    -791.19720458984
+  ],
+  "meanValues": [
+    -1112.4675398201
+  ],
+  "stdvValues": [
+    89.888281814669
+  ],
+  "objectIdField": "",
+  "fields": [],
+  "capabilities": "Image,Metadata,Mensuration",
+  "defaultMosaicMethod": "Center",
+  "allowedMosaicMethods": "",
+  "sortField": "",
+  "sortValue": null,
+  "mosaicOperator": "First",
+  "defaultCompressionQuality": 75,
+  "defaultResamplingMethod": "Bilinear",
+  "maxImageHeight": 4100,
+  "maxImageWidth": 15000,
+  "allowRasterFunction": true,
+  "rasterFunctionInfos": [
+    {
+      "name": "None",
+      "description": "",
+      "help": ""
+    }
+  ],
+  "rasterTypeInfos": [
+    {
+      "name": "Raster Dataset",
+      "description": "Supports all ArcGIS Raster Datasets",
+      "help": ""
+    }
+  ],
+  "mensurationCapabilities": "Basic",
+  "hasHistograms": true,
+  "hasColormap": false,
+  "hasRasterAttributeTable": false,
+  "minScale": 0,
+  "maxScale": 0,
+  "exportTilesAllowed": false,
+  "hasMultidimensions": false,
+  "supportsStatistics": false,
+  "supportsAdvancedQueries": false,
+  "editFieldsInfo": null,
+  "ownershipBasedAccessControlForRasters": null,
+  "allowComputeTiePoints": false,
+  "useStandardizedQueries": true,
+  "advancedQueryCapabilities": {
+    "useStandardizedQueries": true,
+    "supportsStatistics": false,
+    "supportsOrderBy": false,
+    "supportsDistinct": false,
+    "supportsPagination": false
+  },
+  "spatialReference": {
+    "wkid": 104903,
+    "latestWkid": 104903
+  }
+}

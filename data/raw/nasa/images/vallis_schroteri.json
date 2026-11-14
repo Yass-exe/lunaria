@@ -1,0 +1,129 @@
+{
+  "site_id": "vallis_schroteri",
+  "searches": [
+    {
+      "query": "Cobra Head Moon",
+      "match_type": "direct",
+      "total_hits": 1
+    },
+    {
+      "query": "Aristarchus",
+      "match_type": "regional",
+      "total_hits": 13
+    }
+  ],
+  "items": [
+    {
+      "site_id": "vallis_schroteri",
+      "nasa_id": "PIA14009",
+      "title": "Striated Blocks in Aristarchus Crater",
+      "date_created": "2011-02-16T07:00:24Z",
+      "center": "JPL",
+      "photographer": "",
+      "description": "Striated Blocks in Aristarchus Crater",
+      "keywords": "Moon; Lunar Reconnaissance Orbiter LRO",
+      "preview_url": "https://images-assets.nasa.gov/image/PIA14009/PIA14009~small.jpg",
+      "source_query": "Aristarchus",
+      "match_type": "regional",
+      "source_id": "SRC-IMG-01"
+    },
+    {
+      "site_id": "vallis_schroteri",
+      "nasa_id": "PIA12944",
+      "title": "Aristarchus Plateau 2: Pyroclastic Deposit",
+      "date_created": "2010-01-21T01:09:06Z",
+      "center": "JPL",
+      "photographer": "",
+      "description": "Part of the vast pyroclastic deposit located on the Aristarchus plateau is visible in this image taken by NASA Lunar Reconnaissance Orbiter.",
+      "keywords": "Moon; Lunar Reconnaissance Orbiter LRO",
+      "preview_url": "https://images-assets.nasa.gov/image/PIA12944/PIA12944~small.jpg",
+      "source_query": "Aristarchus",
+      "match_type": "regional",
+      "source_id": "SRC-IMG-01"
+    },
+    {
+      "site_id": "vallis_schroteri",
+      "nasa_id": "PIA00090",
+      "title": "Multispectral Mosaic of the Aristarchus Crater and Plateau",
+      "date_created": "1998-06-03T17:21:07Z",
+      "center": "JPL",
+      "photographer": "",
+      "description": "The Aristarchus region is one of the most diverse and interesting areas on the Moon. About 500 images from NASA's Clementine spacecraft were processed and combined into a multispectral mosaic of this region. http://photojournal.jpl.nasa.gov/catalog/PIA00090",
+      "keywords": "Moon; Deep Space Program Science Experiment DSPSE",
+      "preview_url": "https://images-assets.nasa.gov/image/PIA00090/PIA00090~medium.jpg",
+      "source_query": "Aristarchus",
+      "match_type": "regional",
+      "source_id": "SRC-IMG-01"
+    },
+    {
+      "site_id": "vallis_schroteri",
+      "nasa_id": "art002e012028",
+      "title": "Ancient Lava on the Moon",
+      "date_created": "2026-04-06T00:00:00Z",
+      "center": "JSC",
+      "photographer": "NASA",
+      "description": "art002e012028 (April 6, 2026) - The Artemis II crew captured a close-up snapshot of the near side of the Moon as NASA’s Orion spacecraft approached for the lunar flyby. The near side, characterized by the dark patches of ancient lava, is visible on the top third of the lunar disk. Aristarchus crater is the bright white dot in the midst of a dark grey lava flow at the top of the image. Credit: NASA",
+      "keywords": "Artemis; Artemis II; Moon; Lunar Flyby; Lunar; Aristarchus Crater; Crater",
+      "preview_url": "https://images-assets.nasa.gov/image/art002e012028/art002e012028~large.jpg",
+      "source_query": "Aristarchus",
+      "match_type": "regional",
+      "source_id": "SRC-IMG-01"
+    },
+    {
+      "site_id": "vallis_schroteri",
+      "nasa_id": "art002e024520",
+      "title": "Volcanic Terrain of Aristarchus Plateau -- art002e024520",
+      "date_created": "2026-04-06T00:00:00Z",
+      "center": "JSC",
+      "photographer": "",
+      "description": "art002e024520 (April 6, 2026) – The Artemis II crew captured this view, which includes the Aristarchus Plateau, during their lunar flyby. Dark volcanic terrain contrasts with the brighter, heavily cratered surrounding surface. The plateau contains volcanic deposits, including volcanic glass previously identified through spectral reflectance measurements, making it an important area for studying the Moon’s volcanic history and surface composition. Credit: NASA",
+      "keywords": "Artemis II; Lunar Flyby; Lunar Science; Moon",
+      "preview_url": "https://images-assets.nasa.gov/image/art002e024520/art002e024520~large.jpg",
+      "source_query": "Aristarchus",
+      "match_type": "regional",
+      "source_id": "SRC-IMG-01"
+    },
+    {
+      "site_id": "vallis_schroteri",
+      "nasa_id": "PIA12896",
+      "title": "Rille within a Rille",
+      "date_created": "2009-08-18T01:08:18Z",
+      "center": "JPL",
+      "photographer": "",
+      "description": "NASA Lunar Reconnaissance Orbiter shows a sinuous rille winding its way across a much larger rille in the heart of the Aristarchus Plateau.",
+      "keywords": "Moon; Lunar Reconnaissance Orbiter LRO",
+      "preview_url": "https://images-assets.nasa.gov/image/PIA12896/PIA12896~small.jpg",
+      "source_query": "Aristarchus",
+      "match_type": "regional",
+      "source_id": "SRC-IMG-01"
+    },
+    {
+      "site_id": "vallis_schroteri",
+      "nasa_id": "art002e009278",
+      "title": "Keeper of the Night Sky",
+      "date_created": "2026-04-06T00:00:00Z",
+      "center": "JSC",
+      "photographer": "NASA",
+      "description": "art002e009278 (April 6, 2026) - Just over half of the Moon fills the left half of the image. The near side, characterized by the dark patches of ancient lava, is visible on the top third of the lunar disk. Orientale basin, a round crater in the center with a black patch of ancient lava in the center, is wrapped in rings of mountains. The round black spot northeast of Orientale is Grimaldi crater, and Aristarchus crater is the bright white dot in the midst of a dark grey lava flow at the top of the image.",
+      "keywords": "Artemis II; Artemis II mission; Artemis 2 mission; lunar flyby",
+      "preview_url": "https://images-assets.nasa.gov/image/art002e009278/art002e009278~large.jpg",
+      "source_query": "Aristarchus",
+      "match_type": "regional",
+      "source_id": "SRC-IMG-01"
+    },
+    {
+      "site_id": "vallis_schroteri",
+      "nasa_id": "art002e012114",
+      "title": "A Cross Section of Lunar Geology",
+      "date_created": "2026-04-06T00:00:00Z",
+      "center": "JSC",
+      "photographer": "NASA",
+      "description": "art002e012114 (April 6, 2026) - A diverse set of lunar features is visible in this view, including the brightly colored Aristarchus crater, whose high reflectivity stands out against the surrounding terrain. Nearby, the Marius Hills region reveals a field of volcanic domes and cones, evidence of past lunar volcanism. The sinuous Reiner Gamma swirl contrasts with the darker mare surface, while rays from Glushko crater streak across the plains. At the bottom of the frame, the dark-floored Grimaldi crater anchors the scene.",
+      "keywords": "Artemis; Artemis II; Moon; Lunar; Lunar Flyby; Marius Hills; Glushko crater",
+      "preview_url": "https://images-assets.nasa.gov/image/art002e012114/art002e012114~large.jpg",
+      "source_query": "Aristarchus",
+      "match_type": "regional",
+      "source_id": "SRC-IMG-01"
+    }
+  ]
+}
