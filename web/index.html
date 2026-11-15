@@ -1,79 +1,313 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="NASA-data-driven lunar south-pole landing-region screening for 80–90°S.">
-  <title>Lunaria — South-pole landing screen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Lunaria is an independent NASA-data-driven screen of lunar south-polar landing regions, with a two-stage terrain model and a provisional seed.">
+  <meta name="theme-color" content="#e7e1d5">
+  <meta name="color-scheme" content="light">
+  <title>Lunaria × NASA — South Polar Field Atlas</title>
+  <link rel="preload" href="assets/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/ibm-plex-mono-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.replace("no-js", "js");</script>
 </head>
 <body>
-  <a class="skip" href="#result">Skip to result</a>
-  <header class="topbar">
-    <a class="brand" href="#top"><span>◐</span> LUNARIA</a>
-    <nav aria-label="Main navigation">
-      <a href="#result">Result</a><a href="#map">Map</a><a href="#weights">Weights</a>
-      <a href="#time">Date status</a><a href="#evidence">Evidence</a>
-    </nav>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <noscript><p class="noscript">The atlas charts and live ranking need JavaScript. The result report and processed files are still available from the evidence links below.</p></noscript>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="lockup" href="#top">
+        <img class="nasa-mark" src="assets/nasa-logo.svg" width="54" height="45" alt="NASA" fetchpriority="high">
+        <span class="lockup-divider" aria-hidden="true"></span>
+        <span class="lockup-text">
+          <span class="wordmark">Lunaria</span>
+          <span class="lockup-sub">South polar survey</span>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Sections">
+        <a href="#result">Result</a>
+        <a href="#atlas">Atlas</a>
+        <a href="#signals">Signals</a>
+        <a href="#weights">Weights</a>
+        <a href="#evidence">Evidence</a>
+      </nav>
+      <p class="header-note"><span class="signal-dot" aria-hidden="true"></span>Provisional screen</p>
+    </div>
   </header>
 
-  <main id="top">
-    <section class="hero">
-      <div>
-        <p class="eyebrow">LUNAR SOUTH POLE · 80–90°S · 2024–2026</p>
-        <h1>Find the ridge.<br><span>Show the uncertainty.</span></h1>
-        <p class="lede">A two-stage NASA LOLA and JPL Horizons screen of 290,364 polar cells, refined on the source DEM and kept honest about what still needs LROC/LOLA certification.</p>
-        <div class="actions"><a class="button primary" href="#result">See the winner</a><a class="button" href="#map">Explore the map</a></div>
-      </div>
-      <aside class="hero-card" id="hero-card" aria-live="polite"></aside>
-    </section>
-
-    <section class="stats" id="stats"></section>
-
-    <section class="section" id="result">
-      <div class="section-head"><div><p class="eyebrow">01 · SCREENING RESULT</p><h2>A region first. A provisional seed second.</h2></div><p>The headline score is a weighted geometric mean. The coordinate is not a certified landing pad.</p></div>
-      <div class="result-grid"><article class="panel" id="winner"></article><article class="panel warning" id="caveats"></article></div>
-      <div class="indicator-grid" id="indicators" aria-label="Eight normalized indicators"></div>
-      <div class="panel ranking-panel"><div class="panel-head"><h3>Refined candidate regions</h3><span id="ranking-method"></span></div><div id="ranking"></div></div>
-    </section>
-
-    <section class="section" id="map">
-      <div class="section-head"><div><p class="eyebrow">02 · POLAR MAP</p><h2>Switch the layer, keep the candidates fixed.</h2></div><p>Full-cap values are 1 km screening layers. Outlined cells are the six baseline clusters; dots are ~148 m provisional seeds.</p></div>
-      <div class="map-layout">
-        <div class="panel map-panel">
-          <div class="layer-tabs" id="layer-tabs" role="tablist"></div>
-          <div class="polar-map" id="polar-map"><img id="map-image" alt="South-polar screening raster"><div id="map-overlays"></div><span class="north">0°E</span><span class="south">180°</span><span class="east">90°E</span><span class="west">90°W</span></div>
-          <div class="map-legend"><span id="legend-low">lower</span><i></i><span id="legend-high">higher</span></div>
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="dateline"><span>Independent NASA-data analysis</span><span>2024–2026 geometry</span></p>
+        <h1 id="hero-title">A provisional landing ridge at <span class="hero-coordinate" id="hero-coordinate">85.4342°S</span>.</h1>
+        <p class="hero-lede">Lunaria screens the lunar south pole with NASA LOLA terrain and JPL Horizons geometry: <strong id="hero-cell-count">290,364</strong> one-kilometre cells, six refined regions, and one coordinate that deserves a closer look.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#result">Read the Result</a>
+          <a class="button button-quiet" href="#atlas">Open the Atlas</a>
         </div>
-        <aside class="panel map-detail" id="map-detail"></aside>
+        <dl class="hero-metrics" id="hero-metrics" aria-label="Headline measurements"></dl>
+        <p class="hero-caveat">The coordinate is a provisional source-pixel seed, not a landing pad. 5 m Barker/LOLA and 1–2 m LROC terrain are still required.</p>
+      </div>
+
+      <figure class="hero-plate" aria-labelledby="hero-plate-caption">
+        <div class="plate-ruler"><span>Plate 01</span><span>80–90°S · weighted field</span></div>
+        <div class="plate" id="hero-plate">
+          <span class="plate-graticule" aria-hidden="true"></span>
+          <img id="hero-map-image" class="plate-image" src="assets/polar_score.png" width="608" height="608" alt="South-polar weighted suitability field for 80–90°S" fetchpriority="high">
+          <div class="plate-overlay" id="hero-overlay" aria-hidden="true"></div>
+          <span class="plate-scan" aria-hidden="true"></span>
+          <span class="plate-ring" aria-hidden="true"></span>
+        </div>
+        <div class="plate-caption" id="hero-plate-caption">
+          <span><strong>Weighted suitability</strong><br>all 290,364 valid cells</span>
+          <span class="plate-coordinate" id="hero-seed-coordinate">85.4342°S<br>10.5273°W</span>
+        </div>
+        <p class="plate-note">Rings mark region centroids; the cross marks the provisional seed.</p>
+        <div class="plate-stamp" aria-hidden="true"><span>Provisional</span><small>Not certified</small></div>
+      </figure>
+    </section>
+
+    <section class="pipeline-band" aria-labelledby="pipeline-title">
+      <div class="band-inner">
+        <div class="band-head">
+          <h2 id="pipeline-title">From Source Pixels to a Provisional Seed</h2>
+          <p>Every count below comes from the same cached run. Open the evidence ledger to inspect the files it produced.</p>
+        </div>
+        <ol class="pipeline" id="pipeline" aria-label="Processing pipeline"></ol>
       </div>
     </section>
 
-    <section class="section" id="weights">
-      <div class="section-head"><div><p class="eyebrow">03 · MISSION PRIORITIES</p><h2>Move a weight. Watch the ranking move.</h2></div><p>Sliders rerank the six fixed regions; they never silently redraw candidate boundaries.</p></div>
-      <div class="weight-layout"><div class="panel" id="weight-controls"></div><div class="panel"><h3>Live ranking</h3><div id="live-ranking"></div><button id="reset-weights" class="button">Reset balanced weights</button></div></div>
+    <section class="section result" id="result" aria-labelledby="result-title">
+      <header class="section-head">
+        <p class="section-index">Result</p>
+        <h2 id="result-title">The Winning Region Is a Balance, Not a Certainty.</h2>
+        <p>Candidate Region 1 leads the six refined regions. The headline is a weighted geometric mean; the coordinate is the best ~148 m source pixel inside that region.</p>
+      </header>
+
+      <div class="result-layout">
+        <article class="score-panel" aria-labelledby="score-title">
+          <div class="score-line">
+            <div>
+              <p class="label" id="score-title">Weighted geometric mean</p>
+              <p class="big-score"><span id="winner-score">60.15</span><span class="score-denominator">/100</span></p>
+            </div>
+            <p class="score-aside">Top-1 under<br><strong id="winner-top1">39.0%</strong><br>of weight draws</p>
+          </div>
+          <p class="score-summary" id="winner-summary"></p>
+          <div class="indicator-ledger" id="indicator-ledger"></div>
+        </article>
+
+        <article class="seed-panel" aria-labelledby="seed-title">
+          <div class="seed-head">
+            <p class="label" id="seed-title">Provisional seed</p>
+            <span class="stamp-small">Uncertified</span>
+          </div>
+          <p class="seed-coordinate" id="seed-coordinate">85.4342°S<br>10.5273°W</p>
+          <p class="seed-region" id="seed-region"></p>
+          <dl class="seed-facts" id="seed-facts"></dl>
+          <p class="seed-note">The seed is the highest-scoring eligible source pixel in the winning region. It is not a landing ellipse and does not incorporate metre-scale hazards.</p>
+        </article>
+      </div>
+
+      <div class="ranking-panel">
+        <div class="panel-head">
+          <h3>All Six Refined Regions</h3>
+          <p id="ranking-method"></p>
+        </div>
+        <div class="region-table" id="region-table" role="region" tabindex="0" aria-label="Refined candidate regions; scroll horizontally on narrow screens"></div>
+        <p class="scroll-hint" aria-hidden="true">Swipe the table to see all six utilities →</p>
+      </div>
     </section>
 
-    <section class="section" id="time">
-      <div class="section-head"><div><p class="eyebrow">04 · DATE-AWARE STATUS</p><h2>Six-hour Sun and Earth clearance.</h2></div><p>The date control changes instantaneous candidate status, not the two-year aggregate ranking.</p></div>
-      <div class="panel time-panel"><label for="time-slider">Selected time <strong id="time-label"></strong></label><input id="time-slider" type="range" min="0" value="0" step="1"><div id="time-status" class="time-grid"></div></div>
+    <section class="section atlas" id="atlas" aria-labelledby="atlas-title">
+      <header class="section-head">
+        <p class="section-index">Atlas</p>
+        <h2 id="atlas-title">Every Cell, Not a Sample.</h2>
+        <p>The map is the full 290,364-cell screen at 1 km. The distributions below use every valid cell; the refined cloud uses all 1,206 source cells. Switch layers and regions without changing the candidate set.</p>
+      </header>
+
+      <div class="atlas-layout">
+        <div class="atlas-map-panel">
+          <div class="layer-switch" id="layer-switch" role="group" aria-label="Map layer"></div>
+          <div class="atlas-map" id="atlas-map">
+            <span class="plate-graticule" aria-hidden="true"></span>
+            <img id="atlas-image" class="atlas-layer is-visible" src="assets/polar_score.png" width="608" height="608" alt="South-polar weighted suitability field" loading="lazy">
+            <img id="atlas-ghost" class="atlas-layer" src="assets/polar_score.png" width="608" height="608" alt="" aria-hidden="true" loading="lazy">
+            <div class="atlas-overlay" id="atlas-overlay"></div>
+            <span class="compass compass-top">0°E</span>
+            <span class="compass compass-right">90°E</span>
+            <span class="compass compass-bottom">180°</span>
+            <span class="compass compass-left">90°W</span>
+          </div>
+          <div class="map-caption">
+            <div>
+              <p class="label" id="layer-label">Suitability score</p>
+              <p id="layer-description"></p>
+            </div>
+            <div class="legend" aria-label="Layer scale">
+              <span id="legend-low">Lower score</span>
+              <i aria-hidden="true"></i>
+              <span id="legend-high">Higher score</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="atlas-inspector" aria-labelledby="inspector-title">
+          <p class="label" id="inspector-title">Selected region</p>
+          <div id="region-insight"></div>
+          <div class="region-switch" id="region-switch" role="group" aria-label="Candidate regions"></div>
+          <figure class="scatter-figure">
+            <figcaption>
+              <span class="label">Refined cell cloud</span>
+              <span>1,206 source cells</span>
+            </figcaption>
+            <canvas id="refined-scatter" width="520" height="300" role="img" aria-label="Scatter plot of 1,206 refined cells: Earth visibility on the horizontal axis, solar illumination on the vertical axis. The selected region is highlighted."></canvas>
+            <p class="scatter-note">Each dot is one refined source cell. The selected region is drawn solid; the other five are faded.</p>
+          </figure>
+        </aside>
+      </div>
+
+      <div class="distribution-block">
+        <div class="distribution-head">
+          <h3>Distribution of All Screened Cells</h3>
+          <p>Six views of the same 290,364-cell screen. Histogram bins cover the plotted domain; clipped tails are named in each caption.</p>
+        </div>
+        <div class="distribution-grid" id="distributions"></div>
+      </div>
     </section>
 
-    <section class="section" id="evidence">
-      <div class="section-head"><div><p class="eyebrow">05 · EVIDENCE &amp; GAPS</p><h2>Measured, proxied, and missing.</h2></div><p>No Artemis polygon or Barker tile is invented when authoritative geometry is absent.</p></div>
-      <div class="evidence-grid"><article class="panel" id="benchmark"></article><article class="panel" id="data-gaps"></article></div>
-      <div class="panel downloads"><h3>Reusable outputs</h3><div>
-        <a href="../data/processed/polar_refined_region_ranking.csv">region ranking</a>
-        <a href="../data/processed/polar_candidate_regions.geojson">candidate regions</a>
-        <a href="../data/processed/polar_candidate_timeseries.csv">date status</a>
-        <a href="../data/processed/polar_recommendation.json">recommendation</a>
-        <a href="../data/processed/polar_benchmark.json">benchmark</a>
-        <a href="../data/processed/polar_cell_metrics.csv.gz">measured cell metrics</a>
-      </div></div>
+    <section class="section signals" id="signals" aria-labelledby="signals-title">
+      <header class="section-head">
+        <p class="section-index">Signals</p>
+        <h2 id="signals-title">Two Years, Six Hours at a Time.</h2>
+        <p>All 17,550 aligned Sun/Earth status samples are drawn below. The date control changes instantaneous clearance; the two-year aggregate ranking does not move.</p>
+      </header>
+
+      <div class="signals-panel">
+        <div class="timeline-controls">
+          <div class="timeline-label">
+            <label for="timeline">Timeline sample</label>
+            <output id="timeline-date" for="timeline">1 Jan 2024, 00:00 UTC</output>
+          </div>
+          <input id="timeline" type="range" min="0" value="0" step="1" aria-describedby="timeline-desc">
+          <button class="button button-primary play-button" id="play-timeline" type="button" aria-pressed="false">Play Timeline</button>
+        </div>
+        <div class="timeline-chart" id="timeline-wrap">
+          <canvas id="timeline-canvas" width="1200" height="320" role="img" aria-labelledby="timeline-desc"></canvas>
+        </div>
+        <div class="timeline-legend" aria-label="Timeline legend">
+          <span><i class="swatch sun" aria-hidden="true"></i>Sun above terrain</span>
+          <span><i class="swatch earth" aria-hidden="true"></i>Earth above terrain</span>
+          <span><i class="swatch empty" aria-hidden="true"></i>Below terrain</span>
+          <span class="timeline-note">Step: 6 hours</span>
+        </div>
+        <p id="timeline-desc" class="visually-hidden">A dense two-year availability chart for six candidate regions. Each region has a solar band and an Earth-visibility band; filled areas mean the body is above the local terrain horizon at that six-hour sample.</p>
+        <div class="status-table-wrap" role="region" tabindex="0" aria-label="Sun and Earth status for each region; scroll horizontally to see Earth">
+          <table class="status-table">
+            <caption class="visually-hidden">Sun and Earth status for each candidate region at the selected timestamp</caption>
+            <thead>
+              <tr><th scope="col">Region</th><th scope="col">Sun</th><th scope="col">Earth</th></tr>
+            </thead>
+            <tbody id="status-body"></tbody>
+          </table>
+        </div>
+        <p class="scroll-hint" aria-hidden="true">Swipe the status table to see Earth visibility →</p>
+        <p class="timeline-announcer visually-hidden" id="timeline-announcer" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="section weights" id="weights" aria-labelledby="weights-title">
+      <header class="section-head">
+        <p class="section-index">Weights</p>
+        <h2 id="weights-title">The Ranking Is a Choice, Not a Fact.</h2>
+        <p>Sliders renormalize the six independent dimensions. Candidate boundaries stay fixed. The baseline headline weights are 24, 20, 20, 16, 10, and 10 percent.</p>
+      </header>
+
+      <div class="weight-layout">
+        <div class="weight-panel">
+          <div class="panel-head">
+            <h3>Mission Priorities</h3>
+            <p>Normalized live</p>
+          </div>
+          <div id="weight-controls"></div>
+          <button class="button button-quiet" id="reset-weights" type="button">Reset Weights</button>
+          <p class="weight-note" id="weight-note-copy">Sliders are relative priorities and renormalize together. Science is a neutral 0.50 placeholder. Sunlight continuity is reported but not weighted. Crew safety aliases terrain safety to prevent double counting.</p>
+        </div>
+
+        <div class="ranking-panel live-panel">
+          <div class="panel-head">
+            <h3>Current Ranking</h3>
+            <p id="weight-winner"></p>
+          </div>
+          <div class="live-ranking" id="live-ranking" aria-describedby="weight-note-copy"></div>
+          <p class="visually-hidden" id="weight-live" aria-live="polite"></p>
+          <div class="sensitivity-block">
+            <div class="panel-head">
+              <h4>Baseline Top-1 Sensitivity</h4>
+              <p>1,000 Dirichlet draws</p>
+            </div>
+            <div id="sensitivity-strip"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section evidence" id="evidence" aria-labelledby="evidence-title">
+      <header class="section-head">
+        <p class="section-index">Evidence</p>
+        <h2 id="evidence-title">What Passed, What Is Missing, What Shipped.</h2>
+        <p>The result is only as strong as its validation and its data gaps. Both are listed in full. No Artemis polygon or Barker tile is invented when authoritative geometry is absent.</p>
+      </header>
+
+      <div class="evidence-shell">
+        <div class="evidence-tabs" role="tablist" aria-label="Evidence views">
+          <button type="button" role="tab" id="tab-validation" aria-controls="panel-validation" aria-selected="true" tabindex="0">Validation</button>
+          <button type="button" role="tab" id="tab-gaps" aria-controls="panel-gaps" aria-selected="false" tabindex="-1">Data Gaps</button>
+          <button type="button" role="tab" id="tab-artifacts" aria-controls="panel-artifacts" aria-selected="false" tabindex="-1">Artifacts</button>
+          <button type="button" role="tab" id="tab-policy" aria-controls="panel-policy" aria-selected="false" tabindex="-1">Scoring Policy</button>
+        </div>
+        <div id="panel-validation" role="tabpanel" aria-labelledby="tab-validation"></div>
+        <div id="panel-gaps" role="tabpanel" aria-labelledby="tab-gaps" hidden></div>
+        <div id="panel-artifacts" role="tabpanel" aria-labelledby="tab-artifacts" hidden></div>
+        <div id="panel-policy" role="tabpanel" aria-labelledby="tab-policy" hidden></div>
+      </div>
+
+      <div class="provenance-grid">
+        <section class="provenance" aria-labelledby="provenance-title">
+          <h3 id="provenance-title">Provenance</h3>
+          <p>Terrain: NASA Moon Trek LRO LOLA south-polar DEM, server-resampled to 148.44 m/px. Geometry: JPL Horizons body-fixed sub-solar and sub-Earth points plus Moon-centre range, sampled every six hours from 2024-01-01 through 2026-01-01. PSR edge distance: equivalent-circle approximation from the supplied centroid-and-area catalogue.</p>
+          <p>NASA data are used here for independent analysis. NASA does not endorse this product or its provisional result.</p>
+        </section>
+        <section class="caveats" aria-labelledby="caveats-title">
+          <h3 id="caveats-title">Limits to Carry Forward</h3>
+          <ul id="caveat-list"></ul>
+        </section>
+        <section class="downloads" aria-labelledby="downloads-title">
+          <h3 id="downloads-title">Read the Full Record</h3>
+          <a href="../REPORT.md">Result report</a>
+          <a href="../HANDOFF.md">Session handoff</a>
+          <a href="../data/processed/polar_data_gaps.csv">Data-gap ledger</a>
+          <a href="../data/processed/polar_cell_metrics.csv.gz">All cell measurements</a>
+          <a href="../data/processed/polar_candidate_timeseries.csv">Full status timeline</a>
+          <a href="../data/processed/polar_data_manifest.json">Integrity manifest</a>
+        </section>
+      </div>
     </section>
   </main>
 
-  <footer><strong>◐ LUNARIA</strong><span id="footer-meta"></span><span>Screening only · not flight certification.</span></footer>
+  <footer class="site-footer">
+    <div class="footer-lockup">
+      <img src="assets/nasa-logo.svg" width="48" height="40" alt="NASA" loading="lazy">
+      <span><strong>Lunaria</strong> · South polar survey</span>
+    </div>
+    <p id="footer-meta"></p>
+    <p>Independent analysis using NASA data. NASA does not endorse this product. Screening only; not flight certification.</p>
+  </footer>
+
   <script src="data.js"></script>
   <script src="app.js"></script>
 </body>

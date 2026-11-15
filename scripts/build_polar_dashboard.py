@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import csv
+import gzip
 import json
 from collections import defaultdict
 from pathlib import Path
@@ -20,6 +21,25 @@ except ImportError:
     from polar_model import SCORE_DIMENSIONS
 
 
+ARTIFACT_LABELS = {
+    "data/interim/polar_ephemeris.csv": "JPL Horizons Sun/Earth ephemeris",
+    "data/processed/polar_cell_metrics.csv.gz": "All screened cell measurements",
+    "data/processed/polar_terrain_1km.tif": "1 km terrain aggregate",
+    "data/processed/polar_illumination_1km.tif": "Solar and Earth visibility rasters",
+    "data/processed/polar_region_ranking.csv": "Stage-one region ranking",
+    "data/processed/polar_candidate_regions.geojson": "Candidate region polygons",
+    "data/processed/polar_refined_region_ranking.csv": "Final refined region ranking",
+    "data/processed/polar_refined_cells.csv": "Refined source-cell measurements",
+    "data/processed/polar_candidate_timeseries.csv": "Six-hour Sun/Earth status",
+    "data/processed/polar_data_gaps.csv": "Missing-data request ledger",
+    "data/processed/polar_sensitivity.csv": "Dirichlet top-1 probabilities",
+    "data/processed/polar_recommendation.json": "Machine-readable recommendation",
+    "data/processed/polar_benchmark.json": "Geometry and validation benchmark",
+    "data/processed/polar_terrain_manifest.json": "Terrain manifest",
+    "data/processed/polar_illumination_manifest.json": "Illumination manifest",
+}
+
+
 def _float(value, default=None):
     try:
         return float(value)
@@ -32,6 +52,159 @@ def _int(value, default=0):
         return int(value)
     except (TypeError, ValueError):
         return default
+
+
+def _summary(values) -> dict:
+    array = np.asarray(values, dtype=float)
+    array = array[np.isfinite(array)]
+    if not array.size:
+        return {
+            "count": 0,
+            "min": None,
+            "p10": None,
+            "median": None,
+            "p90": None,
+            "max": None,
+            "mean": None,
+        }
+    return {
+        "count": int(array.size),
+        "min": round(float(array.min()), 6),
+        "p10": round(float(np.percentile(array, 10)), 6),
+        "median": round(float(np.median(array)), 6),
+        "p90": round(float(np.percentile(array, 90)), 6),
+        "max": round(float(array.max()), 6),
+        "mean": round(float(array.mean()), 6),
+    }
+
+
+def _distribution(values, *, bins: int = 24, low: float, high: float) -> dict:
+    array = np.asarray(values, dtype=float)
+    array = array[np.isfinite(array)]
+    if not array.size or high <= low:
+        return {**_summary(array), "low": low, "high": high, "clipped": 0, "bins": [], "edges": []}
+    clipped = int(np.count_nonzero((array < low) | (array > high)))
+    counts, edges = np.histogram(np.clip(array, low, high), bins=bins, range=(low, high))
+    return {
+        **_summary(array),
+        "low": low,
+        "high": high,
+        "clipped": clipped,
+        "bins": counts.astype(int).tolist(),
+        "edges": [round(float(value), 6) for value in edges],
+    }
+
+
+def _read_cell_arrays(processed_dir: Path) -> dict[str, list[float]]:
+    arrays: dict[str, list[float]] = {
+        "solar": [],
+        "earth": [],
+        "slope": [],
+        "dark": [],
+        "psr": [],
+    }
+    with (processed_dir / "polar_cell_metrics.csv").open(
+        newline="", encoding="utf-8"
+    ) as handle:
+        for row in csv.DictReader(handle):
+            arrays["solar"].append(_float(row["solar_illumination_fraction"], 0.0))
+            arrays["earth"].append(_float(row["earth_visibility_fraction"], 0.0))
+            arrays["slope"].append(_float(row["regional_slope_p90_deg"], 0.0))
+            arrays["dark"].append(_float(row["longest_dark_days"], 0.0))
+            arrays["psr"].append(_float(row["psr_edge_km"], 0.0))
+    return arrays
+
+
+def _read_score_array(processed_dir: Path) -> list[float]:
+    values: list[float] = []
+    with (processed_dir / "polar_cell_scores.csv").open(
+        newline="", encoding="utf-8"
+    ) as handle:
+        for row in csv.DictReader(handle):
+            values.append(_float(row["weighted_geometric_mean"], 0.0))
+    return values
+
+
+def _row_count(path: Path) -> int | None:
+    if path.suffix == ".csv":
+        with path.open(newline="", encoding="utf-8") as handle:
+            return max(0, sum(1 for _ in handle) - 1)
+    if path.suffix == ".gz":
+        with gzip.open(path, "rt", newline="", encoding="utf-8") as handle:
+            return max(0, sum(1 for _ in handle) - 1)
+    return None
+
+
+def _artifact_rows(manifest: dict) -> list[dict]:
+    rows = []
+    for item in manifest.get("files", []):
+        path = item["path"]
+        suffix = Path(path).suffix.lower()
+        rows.append(
+            {
+                "path": path,
+                "label": ARTIFACT_LABELS.get(path, Path(path).name),
+                "href": f"../{path}",
+                "kind": {
+                    ".csv": "CSV",
+                    ".gz": "CSV.GZ",
+                    ".tif": "GeoTIFF",
+                    ".json": "JSON",
+                    ".geojson": "GeoJSON",
+                }.get(suffix, suffix.lstrip(".").upper() or "File"),
+                "bytes": _int(item.get("bytes")),
+                "sha256": item.get("sha256", ""),
+                "rows": _row_count(Path(path)) if suffix in {".csv", ".gz"} else None,
+            }
+        )
+    return rows
+
+
+def _pipeline(meta: dict, regions: int, refined: int, artifacts: int) -> list[dict]:
+    return [
+        {
+            "label": "Source terrain",
+            "value": 4096 * 4096,
+            "display": "4096²",
+            "unit": "pixels",
+            "detail": f"NASA LOLA south-polar DEM at {meta['source_resolution_m']:.2f} m/px",
+        },
+        {
+            "label": "Full-cap screen",
+            "value": meta["cell_count"],
+            "display": f"{meta['cell_count']:,}",
+            "unit": "cells",
+            "detail": "1 km observer cells, horizons to 60 km, 2,925 six-hour samples",
+        },
+        {
+            "label": "Candidate clusters",
+            "value": regions,
+            "display": str(regions),
+            "unit": "regions",
+            "detail": "Eight-way connected components at the operational 0.60 threshold",
+        },
+        {
+            "label": "Source refinement",
+            "value": refined,
+            "display": f"{refined:,}",
+            "unit": "pixels",
+            "detail": "Fresh ~148 m horizons inside each shortlisted cluster",
+        },
+        {
+            "label": "Sun/Earth states",
+            "value": meta["timeline_rows"],
+            "display": f"{meta['timeline_rows']:,}",
+            "unit": "samples",
+            "detail": "Six regions × 2,925 aligned timestamps",
+        },
+        {
+            "label": "Packaged evidence",
+            "value": artifacts,
+            "display": str(artifacts),
+            "unit": "files",
+            "detail": "Rankings, geometry, timeline, benchmark, and checksums",
+        },
+    ]
 
 
 def build_payload(processed_dir: Path = PROCESSED_DIR) -> dict:
@@ -139,25 +312,76 @@ def build_payload(processed_dir: Path = PROCESSED_DIR) -> dict:
     terrain_manifest = read_json(processed_dir / "polar_terrain_manifest.json")
     config = read_json(CONFIG_DIR / "polar_scoring.json")
     artemis = read_json(CONFIG_DIR / "artemis_regions.json")
+    data_manifest = read_json(processed_dir / "polar_data_manifest.json")
+    data_gaps = read_csv(processed_dir / "polar_data_gaps.csv")
+    artifacts = _artifact_rows(data_manifest)
+
+    cell_arrays = _read_cell_arrays(processed_dir)
+    cell_arrays["score"] = _read_score_array(processed_dir)
+    cell_stats = {
+        "count": len(cell_arrays["solar"]),
+        "solar": _distribution(cell_arrays["solar"], low=0.0, high=1.0),
+        "earth": _distribution(cell_arrays["earth"], low=0.0, high=1.0),
+        "slope": _distribution(cell_arrays["slope"], low=0.0, high=45.0),
+        "dark": _distribution(cell_arrays["dark"], low=0.0, high=60.0),
+        "psr": _distribution(cell_arrays["psr"], low=0.0, high=70.0),
+        "score": _distribution(cell_arrays["score"], low=0.0, high=1.0),
+    }
+
+    refined_by_region: dict[str, list[dict]] = defaultdict(list)
+    for row in refined:
+        refined_by_region[row["region_id"]].append(row)
+    region_stats = {}
+    for region in regions:
+        rows = refined_by_region[region["region_id"]]
+        region_stats[region["region_id"]] = {
+            "solar": _summary([row["solar_illumination_fraction"] for row in rows]),
+            "earth": _summary([row["earth_visibility_fraction"] for row in rows]),
+            "slope": _summary([row["regional_slope_p90_deg"] for row in rows]),
+            "dark": _summary([row["longest_dark_days"] for row in rows]),
+            "psr": _summary([row["psr_edge_km"] for row in rows]),
+            "score": _summary([row["weighted_geometric_mean"] for row in rows]),
+        }
+
+    region_index = {region["region_id"]: index for index, region in enumerate(regions)}
+    refined_cloud = [
+        [
+            region_index[row["region_id"]],
+            round(_float(row["solar_illumination_fraction"], 0.0), 6),
+            round(_float(row["earth_visibility_fraction"], 0.0), 6),
+            round(_float(row["regional_slope_p90_deg"], 0.0), 4),
+            round(_float(row["weighted_geometric_mean"], 0.0), 6),
+            round(_float(row["psr_edge_km"], 0.0), 4),
+            round(_float(row["lat_deg"], 0.0), 6),
+            round(_float(row["lon_deg"], 0.0), 6),
+        ]
+        for row in refined
+    ]
+
+    meta = {
+        "generated_at": utc_now(),
+        "scope": "Lunar south pole, 80–90°S",
+        "window_start": timestamps[0],
+        "window_end": timestamps[-1],
+        "step_hours": 6,
+        "cell_count": illumination_manifest["cells"],
+        "stage1_cell_m": 1000,
+        "stage2_resolution_m": recommendation["refinement"][
+            "stage2_source_resolution_m"
+        ],
+        "observer_elevation": illumination_manifest.get("observer_elevation", "max"),
+        "source_resolution_m": terrain_manifest["source_resolution_m"],
+        "refined_cell_count": len(refined),
+        "timeline_rows": len(timeline_rows),
+        "artifact_count": len(artifacts),
+        "artifact_bytes": sum(item["bytes"] for item in artifacts),
+    }
+
     return {
-        "meta": {
-            "generated_at": utc_now(),
-            "scope": "Lunar south pole, 80–90°S",
-            "window_start": timestamps[0],
-            "window_end": timestamps[-1],
-            "step_hours": 6,
-            "cell_count": illumination_manifest["cells"],
-            "stage1_cell_m": 1000,
-            "stage2_resolution_m": recommendation["refinement"][
-                "stage2_source_resolution_m"
-            ],
-            "observer_elevation": illumination_manifest.get(
-                "observer_elevation", "max"
-            ),
-            "source_resolution_m": terrain_manifest["source_resolution_m"],
-        },
+        "meta": meta,
         "recommendation": recommendation,
         "weights": config["weights"],
+        "policy": config,
         "scoring": {
             "headline": config["scoring"]["headline"],
             "geometric_floor": config["scoring"]["geometric_floor"],
@@ -165,15 +389,57 @@ def build_payload(processed_dir: Path = PROCESSED_DIR) -> dict:
         },
         "dimensions": list(SCORE_DIMENSIONS),
         "regions": regions,
+        "region_stats": region_stats,
+        "refined_cells": {
+            "fields": [
+                "region_index",
+                "solar",
+                "earth",
+                "slope",
+                "score",
+                "psr_edge_km",
+                "lat_deg",
+                "lon_deg",
+            ],
+            "rows": refined_cloud,
+        },
+        "cell_stats": cell_stats,
+        "pipeline": _pipeline(meta, len(regions), len(refined), len(artifacts)),
         "timestamps": timestamps,
         "timeline": compact_timeline,
         "benchmark": benchmark,
         "artemis_regions": artemis,
+        "data_gaps": data_gaps,
+        "artifacts": artifacts,
         "layers": {
-            "score": "assets/polar_score.png",
-            "solar": "assets/polar_solar.png",
-            "earth": "assets/polar_earth.png",
-            "slope": "assets/polar_slope.png",
+            "score": {
+                "src": "assets/polar_score.png",
+                "label": "Suitability score",
+                "low": "Lower score",
+                "high": "Higher score",
+                "description": "Weighted geometric mean of all eight normalized indicators for every 1 km cell.",
+            },
+            "solar": {
+                "src": "assets/polar_solar.png",
+                "label": "Solar illumination",
+                "low": "Less illuminated",
+                "high": "More illuminated",
+                "description": "Fraction of 2,925 six-hour samples with the Sun above the local terrain horizon.",
+            },
+            "earth": {
+                "src": "assets/polar_earth.png",
+                "label": "Earth visibility",
+                "low": "Less visible",
+                "high": "More visible",
+                "description": "Direct-to-Earth visibility above the terrain horizon; relay availability is unknown.",
+            },
+            "slope": {
+                "src": "assets/polar_slope.png",
+                "label": "Terrain roughness",
+                "low": "Flatter",
+                "high": "Steeper",
+                "description": "1 km regional slope p90 derived from the ~148 m LOLA source. Not landing-pad slope.",
+            },
         },
     }
 
@@ -249,7 +515,9 @@ def main() -> None:
     )
     print(
         f"Wrote polar dashboard: {len(payload['regions'])} regions, "
-        f"{len(payload['timestamps'])} timestamps"
+        f"{len(payload['timestamps'])} timestamps, "
+        f"{payload['meta']['refined_cell_count']} refined cells, "
+        f"{len(payload['artifacts'])} artifacts"
     )
 
 
