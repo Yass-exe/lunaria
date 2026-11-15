@@ -3,31 +3,41 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="Lunaria processed-data explorer: an animated, reduced-motion-safe reveal of every metric from the south-polar NASA-data screen.">
+  <meta name="description" content="Explore the sources, methods, results, and limitations behind Lunaria's provisional lunar south-polar screen.">
   <meta name="theme-color" content="#e9e3d6">
-  <meta name="color-scheme" content="light">
-  <title>Lunaria × NASA — Processed Data Explorer</title>
+  <meta name="color-scheme" content="light dark">
+  <title>Lunaria — Data &amp; Methods</title>
   <link rel="preload" href="assets/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/ibm-plex-mono-400-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
-  <script>document.documentElement.classList.replace("no-js", "js");</script>
+  <script>
+    (function () {
+      try {
+        const saved = localStorage.getItem("lunaria-theme");
+        if (saved === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      } catch (_) {}
+      document.documentElement.classList.replace("no-js", "js");
+    })();
+  </script>
   <style id="dx-anim">
-    .reveal {
+    html.dx-motion .reveal {
       opacity: 0;
       transform: translateY(14px);
       transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
       will-change: opacity, transform;
     }
-    .reveal.is-visible { opacity: 1; transform: translateY(0); }
-    .stagger-child {
+    html.dx-motion .reveal.is-visible { opacity: 1; transform: translateY(0); }
+    html.dx-motion .stagger-child {
       opacity: 0;
       transform: translateY(10px);
       transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
     }
-    .stagger-child.is-visible { opacity: 1; transform: translateY(0); }
-    .lockup.reveal-title { animation: dx-lockup-rise 0.9s var(--ease-soft) both; }
+    html.dx-motion .stagger-child.is-visible { opacity: 1; transform: translateY(0); }
+    html.dx-motion .lockup.reveal-title { animation: dx-lockup-rise 0.9s var(--ease-soft) both; }
     @keyframes dx-lockup-rise {
       from { opacity: 0; transform: translateY(18px) scale(0.995); }
       to { opacity: 1; transform: translateY(0) scale(1); }
@@ -43,37 +53,142 @@
   </style>
 </head>
 <body>
+  <div class="starry-background" aria-hidden="true">
+    <canvas id="starry-canvas"></canvas>
+  </div>
   <a class="skip-link" href="#main">Skip to main content</a>
 
   <header class="site-header">
     <div class="header-inner">
       <a class="lockup reveal reveal-title" href="index.html" aria-label="Lunaria — back to the atlas">
-        <img class="nasa-mark" src="assets/nasa-logo.svg" width="54" height="45" alt="NASA" fetchpriority="high">
+        <span class="agency-marks">
+          <img class="lunaria-mark" src="assets/lunaria-logo.svg" width="44" height="44" alt="" fetchpriority="high">
+        </span>
         <span class="lockup-divider" aria-hidden="true"></span>
         <span class="lockup-text">
           <span class="wordmark" translate="no">Lunaria</span>
-          <span class="lockup-sub">Processed data explorer</span>
+          <span class="lockup-sub">Data &amp; methods</span>
         </span>
       </a>
       <nav class="site-nav" aria-label="Sections">
-        <a href="index.html">Atlas</a>
-        <a href="#data" aria-current="page">Data</a>
+        <a href="index.html#atlas">Atlas</a>
+        <a href="index.html#signals">Signals</a>
+        <a href="index.html#weights">Weights</a>
+        <a href="index.html#result">Result</a>
+        <a href="index.html#visualisation">Visualisation</a>
+        <a href="#data" aria-current="page">Data &amp; methods</a>
+        <a href="sun-earth-moon.html">3D Moon system</a>
       </nav>
-      <p class="header-note"><span class="signal-dot" aria-hidden="true"></span>Provisional screen · reduced-motion safe</p>
+      <div class="header-tools">
+        <p class="header-note"><span class="signal-dot" aria-hidden="true"></span>Provisional screen</p>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark starry theme" aria-pressed="false" title="Toggle dark starry theme">
+          <span class="theme-icon sun-icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </span>
+          <span class="theme-icon moon-icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </span>
+          <span class="theme-label" id="theme-label">Dark</span>
+        </button>
+      </div>
     </div>
   </header>
   <main id="main">
     <section class="dx-hero" id="top" aria-labelledby="dx-hero-title">
       <div class="dx-hero-copy reveal">
         <p class="dateline reveal stagger-child"><span>Processed NASA data</span><span>South polar screen · 2024–2026</span></p>
-        <h1 id="dx-hero-title" class="reveal stagger-child">Every processed number, revealed in order.</h1>
-        <p class="reveal stagger-child">Lunaria screened the lunar south pole from NASA LOLA terrain and JPL Horizons geometry. This page animates every processed metric into view — run metadata, region scores, decision weights, and the provisional seed — with reduced-motion-safe transitions.</p>
+        <h1 id="dx-hero-title" class="reveal stagger-child">The evidence behind the map.</h1>
+        <p class="reveal stagger-child">Explore the data sources, scoring method, results, and limitations behind Lunaria's provisional south-polar screen. The figures below describe one cached analysis run; they are not a live forecast.</p>
         <dl class="hero-metrics dx-hero-metrics reveal stagger-child" aria-label="Headline measurements"></dl>
       </div>
       <figure class="dx-plate reveal stagger-child" aria-labelledby="dx-plate-caption">
-        <strong id="dx-plate-caption" class="sr-only-focusable">Lunaria processed-data plate</strong>
-        <em>80–90°S · weighted field · animated reveal</em>
+        <img src="assets/polar_score.png" width="608" height="608" alt="Weighted suitability field across 80–90°S." loading="lazy">
+        <figcaption id="dx-plate-caption">
+          <strong>Weighted suitability</strong>
+          <span>80–90°S · 290,364 valid cells</span>
+        </figcaption>
       </figure>
+    </section>
+
+    <!-- SECTION: DATA USE & TREATMENT METHODOLOGY (#data) -->
+    <section class="dx-section reveal" id="data" aria-labelledby="data-method-title">
+      <div class="dx-head reveal">
+        <p class="dx-index reveal stagger-child">00</p>
+        <h2 id="data-method-title">Data sources and method</h2>
+        <p class="reveal stagger-child">Source products, the two-stage screening method, scoring assumptions, and commands for rebuilding the analysis locally.</p>
+      </div>
+
+      <div class="dx-method-grid">
+        <!-- 1. Data Sources Used -->
+        <article class="dx-method-card reveal stagger-child">
+          <div class="dx-card-badge">Data Sources</div>
+          <h3>Source data</h3>
+          <p class="dx-card-lead">Four inputs support the south-polar screen across 80°S–90°S:</p>
+          <ul class="dx-feature-list">
+            <li>
+              <strong>LOLA 1&nbsp;km Polar DEM (LDEM_80S_1000M):</strong>
+              Polar stereographic elevation grid providing elevation and slope metrics across all 290,364 valid cells.
+            </li>
+            <li>
+              <strong>JPL Horizons Sun/Earth Ephemeris (2024–2026):</strong>
+              Aligned Sun and Earth geometry at 2,925 six-hour epochs per body. The dashboard contains 17,550 region-time records: one record for each of six regions at each epoch.
+            </li>
+            <li>
+              <strong>NASA Moon Trek LOLA export, ~148.44&nbsp;m/px:</strong>
+              Server-resampled terrain from <code>LRO_LOLA_DEM_SPole75_30mp_v04</code> used to refine the six candidate regions. The missing 5&nbsp;m Barker/LOLA terrain is not used.
+            </li>
+            <li>
+              <strong>Permanently shadowed region catalogue:</strong>
+              The supplied centroid and area estimates provide an approximate distance-to-PSR scoring proxy, not a confirmed water-resource measurement.
+            </li>
+          </ul>
+        </article>
+
+        <!-- 2. Data Treatment Approach -->
+        <article class="dx-method-card reveal stagger-child">
+          <div class="dx-card-badge">Methodology</div>
+          <h3>Algorithmic Data Treatment</h3>
+          <p class="dx-card-lead">Five steps turn the source rasters and ephemerides into a provisional regional ranking:</p>
+          <ol class="dx-steps-list">
+            <li>
+              <strong>1. Full-cap screen:</strong> Evaluate 290,364 valid 1&nbsp;km cells. The highest available source pixel in each cell acts as an optimistic observer; 96 azimuth profiles extend to 60&nbsp;km.
+            </li>
+            <li>
+              <strong>2. Celestial geometry:</strong> Compare Sun and Earth vectors against terrain horizons at 2,925 aligned six-hour epochs from 2024 through 2026.
+            </li>
+            <li>
+              <strong>3. Region refinement:</strong> Recompute terrain horizons and Sun/Earth geometry for all source pixels in the six shortlisted regions at the available ~148.44&nbsp;m/px resolution.
+            </li>
+            <li>
+              <strong>4. Weighted score:</strong> Normalize six criteria and combine them with a weighted geometric mean, <em>S</em> = &prod; <em>u<sub>i</sub><sup>w<sub>i</sub></sup></em>. Utilities are floored at 0.01; the score is a screening aid, not a mission decision.
+            </li>
+            <li>
+              <strong>5. Weight sensitivity:</strong> Run 1,000 <code>Dirichlet(1,...,1)</code> weight draws (seed 42) to measure how often each region ranks first under varied priorities.
+            </li>
+          </ol>
+        </article>
+
+        <!-- 3. How to Recreate -->
+        <article class="dx-method-card dx-method-wide reveal stagger-child">
+          <div class="dx-card-badge">Reproduction</div>
+          <h3>How to Recreate the Data Pipeline Locally</h3>
+          <p class="dx-card-lead">From the repository root, install the analysis dependencies, rebuild the cached outputs, and run the offline tests:</p>
+          <div class="dx-code-shell">
+            <div class="dx-code-head">
+              <span>Rebuild and verify</span>
+              <span class="dx-code-pill">Python 3</span>
+            </div>
+            <pre><code>            <span class="c1"># Install the project-specific scientific dependencies</span>
+            python3 -m pip install -r requirements-polar.txt
+
+            <span class="c1"># Rebuild the screening outputs and dashboard data</span>
+            python3 scripts/build_polar.py
+
+            <span class="c1"># Run the offline test suite</span>
+            python3 -B -m unittest discover -s tests -v</code></pre>
+          </div>
+        </article>
+      </div>
     </section>
 
     <section class="dx-section reveal" id="group-meta" aria-labelledby="g-meta-title">
@@ -161,11 +276,14 @@
 
     <footer class="site-footer">
       <div class="footer-lockup reveal">
-        <img src="assets/nasa-logo.svg" width="48" height="40" alt="NASA" loading="lazy">
+        <span class="agency-marks">
+          <img class="lunaria-mark" src="assets/lunaria-logo.svg" width="40" height="40" alt="" loading="lazy">
+        </span>
         <span><strong translate="no">Lunaria</strong> · South polar survey</span>
       </div>
       <p id="dx-footer-meta" class="reveal"></p>
       <p>Independent analysis using NASA data. NASA does not endorse this product. Screening only; not flight certification.</p>
+      <blockquote class="footer-quote">“made by young devs for the celestials and beyond”</blockquote>
     </footer>
 
     <script src="data.js"></script>
@@ -173,4 +291,3 @@
   </main>
 </body>
 </html>
-

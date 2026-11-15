@@ -703,7 +703,7 @@
       point.x.toFixed(3) +
       "%;--y:" +
       point.y.toFixed(3) +
-      '"><span class="marker-ring"></span><span class="marker-label">R' +
+      '%"><span class="marker-ring"></span><span class="marker-label">R' +
       region.rank +
       "</span></button>"
     );
@@ -891,6 +891,21 @@
     return context;
   }
 
+  /* Chart theme colors — returns palette based on current theme */
+  function chartColors() {
+    var dark = document.documentElement.getAttribute("data-theme") === "dark";
+    return {
+      dark: dark,
+      bg:        null,                                            /* clean transparent backdrop so chart breathes on card */
+      grid:      dark ? "rgba(255, 255, 255, 0.22)" : "rgba(23, 25, 27, 0.10)",
+      axis:      dark ? "rgba(255, 255, 255, 0.70)" : "rgba(23, 25, 27, 0.35)",
+      label:     dark ? "#ffffff"                   : "#5b5a54",
+      dot:       dark ? "rgba(255, 255, 255, 0.38)" : "rgba(23, 25, 27, 0.16)",
+      median:    dark ? "#ffffff"                   : "rgba(23, 25, 27, 0.55)",
+      crosshair: dark ? "#ffffff"                   : "#7d540d",
+    };
+  }
+
   function drawScatter() {
     if (!scatterCanvas) return;
     const width = Math.max(250, scatterCanvas.parentElement.clientWidth || 320);
@@ -903,8 +918,13 @@
     const region = regionById.get(state.regionId) || winner;
     const color = REGION_COLORS[region.rank - 1] || "#0b3d91";
     const progress = clamp(scatterProgress, 0, 1);
+    const tc = chartColors();
 
     context.clearRect(0, 0, width, height);
+    if (tc.bg) {
+      context.fillStyle = tc.bg;
+      context.fillRect(0, 0, width, height);
+    }
     context.font = '10px "IBM Plex Mono", monospace';
     context.textAlign = "center";
     context.textBaseline = "middle";
@@ -915,7 +935,7 @@
     ticks.forEach(function (tick) {
       const x = margin.left + tick * plotWidth;
       const y = margin.top + (1 - tick) * plotHeight;
-      context.strokeStyle = "rgba(23,25,27,0.10)";
+      context.strokeStyle = tc.grid;
       context.lineWidth = 1;
       context.beginPath();
       context.moveTo(x + 0.5, margin.top);
@@ -926,7 +946,7 @@
       context.lineTo(margin.left + plotWidth, y + 0.5);
       context.stroke();
       if (Math.abs(tick / labelStep - Math.round(tick / labelStep)) < 0.001) {
-        context.fillStyle = "#5b5a54";
+        context.fillStyle = tc.label;
         context.fillText(Math.round(tick * 100) + "%", x, margin.top + plotHeight + 13);
         context.textAlign = "right";
         context.fillText(Math.round(tick * 100) + "%", margin.left - 7, y);
@@ -934,7 +954,7 @@
       }
     });
 
-    context.strokeStyle = "rgba(23,25,27,0.35)";
+    context.strokeStyle = tc.axis;
     context.beginPath();
     context.moveTo(margin.left + 0.5, margin.top);
     context.lineTo(margin.left + 0.5, margin.top + plotHeight);
@@ -948,18 +968,22 @@
       if (row[0] === selectedIndex) return;
       const x = margin.left + row[2] * plotWidth;
       const y = margin.top + (1 - row[1]) * plotHeight;
-      context.fillStyle = "rgba(23,25,27,0.16)";
+      context.fillStyle = tc.dot;
       context.fillRect(x - 1, y - 1, 2, 2);
     });
+
+    const activeColor = tc.dark
+      ? (["#f8af99", "#ff9e88", "#ffd166", "#7ee8d5", "#d8b4e2", "#93c5fd"][region.rank - 1] || "#f8af99")
+      : color;
 
     rows.forEach(function (row) {
       if (row[0] !== selectedIndex) return;
       const x = margin.left + row[2] * plotWidth;
       const y = margin.top + (1 - row[1]) * plotHeight;
       context.beginPath();
-      context.arc(x, y, 2.1, 0, TAU);
-      context.fillStyle = color;
-      context.globalAlpha = progress * 0.82;
+      context.arc(x, y, 2.2, 0, TAU);
+      context.fillStyle = activeColor;
+      context.globalAlpha = progress * 0.92;
       context.fill();
     });
 
@@ -967,8 +991,8 @@
     const seedX = margin.left + seed.earth_fraction * plotWidth;
     const seedY = margin.top + (1 - seed.solar_fraction) * plotHeight;
     context.globalAlpha = progress;
-    context.strokeStyle = "#7d540d";
-    context.lineWidth = 1.5;
+    context.strokeStyle = tc.crosshair;
+    context.lineWidth = tc.dark ? 2 : 1.5;
     context.beginPath();
     context.arc(seedX, seedY, 5, 0, TAU);
     context.stroke();
@@ -980,7 +1004,7 @@
     context.stroke();
 
     context.globalAlpha = 1;
-    context.fillStyle = "#5b5a54";
+    context.fillStyle = tc.label;
     context.textAlign = "center";
     context.fillText("Earth visibility", margin.left + plotWidth / 2, height - 7);
     context.save();
@@ -1119,23 +1143,39 @@
     const step = plotWidth / bins;
     const barGap = Math.min(2, step * 0.18);
     const eased = clamp(progress == null ? 1 : progress, 0, 1);
+    const tc = chartColors();
 
     context.clearRect(0, 0, width, height);
+    if (tc.bg) {
+      context.fillStyle = tc.bg;
+      context.fillRect(0, 0, width, height);
+    }
 
-    context.strokeStyle = "rgba(23,25,27,0.14)";
+    context.strokeStyle = tc.axis;
     context.lineWidth = 1;
     context.beginPath();
     context.moveTo(margin.left, margin.top + plotHeight + 0.5);
     context.lineTo(margin.left + plotWidth, margin.top + plotHeight + 0.5);
     context.stroke();
 
+    const barColor = tc.dark
+      ? ({
+          score: "#f8af99",
+          solar: "#ffd166",
+          earth: "#7ee8d5",
+          slope: "#ff9e88",
+          dark:  "#d8b4e2",
+          psr:   "#93c5fd",
+        }[config.key] || "#f8af99")
+      : config.color;
+
     stats.bins.forEach(function (count, index) {
       if (!count) return;
       const barHeight = (count / maximum) * plotHeight * eased;
       const x = margin.left + index * step;
       const y = margin.top + plotHeight - barHeight;
-      context.fillStyle = config.color;
-      context.globalAlpha = 0.82;
+      context.fillStyle = barColor;
+      context.globalAlpha = tc.dark ? 0.9 : 0.82;
       context.fillRect(x + barGap / 2, y, Math.max(1, step - barGap), barHeight);
     });
     context.globalAlpha = 1;
@@ -1144,7 +1184,7 @@
       (stats.median - stats.low) / Math.max(1e-9, stats.high - stats.low);
     if (medianPosition >= 0 && medianPosition <= 1) {
       const x = margin.left + medianPosition * plotWidth;
-      context.strokeStyle = "rgba(23,25,27,0.55)";
+      context.strokeStyle = tc.median;
       context.setLineDash([3, 3]);
       context.beginPath();
       context.moveTo(x + 0.5, margin.top);
@@ -1154,7 +1194,7 @@
     }
 
     context.font = '9px "IBM Plex Mono", monospace';
-    context.fillStyle = "#5b5a54";
+    context.fillStyle = tc.label;
     context.textBaseline = "top";
     context.textAlign = "left";
     context.fillText(config.axis(stats.low), margin.left, margin.top + plotHeight + 5);
@@ -1222,7 +1262,8 @@
     base.height = Math.round(geometry.height * dpr);
     const context = base.getContext("2d");
     context.setTransform(dpr, 0, 0, dpr, 0, 0);
-    context.fillStyle = "#14181c";
+    var tc = chartColors();
+    context.fillStyle = tc.dark ? "#1e0e2e" : "#14181c";
     context.fillRect(0, 0, geometry.width, geometry.height);
 
     const left = geometry.left;
@@ -1236,13 +1277,13 @@
     context.font = '9px "IBM Plex Mono", monospace';
     context.textAlign = "left";
     context.textBaseline = "middle";
-    context.fillStyle = "#8f999a";
+    context.fillStyle = tc.dark ? "#ffffff" : "#8f999a";
     context.fillText(
       geometry.width < 560
-        ? "Sun / Earth availability · " + int(D.meta.timeline_rows) + " samples"
+      ? int(samples) + " epochs / region"
         : "Sun and direct Earth availability · " +
-            int(D.meta.timeline_rows) +
-            " aligned six-hour samples",
+          int(samples) +
+          " aligned six-hour epochs per region",
       left,
       12
     );
@@ -1251,23 +1292,23 @@
       const rowY = top + regionIndex * rowHeight;
       const selected = region.region_id === state.regionId;
       if (selected) {
-        context.fillStyle = "rgba(255,255,255,0.05)";
+        context.fillStyle = tc.dark ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.05)";
         context.fillRect(0, rowY, geometry.width, rowHeight);
-        context.fillStyle = "#dfa945";
+        context.fillStyle = tc.dark ? "#f8af99" : "#dfa945";
         context.fillRect(0, rowY, 3, rowHeight);
       }
 
       context.font = selected
         ? '500 10px "IBM Plex Mono", monospace'
         : '10px "IBM Plex Mono", monospace';
-      context.fillStyle = selected ? "#f1ecdf" : "#a9b2b2";
+      context.fillStyle = selected ? "#ffffff" : (tc.dark ? "rgba(255,255,255,0.85)" : "#a9b2b2");
       context.textAlign = "right";
       context.fillText("R" + region.rank, left - 12, rowY + rowHeight / 2);
 
       const bandHeight = Math.min(12, (rowHeight - 13) / 2);
       const sunY = rowY + 4;
       const earthY = sunY + bandHeight + 4;
-      context.fillStyle = "#20262a";
+      context.fillStyle = tc.dark ? "rgba(255,255,255,0.08)" : "#20262a";
       context.fillRect(left, sunY, plotWidth, bandHeight);
       context.fillRect(left, earthY, plotWidth, bandHeight);
 
@@ -1309,13 +1350,13 @@
     ticks.forEach(function (tick, tickIndex) {
       if (tickIndex % tickEvery !== 0 && tickIndex !== ticks.length - 1) return;
       const x = left + (tick.index / (samples - 1)) * plotWidth;
-      context.strokeStyle = "rgba(255,255,255,0.10)";
+      context.strokeStyle = tc.dark ? "rgba(255,255,255,0.22)" : "rgba(255,255,255,0.10)";
       context.lineWidth = 1;
       context.beginPath();
       context.moveTo(x + 0.5, top - 2);
       context.lineTo(x + 0.5, geometry.height - geometry.bottom + 2);
       context.stroke();
-      context.fillStyle = "#8f999a";
+      context.fillStyle = tc.dark ? "#ffffff" : "#8f999a";
       context.textAlign =
         x > left + plotWidth - 16
           ? "right"
@@ -1336,7 +1377,8 @@
     );
     const height = 300;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const key = [width, height, dpr, state.regionId].join("|");
+    const theme = document.documentElement.getAttribute("data-theme") || "light";
+    const key = [width, height, dpr, state.regionId, theme].join("|");
     if (TIMELINE.geometry && TIMELINE.baseKey === key) {
       return TIMELINE.geometry;
     }
@@ -1367,10 +1409,11 @@
   function drawTimelineFrame() {
     const geometry = ensureTimeline();
     if (!geometry) return;
+    const tc = chartColors();
     const context = TIMELINE.canvas.getContext("2d");
     context.setTransform(geometry.dpr, 0, 0, geometry.dpr, 0, 0);
     context.clearRect(0, 0, geometry.width, geometry.height);
-    context.fillStyle = "#14181c";
+    context.fillStyle = tc.dark ? "#1e0e2e" : "#14181c";
     context.fillRect(0, 0, geometry.width, geometry.height);
 
     const progress = clamp(TIMELINE.progress, 0, 1);
@@ -2262,6 +2305,157 @@
   }, 160);
 
   /* ---------------------------------------------------------------------
+     Theme Switcher & Starry Cosmos Background
+     Palette: #381a4b (void), #542668 (plum), #773575 (violet),
+              #e79198 (rose), #f8af99 (peach), #f3cdc8 (blush)
+     --------------------------------------------------------------------- */
+
+  function setupThemeSwitcher() {
+    const toggle = $("#theme-toggle");
+    const themeLabel = $("#theme-label");
+    const metaTheme = $('meta[name="theme-color"]');
+    const canvas = $("#starry-canvas");
+    if (!toggle || !canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    let animId = null;
+    let stars = [];
+    const STAR_COLORS = ["#f3cdc8", "#f8af99", "#ffffff", "#e79198", "#ffd5cc"];
+
+    function initStars() {
+      const w = (canvas.width = window.innerWidth);
+      const h = (canvas.height = window.innerHeight);
+      const count = window.innerWidth < 768 ? 95 : 220;
+      stars = [];
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: 0.6 + Math.random() * 1.5,
+          color: STAR_COLORS[Math.floor(Math.random() * STAR_COLORS.length)],
+          alpha: 0.25 + Math.random() * 0.75,
+          speed: 0.7 + Math.random() * 2.1,
+          phase: Math.random() * Math.PI * 2,
+          drift: (Math.random() - 0.5) * 0.08
+        });
+      }
+    }
+
+    function renderStars(now) {
+      if (!ctx) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const time = now * 0.001;
+      const w = canvas.width;
+      const h = canvas.height;
+
+      for (let i = 0; i < stars.length; i++) {
+        const s = stars[i];
+        s.y += s.drift;
+        if (s.y < 0) s.y = h;
+        if (s.y > h) s.y = 0;
+        const twinkle = 0.4 + 0.6 * (Math.sin(time * s.speed + s.phase) * 0.5 + 0.5);
+        ctx.globalAlpha = s.alpha * twinkle;
+        ctx.fillStyle = s.color;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Subtle cross flare on brightest stars
+        if (s.r > 1.6 && twinkle > 0.82) {
+          ctx.strokeStyle = s.color;
+          ctx.lineWidth = 0.5;
+          ctx.globalAlpha = 0.28 * twinkle;
+          ctx.beginPath();
+          ctx.moveTo(s.x - 4, s.y);
+          ctx.lineTo(s.x + 4, s.y);
+          ctx.moveTo(s.x, s.y - 4);
+          ctx.lineTo(s.x, s.y + 4);
+          ctx.stroke();
+        }
+      }
+      ctx.globalAlpha = 1;
+      animId = requestAnimationFrame(renderStars);
+    }
+
+    function startStarryAnimation() {
+      if (!animId) {
+        initStars();
+        animId = requestAnimationFrame(renderStars);
+      }
+    }
+
+    function stopStarryAnimation() {
+      if (animId) {
+        cancelAnimationFrame(animId);
+        animId = null;
+        if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+
+    function applyTheme(theme, save) {
+      if (save === undefined) save = true;
+      const isDark = theme === "dark";
+      if (isDark) {
+        document.documentElement.setAttribute("data-theme", "dark");
+        if (metaTheme) metaTheme.content = "#381a4b";
+        toggle.setAttribute("aria-pressed", "true");
+        if (themeLabel) themeLabel.textContent = "Light";
+        startStarryAnimation();
+      } else {
+        document.documentElement.removeAttribute("data-theme");
+        if (metaTheme) metaTheme.content = "#e9e3d6";
+        toggle.setAttribute("aria-pressed", "false");
+        if (themeLabel) themeLabel.textContent = "Dark";
+        stopStarryAnimation();
+      }
+      if (save) {
+        try {
+          localStorage.setItem("lunaria-theme", theme);
+        } catch (_) {}
+      }
+
+      // Sync with embedded Three.js simulation iframe
+      const visFrame = document.querySelector(".vis-frame-wrapper iframe");
+      if (visFrame && visFrame.contentWindow) {
+        visFrame.contentWindow.postMessage({ type: "set-theme", theme: theme }, "*");
+      }
+
+      // Re-render canvases to match new theme contrast
+      if (typeof drawScatter === "function") drawScatter();
+      if (typeof DIST_CONFIG !== "undefined") {
+        DIST_CONFIG.forEach(function (config) {
+          if (typeof drawDistribution === "function") {
+            drawDistribution(config.key, distProgress.get(config.key) || 1);
+          }
+        });
+      }
+      if (typeof drawTimelineFrame === "function") drawTimelineFrame();
+    }
+
+    toggle.addEventListener("click", function () {
+      const current = document.documentElement.getAttribute("data-theme");
+      applyTheme(current === "dark" ? "light" : "dark");
+    });
+
+    window.addEventListener(
+      "resize",
+      debounce(function () {
+        if (document.documentElement.getAttribute("data-theme") === "dark") {
+          initStars();
+        }
+      }, 200)
+    );
+
+    // Initial state
+    const saved = localStorage.getItem("lunaria-theme");
+    if (saved === "dark") {
+      applyTheme("dark", false);
+    } else {
+      applyTheme("light", false);
+    }
+  }
+
+  /* ---------------------------------------------------------------------
      Boot
      --------------------------------------------------------------------- */
 
@@ -2279,6 +2473,7 @@
     applyRegionSelection();
 
     setupScrollSpy();
+    setupThemeSwitcher();
     window.addEventListener("resize", handleResize);
   }
 

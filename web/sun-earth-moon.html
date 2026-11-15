@@ -1,0 +1,1612 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#e9e3d6">
+  <meta name="description" content="Interactive 3D Moon System and South Polar Landing Site Survey. Procedural lunar cartography with candidate regions R1 through R6.">
+  <title>Lunaria · 3D Moon System &amp; South Polar Survey</title>
+  <style>
+    @font-face {
+      font-family: "Bricolage Grotesque";
+      src: url("assets/fonts/bricolage-grotesque-latin.woff2") format("woff2");
+      font-weight: 200 800;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Instrument Sans";
+      src: url("assets/fonts/instrument-sans-latin.woff2") format("woff2");
+      font-weight: 400 700;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "IBM Plex Mono";
+      src: url("assets/fonts/ibm-plex-mono-400-latin.woff2") format("woff2");
+      font-weight: 400;
+      font-display: swap;
+    }
+
+    :root {
+      color-scheme: light;
+      --font-sans: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-display: "Bricolage Grotesque", var(--font-sans);
+      --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+      /* Light Theme (Papyrus & Deep Aerospace Blue) */
+      --bg-base: #e9e3d6;
+      --bg-surface: rgba(243, 238, 227, 0.88);
+      --bg-card: rgba(255, 255, 255, 0.72);
+      --border: rgba(23, 25, 27, 0.14);
+      --border-strong: rgba(23, 25, 27, 0.32);
+      --ink: #17191b;
+      --ink-soft: #45474a;
+      --muted: #5b5a54;
+      --accent: #0b3d91;
+      --accent-glow: #1a56b8;
+      --accent-soft: rgba(11, 61, 145, 0.12);
+      --winner-gold: #c27803;
+      --winner-soft: rgba(194, 120, 3, 0.15);
+      --shadow: 0 12px 36px rgba(23, 25, 27, 0.12);
+      --canvas-bg: #e9e3d6;
+      --dock-bg: rgba(243, 238, 227, 0.92);
+      --pill-bg: rgba(23, 25, 27, 0.06);
+      --pill-hover: rgba(11, 61, 145, 0.12);
+      --kbd-bg: rgba(23, 25, 27, 0.08);
+    }
+
+    [data-theme="dark"] {
+      color-scheme: dark;
+      /* Dark Theme (User Twilight Plum & Apricot Glow Palette) */
+      --bg-base: #1a0b26;
+      --bg-surface: rgba(48, 20, 68, 0.88);
+      --bg-card: rgba(56, 26, 75, 0.72);
+      --border: rgba(248, 175, 153, 0.22);
+      --border-strong: rgba(248, 175, 153, 0.45);
+      --ink: #f3cdc8;
+      --ink-soft: #f8af99;
+      --muted: #e79198;
+      --accent: #f8af99;
+      --accent-glow: #ffd166;
+      --accent-soft: rgba(248, 175, 153, 0.18);
+      --winner-gold: #ffd166;
+      --winner-soft: rgba(255, 209, 102, 0.22);
+      --shadow: 0 16px 44px rgba(0, 0, 0, 0.65);
+      --canvas-bg: #140720;
+      --dock-bg: rgba(36, 14, 50, 0.92);
+      --pill-bg: rgba(248, 175, 153, 0.1);
+      --pill-hover: rgba(248, 175, 153, 0.24);
+      --kbd-bg: rgba(248, 175, 153, 0.16);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: var(--bg-base);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      line-height: 1.45;
+      user-select: none;
+      -webkit-user-select: none;
+      transition: background 500ms ease, color 500ms ease;
+    }
+
+    /* 3D Canvas Container */
+    #viewport-container {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    canvas#webgl {
+      display: block;
+      width: 100%;
+      height: 100%;
+      outline: none;
+    }
+
+    /* Top HUD Bar */
+    .hud-header {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      right: 14px;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      pointer-events: none;
+    }
+
+    .hud-brand {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 14px;
+      background: var(--bg-surface);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+    }
+    .hud-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 13px;
+      transition: opacity 160ms ease;
+    }
+    .hud-back:hover { opacity: 0.75; }
+    .hud-divider {
+      width: 1px;
+      height: 16px;
+      background: var(--border-strong);
+    }
+    .hud-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+    .hud-title small {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 400;
+      margin-left: 6px;
+    }
+
+    .hud-actions {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hud-pill-group {
+      display: flex;
+      align-items: center;
+      background: var(--bg-surface);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 4px;
+      box-shadow: var(--shadow);
+      gap: 2px;
+    }
+    .hud-btn {
+      appearance: none;
+      background: transparent;
+      border: none;
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 550;
+      padding: 6px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 180ms ease;
+      white-space: nowrap;
+    }
+    .hud-btn:hover {
+      background: var(--pill-hover);
+      color: var(--accent);
+    }
+    .hud-btn.is-active {
+      background: var(--accent);
+      color: #fff;
+    }
+    [data-theme="dark"] .hud-btn.is-active {
+      color: #1a0b26;
+      font-weight: 700;
+    }
+
+    .theme-toggle-btn {
+      appearance: none;
+      background: var(--bg-surface);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--ink);
+      padding: 8px 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      box-shadow: var(--shadow);
+      transition: all 180ms ease;
+    }
+    .theme-toggle-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* Left Drawer: Candidate Inspector */
+    .inspector-panel {
+      position: absolute;
+      top: 76px;
+      left: 14px;
+      width: 320px;
+      max-width: calc(100vw - 28px);
+      z-index: 20;
+      background: var(--bg-surface);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform 300ms ease, opacity 300ms ease;
+    }
+
+    .inspector-panel.is-collapsed {
+      transform: translateX(calc(-100% - 20px));
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    .inspector-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .inspector-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+    .inspector-title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+    .score-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      background: var(--winner-soft);
+      border: 1px solid var(--winner-gold);
+      padding: 4px 8px;
+      border-radius: 8px;
+    }
+    .score-val {
+      font-family: var(--font-mono);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--winner-gold);
+      line-height: 1;
+    }
+    .score-sub {
+      font-size: 9px;
+      font-family: var(--font-mono);
+      color: var(--ink-soft);
+      margin-top: 2px;
+    }
+
+    /* Candidate Region Pills (R1 - R6) */
+    .region-pills {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 4px;
+      background: var(--pill-bg);
+      padding: 4px;
+      border-radius: 8px;
+    }
+    .pill-btn {
+      appearance: none;
+      background: transparent;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 2px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--ink-soft);
+      cursor: pointer;
+      text-align: center;
+      transition: all 150ms ease;
+    }
+    .pill-btn:hover {
+      background: var(--pill-hover);
+      color: var(--accent);
+    }
+    .pill-btn.is-selected {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    [data-theme="dark"] .pill-btn.is-selected {
+      color: #1a0b26;
+      font-weight: 700;
+    }
+
+    /* Metrics Grid */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .metric-cell {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .metric-cell.wide {
+      grid-column: span 2;
+    }
+    .metric-lbl {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+    }
+    .metric-num {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .metric-bar {
+      height: 4px;
+      background: var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+    .metric-bar-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 999px;
+      transition: width 400ms ease;
+    }
+
+    .focus-site-btn {
+      appearance: none;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 9px 14px;
+      border-radius: 8px;
+      font-family: var(--font-sans);
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+      transition: all 180ms ease;
+    }
+    [data-theme="dark"] .focus-site-btn {
+      color: #1a0b26;
+    }
+    .focus-site-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    /* Bottom Dock Bar */
+    .hud-dock {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      right: 14px;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      pointer-events: none;
+    }
+
+    .dock-controls {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--dock-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 14px;
+      box-shadow: var(--shadow);
+      font-size: 12px;
+    }
+    .dock-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      color: var(--ink-soft);
+      font-weight: 500;
+      user-select: none;
+    }
+    .dock-toggle input[type="checkbox"] {
+      cursor: pointer;
+      accent-color: var(--accent);
+    }
+    .dock-slider-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: 8px;
+      padding-left: 8px;
+      border-left: 1px solid var(--border);
+    }
+    .dock-slider-group input[type="range"] {
+      width: 90px;
+      cursor: pointer;
+      accent-color: var(--accent);
+    }
+
+    .dock-shortcuts {
+      pointer-events: auto;
+      background: var(--dock-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 14px;
+      box-shadow: var(--shadow);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    kbd {
+      background: var(--kbd-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      color: var(--ink);
+    }
+
+    /* Marker 2D Tooltip */
+    #marker-tooltip {
+      position: absolute;
+      z-index: 50;
+      pointer-events: none;
+      background: var(--bg-surface);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-strong);
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      box-shadow: var(--shadow);
+      transform: translate(-50%, -120%);
+      opacity: 0;
+      transition: opacity 150ms ease;
+      white-space: nowrap;
+    }
+    #marker-tooltip.is-visible {
+      opacity: 1;
+    }
+    #marker-tooltip strong {
+      color: var(--accent);
+      display: block;
+      font-size: 12px;
+      font-family: var(--font-sans);
+    }
+
+    /* Loading Screen */
+    #loading-screen {
+      position: absolute;
+      inset: 0;
+      z-index: 100;
+      background: var(--bg-base);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      transition: opacity 500ms ease, visibility 500ms ease;
+    }
+    #loading-screen.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .loading-spinner {
+      width: 44px;
+      height: 44px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 800ms linear infinite;
+    }
+    .loading-text {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 860px) {
+      .inspector-panel {
+        width: calc(100vw - 28px);
+        top: auto;
+        bottom: 64px;
+        max-height: 45vh;
+        overflow-y: auto;
+      }
+      .hud-dock {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .dock-shortcuts { display: none; }
+      .dock-controls { justify-content: center; overflow-x: auto; }
+      .hud-actions .hud-btn span.label-text { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading Splash Screen -->
+  <div id="loading-screen">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Synthesizing Lunar Surface &amp; South Polar Survey…</div>
+  </div>
+
+  <!-- 3D Canvas Container -->
+  <div id="viewport-container">
+    <canvas id="webgl"></canvas>
+  </div>
+
+  <!-- 2D Marker Hover Tooltip -->
+  <div id="marker-tooltip">
+    <strong id="tt-title">Candidate Region 1</strong>
+    <span id="tt-sub">85.43°S, 10.53°W · Score 60.1</span>
+  </div>
+
+  <!-- Header HUD -->
+  <header class="hud-header">
+    <div class="hud-brand">
+      <a href="index.html#visualisation" class="hud-back" title="Return to Lunaria Survey Atlas">← Back to Atlas</a>
+      <div class="hud-divider"></div>
+      <div class="hud-title">Lunaria · Moon System 3D <small>80°–90°S Survey</small></div>
+    </div>
+
+    <div class="hud-actions">
+      <div class="hud-pill-group">
+        <button class="hud-btn" id="btn-view-pole" title="Overhead South Pole view (80°–90°S)">
+          <span>🔭</span><span class="label-text">South Pole</span>
+        </button>
+        <button class="hud-btn is-active" id="btn-view-global" title="Full lunar disk view">
+          <span>🌕</span><span class="label-text">Global</span>
+        </button>
+        <button class="hud-btn" id="btn-view-equator" title="Equatorial horizon view">
+          <span>🌐</span><span class="label-text">Equator</span>
+        </button>
+      </div>
+
+      <button class="theme-toggle-btn" id="btn-theme-toggle" title="Toggle Light / Dark mode">
+        <span id="theme-icon">◐</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Left Drawer: Candidate Region Inspector -->
+  <aside class="inspector-panel" id="inspector">
+    <div class="inspector-head">
+      <div>
+        <div class="inspector-tag">Screening Rank #<span id="insp-rank">1</span> · Candidate Region</div>
+        <h2 class="inspector-title" id="insp-title">Candidate Region 1</h2>
+      </div>
+      <div class="score-badge">
+        <div class="score-val" id="insp-score">60.1</div>
+        <div class="score-sub">Top-1 Score</div>
+      </div>
+    </div>
+
+    <!-- 6 Candidate Pills -->
+    <div class="region-pills" role="tablist">
+      <button class="pill-btn is-selected" data-region="1">R1</button>
+      <button class="pill-btn" data-region="2">R2</button>
+      <button class="pill-btn" data-region="3">R3</button>
+      <button class="pill-btn" data-region="4">R4</button>
+      <button class="pill-btn" data-region="5">R5</button>
+      <button class="pill-btn" data-region="6">R6</button>
+    </div>
+
+    <!-- Metrics Grid -->
+    <div class="metrics-grid">
+      <div class="metric-cell">
+        <span class="metric-lbl">Coordinates</span>
+        <span class="metric-num" id="insp-coords">85.43°S, 10.53°W</span>
+      </div>
+      <div class="metric-cell">
+        <span class="metric-lbl">Elevation</span>
+        <span class="metric-num" id="insp-elev">+1,402 m</span>
+      </div>
+
+      <div class="metric-cell">
+        <span class="metric-lbl">Solar Illumination</span>
+        <span class="metric-num" id="insp-solar">42.4%</span>
+        <div class="metric-bar"><div class="metric-bar-fill" id="bar-solar" style="width: 42.4%"></div></div>
+      </div>
+      <div class="metric-cell">
+        <span class="metric-lbl">Earth Visibility</span>
+        <span class="metric-num" id="insp-earth">95.6%</span>
+        <div class="metric-bar"><div class="metric-bar-fill" id="bar-earth" style="width: 95.6%"></div></div>
+      </div>
+
+      <div class="metric-cell">
+        <span class="metric-lbl">Terrain Slope (p90)</span>
+        <span class="metric-num" id="insp-slope">7.9°</span>
+      </div>
+      <div class="metric-cell">
+        <span class="metric-lbl">PSR Edge Dist.</span>
+        <span class="metric-num" id="insp-psr">2.60 km</span>
+      </div>
+
+      <div class="metric-cell wide">
+        <span class="metric-lbl">Top-1 Bayesian Probability</span>
+        <span class="metric-num" id="insp-prob">39.0% probability</span>
+      </div>
+    </div>
+
+    <button class="focus-site-btn" id="btn-focus-site">
+      <span>🎯</span> Focus Camera on Candidate
+    </button>
+  </aside>
+
+  <!-- Bottom Dock Controls -->
+  <footer class="hud-dock">
+    <div class="dock-controls">
+      <label class="dock-toggle">
+        <input type="checkbox" id="chk-grid" checked>
+        <span>Polar Grid</span>
+      </label>
+      <label class="dock-toggle">
+        <input type="checkbox" id="chk-markers" checked>
+        <span>Candidate Markers</span>
+      </label>
+      <label class="dock-toggle">
+        <input type="checkbox" id="chk-rotate">
+        <span>Auto-Rotate</span>
+      </label>
+
+      <div class="dock-slider-group" title="Adjust Sun azimuth to simulate grazing solar shadow relief">
+        <span>☀️ Sun Azimuth</span>
+        <input type="range" id="rng-sun" min="0" max="360" value="45">
+      </div>
+    </div>
+
+    <div class="dock-shortcuts">
+      <span><kbd>1</kbd>–<kbd>6</kbd> Select Region</span>
+      <span><kbd>P</kbd> South Pole</span>
+      <span><kbd>R</kbd> Reset</span>
+      <span><kbd>Space</kbd> Rotate</span>
+      <span><kbd>T</kbd> Theme</span>
+    </div>
+  </footer>
+
+  <!-- Three.js Import Map -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.168.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.168.0/examples/jsm/"
+      }
+    }
+  </script>
+
+  <!-- Application Logic -->
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+    /* ── Candidate Region Data (Screening & Seed Coordinates) ── */
+    const CANDIDATES = [
+      {
+        id: 1,
+        code: "R1",
+        label: "Candidate Region 1",
+        rank: 1,
+        score: "60.1",
+        lat: -85.434,
+        lon: -10.527,
+        elevation: "+1,402 m",
+        solar: 42.4,
+        earth: 95.6,
+        slope: "7.9°",
+        psr: "2.60 km",
+        prob: "39.0%",
+        color: 0xf8af99,
+        seed: "polar-region-r167-c278-fine-r1130-c1877"
+      },
+      {
+        id: 2,
+        code: "R2",
+        label: "Candidate Region 2",
+        rank: 2,
+        score: "59.1",
+        lat: -86.063,
+        lon: 73.502,
+        elevation: "+959 m",
+        solar: 42.6,
+        earth: 54.8,
+        slope: "5.0°",
+        psr: "1.47 km",
+        prob: "38.5%",
+        color: 0xff9e88,
+        seed: "polar-region-r266-c417-fine-r1819-c2819"
+      },
+      {
+        id: 3,
+        code: "R3",
+        label: "Candidate Region 3",
+        rank: 3,
+        score: "58.2",
+        lat: -84.130,
+        lon: 40.505,
+        elevation: "+5,829 m",
+        solar: 48.0,
+        earth: 76.2,
+        slope: "5.2°",
+        psr: "3.14 km",
+        prob: "3.1%",
+        color: 0x7ee8d5,
+        seed: "polar-region-r165-c419-fine-r1135-c2827"
+      },
+      {
+        id: 4,
+        code: "R4",
+        label: "Candidate Region 4",
+        rank: 4,
+        score: "58.0",
+        lat: -84.272,
+        lon: 43.997,
+        elevation: "+6,009 m",
+        solar: 47.4,
+        earth: 55.6,
+        slope: "5.7°",
+        psr: "2.98 km",
+        prob: "7.3%",
+        color: 0xd8b4e2,
+        seed: "polar-region-r178-c423-fine-r1205-c2861"
+      },
+      {
+        id: 5,
+        code: "R5",
+        label: "Candidate Region 5",
+        rank: 5,
+        score: "57.5",
+        lat: -85.333,
+        lon: -14.976,
+        elevation: "+1,408 m",
+        solar: 39.5,
+        earth: 78.4,
+        slope: "5.3°",
+        psr: "4.77 km",
+        prob: "0.0%",
+        color: 0xffb380,
+        seed: "polar-region-r167-c266-fine-r1126-c1801"
+      },
+      {
+        id: 6,
+        code: "R6",
+        label: "Candidate Region 6",
+        rank: 6,
+        score: "51.4",
+        lat: -86.578,
+        lon: 77.405,
+        elevation: "+638 m",
+        solar: 24.1,
+        earth: 53.3,
+        slope: "4.4°",
+        psr: "5.93 km",
+        prob: "12.1%",
+        color: 0x93c5fd,
+        seed: "polar-region-r281-c404-fine-r1895-c2730"
+      }
+    ];
+
+    /* ── Global State ── */
+    const MOON_RADIUS = 10;
+    let currentTheme = localStorage.getItem("lunaria-theme") || "light";
+    let selectedCandidate = CANDIDATES[0];
+    let autoRotate = false;
+    let showGrid = true;
+    let showMarkers = true;
+    let sunAzimuthDeg = 45;
+
+    // Three.js Objects
+    let scene, camera, renderer, controls;
+    let moonMesh, moonGroup, polarGridGroup, markersGroup, starsPoints;
+    let sunLight, earthshineLight, ambientLight;
+    let raycaster, mouse;
+    let markerInteractables = [];
+    let hoveredMarker = null;
+
+    // Camera animation tween state
+    let isCameraAnimating = false;
+    let cameraAnim = {
+      startTime: 0,
+      duration: 1200,
+      startPos: new THREE.Vector3(),
+      targetPos: new THREE.Vector3(),
+      startLookAt: new THREE.Vector3(),
+      targetLookAt: new THREE.Vector3()
+    };
+    let currentLookAt = new THREE.Vector3(0, 0, 0);
+
+    /* ── Coordinate Transformation: Spherical to Cartesian ── */
+    function latLonToVector3(latDeg, lonDeg, radius = MOON_RADIUS, alt = 0.05) {
+      const phi = (90 - latDeg) * (Math.PI / 180);
+      const theta = (lonDeg + 180) * (Math.PI / 180);
+      const r = radius + alt;
+      return new THREE.Vector3(
+        -r * Math.sin(phi) * Math.cos(theta),
+        r * Math.cos(phi),
+        r * Math.sin(phi) * Math.sin(theta)
+      );
+    }
+
+    /* ── Procedural Moon Texture Generation (Canvas 2D) ── */
+    function generateMoonTextures() {
+      const width = 2048;
+      const height = 1024;
+
+      const diffCanvas = document.createElement("canvas");
+      diffCanvas.width = width;
+      diffCanvas.height = height;
+      const diffCtx = diffCanvas.getContext("2d");
+
+      const bumpCanvas = document.createElement("canvas");
+      bumpCanvas.width = width;
+      bumpCanvas.height = height;
+      const bumpCtx = bumpCanvas.getContext("2d");
+
+      // 1. Base Regolith (Silvery-gray lunar crust)
+      diffCtx.fillStyle = "#9c9a95";
+      diffCtx.fillRect(0, 0, width, height);
+      bumpCtx.fillStyle = "#808080";
+      bumpCtx.fillRect(0, 0, width, height);
+
+      // Micro-noise stippling
+      const imgData = diffCtx.getImageData(0, 0, width, height);
+      const bumpData = bumpCtx.getImageData(0, 0, width, height);
+      const d = imgData.data;
+      const bd = bumpData.data;
+      for (let i = 0; i < d.length; i += 4) {
+        const noise = (Math.random() - 0.5) * 28;
+        d[i] = Math.min(255, Math.max(0, d[i] + noise));
+        d[i + 1] = Math.min(255, Math.max(0, d[i + 1] + noise));
+        d[i + 2] = Math.min(255, Math.max(0, d[i + 2] + noise));
+        bd[i] = Math.min(255, Math.max(0, bd[i] + noise * 1.5));
+        bd[i + 1] = bd[i];
+        bd[i + 2] = bd[i];
+      }
+      diffCtx.putImageData(imgData, 0, 0);
+      bumpCtx.putImageData(bumpData, 0, 0);
+
+      // Helper to map lat/lon to canvas (x, y)
+      function toCanvas(lat, lon) {
+        return {
+          x: ((lon + 180) / 360) * width,
+          y: ((90 - lat) / 180) * height
+        };
+      }
+
+      // 2. Draw Major Lunar Maria (Dark basalt volcanic plains)
+      const maria = [
+        { name: "Oceanus Procellarum", lat: 20, lon: -55, rx: 240, ry: 190, rot: -0.2 },
+        { name: "Mare Imbrium", lat: 35, lon: -17, rx: 140, ry: 120, rot: 0.1 },
+        { name: "Mare Serenitatis", lat: 28, lon: 17, rx: 110, ry: 95, rot: 0 },
+        { name: "Mare Tranquillitatis", lat: 8, lon: 31, rx: 125, ry: 110, rot: 0.2 },
+        { name: "Mare Crisium", lat: 17, lon: 59, rx: 80, ry: 70, rot: 0 },
+        { name: "Mare Fecunditatis", lat: -8, lon: 51, rx: 100, ry: 110, rot: 0.1 },
+        { name: "Mare Nectaris", lat: -15, lon: 35, rx: 65, ry: 60, rot: 0 },
+        { name: "Mare Nubium", lat: -21, lon: -16, rx: 110, ry: 90, rot: -0.1 },
+        { name: "Mare Humorum", lat: -24, lon: -38, rx: 70, ry: 65, rot: 0 },
+        { name: "South Pole - Aitken", lat: -53, lon: 170, rx: 220, ry: 170, rot: 0.3 }
+      ];
+
+      maria.forEach(m => {
+        const pt = toCanvas(m.lat, m.lon);
+        // Diffuse darker patch
+        diffCtx.save();
+        diffCtx.translate(pt.x, pt.y);
+        diffCtx.rotate(m.rot);
+        const grad = diffCtx.createRadialGradient(0, 0, 10, 0, 0, m.rx);
+        grad.addColorStop(0, "rgba(55, 54, 52, 0.88)");
+        grad.addColorStop(0.65, "rgba(70, 68, 65, 0.65)");
+        grad.addColorStop(1, "rgba(156, 154, 149, 0)");
+        diffCtx.fillStyle = grad;
+        diffCtx.beginPath();
+        diffCtx.ellipse(0, 0, m.rx, m.ry, 0, 0, Math.PI * 2);
+        diffCtx.fill();
+        diffCtx.restore();
+
+        // Bump slight depression
+        bumpCtx.save();
+        bumpCtx.translate(pt.x, pt.y);
+        bumpCtx.rotate(m.rot);
+        const bgrad = bumpCtx.createRadialGradient(0, 0, 10, 0, 0, m.rx);
+        bgrad.addColorStop(0, "rgba(80, 80, 80, 0.85)");
+        bgrad.addColorStop(1, "rgba(128, 128, 128, 0)");
+        bumpCtx.fillStyle = bgrad;
+        bumpCtx.beginPath();
+        bumpCtx.ellipse(0, 0, m.rx, m.ry, 0, 0, Math.PI * 2);
+        bumpCtx.fill();
+        bumpCtx.restore();
+      });
+
+      // 3. Draw Procedural Craters with Rims and Shadows
+      function drawCrater(lat, lon, r, hasRays = false) {
+        const pt = toCanvas(lat, lon);
+
+        // Rays (e.g. Tycho/Copernicus ray systems)
+        if (hasRays) {
+          diffCtx.save();
+          diffCtx.translate(pt.x, pt.y);
+          diffCtx.strokeStyle = "rgba(235, 235, 230, 0.35)";
+          diffCtx.lineWidth = 1.5;
+          for (let a = 0; a < Math.PI * 2; a += Math.PI / 10) {
+            const rayLen = r * (10 + Math.random() * 20);
+            diffCtx.beginPath();
+            diffCtx.moveTo(0, 0);
+            diffCtx.lineTo(Math.cos(a) * rayLen, Math.sin(a) * rayLen);
+            diffCtx.stroke();
+          }
+          diffCtx.restore();
+        }
+
+        // Diffuse Crater
+        const cgrad = diffCtx.createRadialGradient(pt.x, pt.y, r * 0.1, pt.x, pt.y, r * 1.3);
+        cgrad.addColorStop(0, "#585652");
+        cgrad.addColorStop(0.7, "#6a6864");
+        cgrad.addColorStop(0.85, "#dfddd8"); // Bright rim
+        cgrad.addColorStop(1, "rgba(156, 154, 149, 0)");
+        diffCtx.fillStyle = cgrad;
+        diffCtx.beginPath();
+        diffCtx.arc(pt.x, pt.y, r * 1.3, 0, Math.PI * 2);
+        diffCtx.fill();
+
+        // Bump: elevated rim (white), depressed floor (black)
+        const bgrad = bumpCtx.createRadialGradient(pt.x, pt.y, r * 0.1, pt.x, pt.y, r * 1.3);
+        bgrad.addColorStop(0, "#282828");
+        bgrad.addColorStop(0.7, "#404040");
+        bgrad.addColorStop(0.85, "#ffffff"); // High elevation rim
+        bgrad.addColorStop(1, "#808080");
+        bumpCtx.fillStyle = bgrad;
+        bumpCtx.beginPath();
+        bumpCtx.arc(pt.x, pt.y, r * 1.3, 0, Math.PI * 2);
+        bumpCtx.fill();
+      }
+
+      // Prominent Craters
+      drawCrater(-43.3, -11.2, 22, true);  // Tycho (with bright rays)
+      drawCrater(9.6, -20.1, 24, true);    // Copernicus
+      drawCrater(8.1, -38.0, 14, true);    // Kepler
+      drawCrater(-58.4, -14.4, 30, false); // Clavius
+      drawCrater(-70.6, -5.8, 20, false);  // Moretus
+      drawCrater(-84.5, 82.8, 16, false);  // Amundsen (near polar)
+      drawCrater(-82.1, 48.5, 14, false);  // Scott
+      drawCrater(-89.9, 0.0, 12, false);   // Shackleton (South Pole!)
+
+      // Dense South Polar crater field (80°S - 90°S)
+      for (let i = 0; i < 90; i++) {
+        const plat = -80 - Math.random() * 9.8;
+        const plon = (Math.random() - 0.5) * 360;
+        const pr = 4 + Math.random() * 11;
+        drawCrater(plat, plon, pr);
+      }
+
+      // Random global craters
+      for (let i = 0; i < 400; i++) {
+        const lat = (Math.random() - 0.5) * 160;
+        const lon = (Math.random() - 0.5) * 360;
+        const r = 2 + Math.random() * 8;
+        drawCrater(lat, lon, r);
+      }
+
+      const diffTex = new THREE.CanvasTexture(diffCanvas);
+      diffTex.colorSpace = THREE.SRGBColorSpace;
+      diffTex.wrapS = THREE.RepeatWrapping;
+      diffTex.wrapT = THREE.ClampToEdgeWrapping;
+
+      const bumpTex = new THREE.CanvasTexture(bumpCanvas);
+      bumpTex.wrapS = THREE.RepeatWrapping;
+      bumpTex.wrapT = THREE.ClampToEdgeWrapping;
+
+      return { diffTex, bumpTex };
+    }
+
+    /* ── South Polar Exploration Grid (80°–90°S) ── */
+    function createPolarGrid() {
+      const group = new THREE.Group();
+      group.name = "PolarGrid";
+
+      // 1. Boundary Ring at 80°S (Highlighted perimeter)
+      const ring80Geo = new THREE.BufferGeometry();
+      const ring80Pts = [];
+      for (let i = 0; i <= 128; i++) {
+        const lon = (i / 128) * 360 - 180;
+        ring80Pts.push(latLonToVector3(-80, lon, MOON_RADIUS, 0.04));
+      }
+      ring80Geo.setFromPoints(ring80Pts);
+      const ring80Mat = new THREE.LineBasicMaterial({
+        color: currentTheme === "dark" ? 0xf8af99 : 0x0b3d91,
+        linewidth: 2,
+        transparent: true,
+        opacity: 0.85
+      });
+      const ring80 = new THREE.Line(ring80Geo, ring80Mat);
+      group.add(ring80);
+
+      // 2. Latitude rings for 82°S, 84°S, 86°S, 88°S
+      const subLats = [-82, -84, -86, -88];
+      subLats.forEach(lat => {
+        const geo = new THREE.BufferGeometry();
+        const pts = [];
+        for (let i = 0; i <= 96; i++) {
+          const lon = (i / 96) * 360 - 180;
+          pts.push(latLonToVector3(lat, lon, MOON_RADIUS, 0.02));
+        }
+        geo.setFromPoints(pts);
+        const mat = new THREE.LineBasicMaterial({
+          color: currentTheme === "dark" ? 0xe79198 : 0x5b5a54,
+          transparent: true,
+          opacity: 0.35
+        });
+        group.add(new THREE.Line(geo, mat));
+      });
+
+      // 3. Meridian Spokes from 80°S down to 90°S
+      for (let m = 0; m < 360; m += 45) {
+        const geo = new THREE.BufferGeometry();
+        const pts = [];
+        for (let lat = -80; lat >= -90; lat -= 1) {
+          pts.push(latLonToVector3(lat, m, MOON_RADIUS, 0.02));
+        }
+        geo.setFromPoints(pts);
+        const mat = new THREE.LineBasicMaterial({
+          color: currentTheme === "dark" ? 0xe79198 : 0x5b5a54,
+          transparent: true,
+          opacity: 0.3
+        });
+        group.add(new THREE.Line(geo, mat));
+      }
+
+      // 4. Glowing South Pole (90°S) Pin Marker
+      const poleGeo = new THREE.SphereGeometry(0.12, 16, 16);
+      const poleMat = new THREE.MeshBasicMaterial({
+        color: currentTheme === "dark" ? 0xffd166 : 0xc27803
+      });
+      const poleMesh = new THREE.Mesh(poleGeo, poleMat);
+      poleMesh.position.copy(latLonToVector3(-90, 0, MOON_RADIUS, 0.08));
+      group.add(poleMesh);
+
+      return group;
+    }
+
+    /* ── Candidate Region 3D Markers (R1 through R6) ── */
+    function createCandidateMarkers() {
+      const group = new THREE.Group();
+      group.name = "CandidateMarkers";
+      markerInteractables = [];
+
+      CANDIDATES.forEach(cand => {
+        const mGroup = new THREE.Group();
+        mGroup.userData = { candidate: cand };
+
+        const surfacePos = latLonToVector3(cand.lat, cand.lon, MOON_RADIUS, 0.02);
+        const normal = surfacePos.clone().normalize();
+
+        // Base ground ring flat against surface
+        const ringGeo = new THREE.RingGeometry(0.18, 0.26, 32);
+        const ringMat = new THREE.MeshBasicMaterial({
+          color: cand.color,
+          side: THREE.DoubleSide,
+          transparent: true,
+          opacity: 0.8
+        });
+        const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+        ringMesh.position.copy(surfacePos);
+        ringMesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), normal);
+        mGroup.add(ringMesh);
+
+        // Vertical Beacon Stem
+        const stemHeight = 0.85;
+        const stemGeo = new THREE.CylinderGeometry(0.035, 0.035, stemHeight, 16);
+        const stemMat = new THREE.MeshBasicMaterial({
+          color: cand.color,
+          transparent: true,
+          opacity: 0.95
+        });
+        const stemMesh = new THREE.Mesh(stemGeo, stemMat);
+        // Position midway along stem
+        stemMesh.position.copy(surfacePos).add(normal.clone().multiplyScalar(stemHeight / 2));
+        stemMesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), normal);
+        mGroup.add(stemMesh);
+
+        // Top Beacon Head (Octahedron diamond)
+        const headGeo = new THREE.OctahedronGeometry(0.18, 0);
+        const headMat = new THREE.MeshBasicMaterial({
+          color: cand.color
+        });
+        const headMesh = new THREE.Mesh(headGeo, headMat);
+        const headPos = surfacePos.clone().add(normal.clone().multiplyScalar(stemHeight + 0.12));
+        headMesh.position.copy(headPos);
+        mGroup.add(headMesh);
+
+        // 2D Billboard Sprite Label (R1..R6)
+        const spriteCanvas = document.createElement("canvas");
+        spriteCanvas.width = 128;
+        spriteCanvas.height = 64;
+        const sctx = spriteCanvas.getContext("2d");
+        sctx.fillStyle = currentTheme === "dark" ? "rgba(56, 26, 75, 0.92)" : "rgba(243, 238, 227, 0.92)";
+        sctx.strokeStyle = "#" + cand.color.toString(16).padStart(6, "0");
+        sctx.lineWidth = 4;
+        sctx.beginPath();
+        sctx.roundRect(8, 8, 112, 48, 12);
+        sctx.fill();
+        sctx.stroke();
+
+        sctx.fillStyle = currentTheme === "dark" ? "#f3cdc8" : "#17191b";
+        sctx.font = "bold 28px 'IBM Plex Mono', monospace";
+        sctx.textAlign = "center";
+        sctx.textBaseline = "middle";
+        sctx.fillText(cand.code, 64, 32);
+
+        const spriteTex = new THREE.CanvasTexture(spriteCanvas);
+        const spriteMat = new THREE.SpriteMaterial({ map: spriteTex, depthTest: false });
+        const sprite = new THREE.Sprite(spriteMat);
+        sprite.scale.set(0.7, 0.35, 1);
+        sprite.position.copy(headPos).add(normal.clone().multiplyScalar(0.35));
+        mGroup.add(sprite);
+
+        // Invisible Raycast Target Sphere
+        const hitGeo = new THREE.SphereGeometry(0.65, 8, 8);
+        const hitMat = new THREE.MeshBasicMaterial({ visible: false });
+        const hitMesh = new THREE.Mesh(hitGeo, hitMat);
+        hitMesh.position.copy(headPos);
+        hitMesh.userData = { candidate: cand, group: mGroup };
+        mGroup.add(hitMesh);
+        markerInteractables.push(hitMesh);
+
+        group.add(mGroup);
+      });
+
+      return group;
+    }
+
+    /* ── Background Starfield (Subtle Dark Space) ── */
+    function createStarfield() {
+      const starGeo = new THREE.BufferGeometry();
+      const count = 1800;
+      const positions = new Float32Array(count * 3);
+      for (let i = 0; i < count * 3; i += 3) {
+        const r = 250 + Math.random() * 250;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos((Math.random() * 2) - 1);
+        positions[i] = r * Math.sin(phi) * Math.cos(theta);
+        positions[i + 1] = r * Math.sin(phi) * Math.sin(theta);
+        positions[i + 2] = r * Math.cos(phi);
+      }
+      starGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      const starMat = new THREE.PointsMaterial({
+        color: 0xffffff,
+        size: 1.2,
+        transparent: true,
+        opacity: currentTheme === "dark" ? 0.65 : 0
+      });
+      return new THREE.Points(starGeo, starMat);
+    }
+
+    /* ── Scene Initialization ── */
+    function initScene() {
+      const container = document.getElementById("viewport-container");
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(currentTheme === "dark" ? 0x140720 : 0xe9e3d6);
+
+      camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 1000);
+      camera.position.set(16, 7, 21);
+
+      renderer = new THREE.WebGLRenderer({
+        canvas: document.getElementById("webgl"),
+        antialias: true,
+        alpha: false,
+        powerPreference: "high-performance"
+      });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = currentTheme === "dark" ? 1.05 : 0.95;
+
+      controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.08;
+      controls.minDistance = 11.5;
+      controls.maxDistance = 65;
+
+      // Lighting (Simulate low grazing Sun angle at Lunar South Pole)
+      ambientLight = new THREE.AmbientLight(
+        currentTheme === "dark" ? 0x221330 : 0x48443e,
+        currentTheme === "dark" ? 0.35 : 0.65
+      );
+      scene.add(ambientLight);
+
+      sunLight = new THREE.DirectionalLight(0xfff5ea, 2.8);
+      updateSunPosition();
+      scene.add(sunLight);
+
+      // Earthshine (faint blue fill on unlit side)
+      earthshineLight = new THREE.DirectionalLight(0x7397b8, 0.25);
+      earthshineLight.position.set(-20, -10, -20);
+      scene.add(earthshineLight);
+
+      // Moon Object
+      moonGroup = new THREE.Group();
+      const { diffTex, bumpTex } = generateMoonTextures();
+      const moonGeo = new THREE.SphereGeometry(MOON_RADIUS, 128, 128);
+      const moonMat = new THREE.MeshStandardMaterial({
+        map: diffTex,
+        bumpMap: bumpTex,
+        bumpScale: 0.22,
+        roughness: 0.9,
+        metalness: 0.04
+      });
+      moonMesh = new THREE.Mesh(moonGeo, moonMat);
+      moonGroup.add(moonMesh);
+
+      // Polar Exploration Grid
+      polarGridGroup = createPolarGrid();
+      moonGroup.add(polarGridGroup);
+
+      // Candidate Markers
+      markersGroup = createCandidateMarkers();
+      moonGroup.add(markersGroup);
+
+      scene.add(moonGroup);
+
+      // Stars
+      starsPoints = createStarfield();
+      scene.add(starsPoints);
+
+      // Raycaster & Interaction
+      raycaster = new THREE.Raycaster();
+      mouse = new THREE.Vector2();
+
+      // Event Listeners
+      window.addEventListener("resize", onWindowResize);
+      renderer.domElement.addEventListener("mousemove", onMouseMove);
+      renderer.domElement.addEventListener("click", onCanvasClick);
+
+      // Apply initial theme
+      applyTheme(currentTheme);
+
+      // Ready!
+      const loader = document.getElementById("loading-screen");
+      loader.classList.add("is-hidden");
+    }
+
+    /* ── Sun Position Azimuth Update ── */
+    function updateSunPosition() {
+      const rad = (sunAzimuthDeg * Math.PI) / 180;
+      const dist = 50;
+      // Slight 1.54° elevation relative to moon equator to simulate lunar obliquity
+      const elevRad = (1.54 * Math.PI) / 180;
+      sunLight.position.set(
+        dist * Math.cos(rad) * Math.cos(elevRad),
+        dist * Math.sin(elevRad),
+        dist * Math.sin(rad) * Math.cos(elevRad)
+      );
+    }
+
+    /* ── Camera Smooth Transitions ── */
+    function animateCameraTo(targetPos, targetLookAt, duration = 1200) {
+      cameraAnim.startTime = performance.now();
+      cameraAnim.duration = duration;
+      cameraAnim.startPos.copy(camera.position);
+      cameraAnim.targetPos.copy(targetPos);
+      cameraAnim.startLookAt.copy(currentLookAt);
+      cameraAnim.targetLookAt.copy(targetLookAt);
+      isCameraAnimating = true;
+    }
+
+    /* ── Quick Views ── */
+    function viewSouthPole() {
+      // Look directly up into the south pole from below (-Y)
+      animateCameraTo(
+        new THREE.Vector3(0.01, -22.5, 0),
+        new THREE.Vector3(0, -10, 0),
+        1100
+      );
+      setActiveViewBtn("btn-view-pole");
+    }
+
+    function viewGlobal() {
+      animateCameraTo(
+        new THREE.Vector3(16, 7, 21),
+        new THREE.Vector3(0, 0, 0),
+        1100
+      );
+      setActiveViewBtn("btn-view-global");
+    }
+
+    function viewEquator() {
+      animateCameraTo(
+        new THREE.Vector3(25, 0, 0),
+        new THREE.Vector3(0, 0, 0),
+        1100
+      );
+      setActiveViewBtn("btn-view-equator");
+    }
+
+    function focusOnCandidate(cand) {
+      // Compute surface pos in world space
+      const surfacePos = latLonToVector3(cand.lat, cand.lon, MOON_RADIUS, 0);
+      const normal = surfacePos.clone().normalize();
+      // Position camera offset radially outwards and slightly toward south pole
+      const camPos = surfacePos.clone().add(normal.clone().multiplyScalar(4.5));
+      animateCameraTo(camPos, surfacePos, 1300);
+      selectCandidate(cand.id);
+    }
+
+    function setActiveViewBtn(btnId) {
+      document.querySelectorAll(".hud-pill-group .hud-btn").forEach(b => {
+        b.classList.toggle("is-active", b.id === btnId);
+      });
+    }
+
+    /* ── Candidate Selection & HUD Update ── */
+    function selectCandidate(id) {
+      const cand = CANDIDATES.find(c => c.id === id);
+      if (!cand) return;
+      selectedCandidate = cand;
+
+      // Update Inspector Panel UI
+      document.getElementById("insp-rank").textContent = cand.rank;
+      document.getElementById("insp-title").textContent = cand.label;
+      document.getElementById("insp-score").textContent = cand.score;
+      document.getElementById("insp-coords").textContent = `${Math.abs(cand.lat).toFixed(2)}°S, ${cand.lon < 0 ? Math.abs(cand.lon).toFixed(2) + "°W" : cand.lon.toFixed(2) + "°E"}`;
+      document.getElementById("insp-elev").textContent = cand.elevation;
+      document.getElementById("insp-solar").textContent = `${cand.solar.toFixed(1)}%`;
+      document.getElementById("insp-earth").textContent = `${cand.earth.toFixed(1)}%`;
+      document.getElementById("insp-slope").textContent = cand.slope;
+      document.getElementById("insp-psr").textContent = cand.psr;
+      document.getElementById("insp-prob").textContent = `${cand.prob} probability`;
+
+      document.getElementById("bar-solar").style.width = `${cand.solar}%`;
+      document.getElementById("bar-earth").style.width = `${cand.earth}%`;
+
+      // Update Pills
+      document.querySelectorAll(".region-pills .pill-btn").forEach(btn => {
+        btn.classList.toggle("is-selected", Number(btn.dataset.region) === id);
+      });
+    }
+
+    /* ── Theme Handling & Sync ── */
+    function applyTheme(theme) {
+      currentTheme = theme;
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("lunaria-theme", theme);
+
+      const icon = document.getElementById("theme-icon");
+      if (icon) icon.textContent = theme === "dark" ? "☀️" : "◐";
+
+      if (scene) {
+        scene.background.set(theme === "dark" ? 0x140720 : 0xe9e3d6);
+        if (ambientLight) {
+          ambientLight.color.set(theme === "dark" ? 0x221330 : 0x48443e);
+          ambientLight.intensity = theme === "dark" ? 0.35 : 0.65;
+        }
+        if (starsPoints) {
+          starsPoints.material.opacity = theme === "dark" ? 0.65 : 0;
+        }
+        // Recreate polar grid to update line colors
+        if (polarGridGroup && moonGroup) {
+          moonGroup.remove(polarGridGroup);
+          polarGridGroup = createPolarGrid();
+          polarGridGroup.visible = showGrid;
+          moonGroup.add(polarGridGroup);
+        }
+      }
+    }
+
+    function toggleTheme() {
+      applyTheme(currentTheme === "dark" ? "light" : "dark");
+    }
+
+    // PostMessage listener from parent page iframe
+    window.addEventListener("message", (event) => {
+      if (event.data && event.data.type === "set-theme") {
+        applyTheme(event.data.theme);
+      }
+    });
+
+    /* ── Mouse & Raycasting ── */
+    function onMouseMove(event) {
+      const rect = renderer.domElement.getBoundingClientRect();
+      mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(markerInteractables, false);
+
+      const tooltip = document.getElementById("marker-tooltip");
+      if (intersects.length > 0 && showMarkers) {
+        const hit = intersects[0].object;
+        const cand = hit.userData.candidate;
+        hoveredMarker = cand;
+        document.body.style.cursor = "pointer";
+
+        document.getElementById("tt-title").textContent = cand.label;
+        document.getElementById("tt-sub").textContent = `${Math.abs(cand.lat).toFixed(1)}°S · Score ${cand.score} · Top-1: ${cand.prob}`;
+        tooltip.style.left = `${event.clientX}px`;
+        tooltip.style.top = `${event.clientY}px`;
+        tooltip.classList.add("is-visible");
+      } else {
+        hoveredMarker = null;
+        document.body.style.cursor = "default";
+        tooltip.classList.remove("is-visible");
+      }
+    }
+
+    function onCanvasClick(event) {
+      if (hoveredMarker) {
+        focusOnCandidate(hoveredMarker);
+      }
+    }
+
+    function onWindowResize() {
+      const container = document.getElementById("viewport-container");
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    }
+
+    /* ── Animation Loop ── */
+    function animate(time) {
+      requestAnimationFrame(animate);
+
+      // Smooth camera transition tween
+      if (isCameraAnimating) {
+        const elapsed = time - cameraAnim.startTime;
+        const t = Math.min(1, elapsed / cameraAnim.duration);
+        // Cubic ease out
+        const ease = 1 - Math.pow(1 - t, 3);
+
+        camera.position.lerpVectors(cameraAnim.startPos, cameraAnim.targetPos, ease);
+        currentLookAt.lerpVectors(cameraAnim.startLookAt, cameraAnim.targetLookAt, ease);
+        controls.target.copy(currentLookAt);
+
+        if (t >= 1) {
+          isCameraAnimating = false;
+        }
+      }
+
+      // Auto-rotation of the moon
+      if (autoRotate && !isCameraAnimating) {
+        moonGroup.rotation.y += 0.0015;
+      }
+
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    /* ── UI Bindings & Keyboard Shortcuts ── */
+    document.addEventListener("DOMContentLoaded", () => {
+      initScene();
+      requestAnimationFrame(animate);
+
+      // View presets
+      document.getElementById("btn-view-pole").addEventListener("click", viewSouthPole);
+      document.getElementById("btn-view-global").addEventListener("click", viewGlobal);
+      document.getElementById("btn-view-equator").addEventListener("click", viewEquator);
+
+      // Theme toggle
+      document.getElementById("btn-theme-toggle").addEventListener("click", toggleTheme);
+
+      // Candidate Region Pills
+      document.querySelectorAll(".region-pills .pill-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = Number(btn.dataset.region);
+          const cand = CANDIDATES.find(c => c.id === id);
+          if (cand) focusOnCandidate(cand);
+        });
+      });
+
+      // Focus Button in Inspector
+      document.getElementById("btn-focus-site").addEventListener("click", () => {
+        focusOnCandidate(selectedCandidate);
+      });
+
+      // Layer Toggles
+      const chkGrid = document.getElementById("chk-grid");
+      chkGrid.addEventListener("change", (e) => {
+        showGrid = e.target.checked;
+        if (polarGridGroup) polarGridGroup.visible = showGrid;
+      });
+
+      const chkMarkers = document.getElementById("chk-markers");
+      chkMarkers.addEventListener("change", (e) => {
+        showMarkers = e.target.checked;
+        if (markersGroup) markersGroup.visible = showMarkers;
+      });
+
+      const chkRotate = document.getElementById("chk-rotate");
+      chkRotate.addEventListener("change", (e) => {
+        autoRotate = e.target.checked;
+      });
+
+      // Sun Azimuth Slider
+      const rngSun = document.getElementById("rng-sun");
+      rngSun.addEventListener("input", (e) => {
+        sunAzimuthDeg = Number(e.target.value);
+        updateSunPosition();
+      });
+
+      // Keyboard Shortcuts
+      window.addEventListener("keydown", (e) => {
+        if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
+
+        if (e.key >= "1" && e.key <= "6") {
+          const id = Number(e.key);
+          const cand = CANDIDATES.find(c => c.id === id);
+          if (cand) focusOnCandidate(cand);
+        } else if (e.key === "p" || e.key === "P") {
+          viewSouthPole();
+        } else if (e.key === "r" || e.key === "R") {
+          viewGlobal();
+        } else if (e.key === "e" || e.key === "E") {
+          viewEquator();
+        } else if (e.key === "t" || e.key === "T") {
+          toggleTheme();
+        } else if (e.key === " ") {
+          e.preventDefault();
+          autoRotate = !autoRotate;
+          chkRotate.checked = autoRotate;
+        }
+      });
+    });
+  </script>
+</body>
+</html>

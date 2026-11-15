@@ -103,7 +103,8 @@
   function formatScalar(key, value) {
     const k = String(key).toLowerCase();
     if (typeof value === "number") {
-      if (k.includes("lat") || k.includes("lon")) return coordLat(value);
+      if (k.includes("lat")) return coordLat(value);
+      if (k.includes("lon")) return coordLon(value);
       if (k.includes("bytes")) return bytes(value);
       if (k.includes("fraction") || k.includes("score") || k.includes("proxy")) return pct(value);
       if (k.includes("km") || k.includes("m") || k.includes("deg")) return num(value);
@@ -179,7 +180,7 @@
       <div class="dx-metric"><dt>Refined cells</dt><dd class="count" data-count-to="${m.refined_cell_count}" data-count-fmt="int">0</dd></div>
       <div class="dx-metric"><dt>Winner score</dt><dd class="count" data-count-to="${r.winner_score}" data-count-fmt="pct">0%</dd></div>
       <div class="dx-metric"><dt>Regions</dt><dd class="count" data-count-to="${r.region_count}" data-count-fmt="int">0</dd></div>
-      <div class="dx-metric"><dt>Timeline rows</dt><dd class="count" data-count-to="${m.timeline_rows}" data-count-fmt="int">0</dd></div>
+      <div class="dx-metric"><dt>Region-time records</dt><dd class="count" data-count-to="${m.timeline_rows}" data-count-fmt="int">0</dd></div>
       <div class="dx-metric"><dt>Artifacts</dt><dd class="count" data-count-to="${m.artifact_count}" data-count-fmt="int">0</dd></div>
     `;
   }
@@ -195,7 +196,7 @@
       ["Stage-1 cell size", m.stage1_cell_m != null ? m.stage1_cell_m + " m" : "—"],
       ["Stage-2 resolution", m.stage2_resolution_m != null ? num(m.stage2_resolution_m) + " m" : "—"],
       ["Refined cells", int(m.refined_cell_count)],
-      ["Timeline rows", int(m.timeline_rows)],
+      ["Region-time records", int(m.timeline_rows)],
       ["Artifacts", int(m.artifact_count)],
       ["Artifact bytes", bytes(m.artifact_bytes)],
     ];
@@ -339,7 +340,7 @@
   }
 
   /* ----------------------------------------------------------------------
-     Count-up animation (rAF, reduced-motion safe)
+     Render count values
      ---------------------------------------------------------------------- */
   function formatCount(value, fmt) {
     if (!Number.isFinite(value)) return "—";
@@ -350,41 +351,13 @@
     if (fmt === "coord") return String(value);
     return num(value);
   }
-  function easeOutQuad(t) {
-    return 1 - (1 - t) * (1 - t);
-  }
-  function animateCounts(scope) {
-    const els = $$(".count[data-count-to]", scope || document);
-    if (!els.length || REDUCED) {
-      els.forEach((el) => {
-        const fmt = el.dataset.countFmt || "num";
-        el.textContent = formatCount(Number(el.dataset.countTo), fmt);
-        el.classList.add("done");
-      });
-      return;
-    }
-    const start = performance.now();
-    const duration = 900;
-    function frame(now) {
-      const t = Math.min(1, (now - start) / duration);
-      let any = false;
-      els.forEach((el) => {
-        if (el.classList.contains("done")) return;
-        const to = Number(el.dataset.countTo);
-        const from = Number(el.dataset.countFrom || 0);
-        const fmt = el.dataset.countFmt || "num";
-        const cur = t >= 1 ? to : from + (to - from) * easeOutQuad(t);
-        el.textContent = formatCount(cur, fmt);
-        if (t >= 1) {
-          el.textContent = formatCount(to, fmt);
-          el.classList.add("done");
-        } else {
-          any = true;
-        }
-      });
-      if (any) requestAnimationFrame(frame);
-    }
-    requestAnimationFrame(frame);
+  function renderCounts(scope) {
+    $$(".count[data-count-to]", scope || document).forEach((el) => {
+      if (el.classList.contains("done")) return;
+      const format = el.dataset.countFmt || "num";
+      el.textContent = formatCount(Number(el.dataset.countTo), format);
+      el.classList.add("done");
+    });
   }
 
   /* ----------------------------------------------------------------------
@@ -397,9 +370,14 @@
         el.style.opacity = "1";
         el.style.transform = "none";
       });
-      animateCounts(document);
+      renderCounts(document);
       return;
     }
+    if (!("IntersectionObserver" in window)) {
+      renderCounts(document);
+      return;
+    }
+    document.documentElement.classList.add("dx-motion");
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -413,13 +391,13 @@
             child.style.transitionDelay = i * 90 + "ms";
             child.classList.add("is-visible");
           });
-          animateCounts(el);
+          renderCounts(el);
         });
       },
       { threshold: 0.1, rootMargin: "0px 0px -10% 0px" }
     );
     $$(".reveal").forEach((el) => observer.observe(el));
-    animateCounts(document);
+    renderCounts(document);
   }
 
   /* ----------------------------------------------------------------------
@@ -442,6 +420,116 @@
         "Generated " + stamp(D.meta.generated_at) + " \u00b7 " + int(D.meta.cell_count) + " cells screened";
     }
     setupReveals();
+    setupThemeSwitcher();
+  }
+
+  /* ----------------------------------------------------------------------
+     Theme Switcher & Starry Cosmos Background
+     ---------------------------------------------------------------------- */
+  function setupThemeSwitcher() {
+    const toggle = $("#theme-toggle");
+    const themeLabel = $("#theme-label");
+    const canvas = $("#starry-canvas");
+    if (!toggle || !canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    let animId = null;
+    let stars = [];
+    const STAR_COLORS = ["#f3cdc8", "#f8af99", "#ffffff", "#e79198", "#ffd5cc"];
+
+    function initStars() {
+      const w = (canvas.width = window.innerWidth);
+      const h = (canvas.height = window.innerHeight);
+      const count = Math.min(220, Math.floor((w * h) / 7500));
+      stars = [];
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          radius: Math.random() * 1.5 + 0.35,
+          color: STAR_COLORS[Math.floor(Math.random() * STAR_COLORS.length)],
+          baseAlpha: Math.random() * 0.65 + 0.25,
+          twinkleSpeed: Math.random() * 0.035 + 0.008,
+          phase: Math.random() * Math.PI * 2,
+          hasFlare: Math.random() < 0.12,
+        });
+      }
+    }
+
+    function renderStars() {
+      if (document.documentElement.getAttribute("data-theme") !== "dark") {
+        if (animId) cancelAnimationFrame(animId);
+        animId = null;
+        return;
+      }
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      for (let i = 0; i < stars.length; i++) {
+        const s = stars[i];
+        s.phase += s.twinkleSpeed;
+        const alpha = s.baseAlpha + Math.sin(s.phase) * 0.35;
+        const clampedAlpha = Math.max(0.08, Math.min(1, alpha));
+
+        ctx.fillStyle = s.color;
+        ctx.globalAlpha = clampedAlpha;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        if (s.hasFlare && clampedAlpha > 0.6) {
+          ctx.strokeStyle = s.color;
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(s.x - s.radius * 3.5, s.y);
+          ctx.lineTo(s.x + s.radius * 3.5, s.y);
+          ctx.moveTo(s.x, s.y - s.radius * 3.5);
+          ctx.lineTo(s.x, s.y + s.radius * 3.5);
+          ctx.stroke();
+        }
+      }
+      ctx.globalAlpha = 1;
+      animId = requestAnimationFrame(renderStars);
+    }
+
+    function applyTheme(theme) {
+      if (theme === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+        toggle.setAttribute("aria-pressed", "true");
+        if (themeLabel) themeLabel.textContent = "Light";
+        initStars();
+        if (!animId) renderStars();
+      } else {
+        document.documentElement.removeAttribute("data-theme");
+        toggle.setAttribute("aria-pressed", "false");
+        if (themeLabel) themeLabel.textContent = "Dark";
+        if (animId) {
+          cancelAnimationFrame(animId);
+          animId = null;
+        }
+        if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+      try {
+        localStorage.setItem("lunaria-theme", theme);
+      } catch (_) {}
+    }
+
+    toggle.addEventListener("click", function () {
+      const current = document.documentElement.getAttribute("data-theme");
+      applyTheme(current === "dark" ? "light" : "dark");
+    });
+
+    window.addEventListener("resize", function () {
+      if (document.documentElement.getAttribute("data-theme") === "dark") {
+        initStars();
+      }
+    });
+
+    const saved = localStorage.getItem("lunaria-theme");
+    if (saved === "dark") {
+      applyTheme("dark");
+    }
   }
 
   if (document.readyState === "loading") {

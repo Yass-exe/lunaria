@@ -5,38 +5,64 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="Lunaria is an independent NASA-data-driven screen of lunar south-polar landing regions, with a two-stage terrain model and a provisional seed.">
   <meta name="theme-color" content="#e9e3d6">
-  <meta name="color-scheme" content="light">
-  <title>Lunaria × NASA — South Polar Field Atlas</title>
+  <meta name="color-scheme" content="light dark">
+  <title>Lunaria — South Polar Field Atlas</title>
   <link rel="preload" href="assets/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/ibm-plex-mono-400-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
-  <script>document.documentElement.classList.replace("no-js", "js");</script>
+  <script>
+    (function () {
+      try {
+        const saved = localStorage.getItem("lunaria-theme");
+        if (saved === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      } catch (_) {}
+      document.documentElement.classList.replace("no-js", "js");
+    })();
+  </script>
 </head>
 <body>
+  <div class="starry-background" id="starry-background" aria-hidden="true">
+    <canvas id="starry-canvas"></canvas>
+  </div>
   <a class="skip-link" href="#main">Skip to main content</a>
   <noscript><p class="noscript">The atlas charts and live ranking need JavaScript. The result report and processed files are still available from the evidence links below.</p></noscript>
 
   <header class="site-header">
     <div class="header-inner">
       <a class="lockup" href="#top">
-        <img class="nasa-mark" src="assets/nasa-logo.svg" width="54" height="45" alt="NASA" fetchpriority="high">
-        <span class="lockup-divider" aria-hidden="true"></span>
+        <span class="agency-marks">
+          <img class="lunaria-mark" src="assets/lunaria-logo.svg" width="44" height="44" alt="" fetchpriority="high">
+        </span>
         <span class="lockup-text">
           <span class="wordmark" translate="no">Lunaria</span>
           <span class="lockup-sub">South polar survey</span>
         </span>
       </a>
       <nav class="site-nav" aria-label="Sections">
-        <a href="#result">Result</a>
         <a href="#atlas">Atlas</a>
         <a href="#signals">Signals</a>
         <a href="#weights">Weights</a>
         <a href="#evidence">Evidence</a>
-        <a href="data-explorer.html">Data explorer</a>
+        <a href="#result">Result</a>
+        <a href="#visualisation">Visualisation</a>
+        <a href="data-explorer.html#data">Data explorer</a>
       </nav>
-      <p class="header-note"><span class="signal-dot" aria-hidden="true"></span>Provisional screen</p>
+      <div class="header-tools">
+        <p class="header-note"><span class="signal-dot" aria-hidden="true"></span>Provisional screen</p>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark starry theme" aria-pressed="false" title="Toggle dark starry theme">
+          <span class="theme-icon sun-icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </span>
+          <span class="theme-icon moon-icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </span>
+          <span class="theme-label" id="theme-label">Dark</span>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -45,10 +71,11 @@
       <div class="hero-copy">
         <p class="dateline"><span>Independent NASA-data analysis</span><span>2024–2026 geometry</span></p>
         <h1 id="hero-title">A provisional landing ridge at <span class="hero-coordinate" id="hero-coordinate">85.4342°S</span>.</h1>
-        <p class="hero-lede">Lunaria screens the lunar south pole with NASA LOLA terrain and JPL Horizons geometry: <strong id="hero-cell-count">290,364</strong> one-kilometre cells, six refined regions, and one coordinate that deserves a closer look.</p>
+        <p class="hero-lede">Lunaria screens the lunar south pole with NASA LOLA terrain and JPL Horizons geometry: <strong id="hero-cell-count">290,364</strong> one-kilometre cells, six refined candidate regions, an interactive field atlas, and an illustrative Sun–Earth–Moon model.</p>
         <div class="hero-actions">
-          <a class="button button-primary" href="#result">Read the Result</a>
-          <a class="button button-quiet" href="#atlas">Open the Atlas</a>
+          <a class="button button-primary" href="#atlas">Open the Atlas</a>
+          <a class="button button-quiet" href="#visualisation">3D Visualisation</a>
+          <a class="button button-quiet" href="#result">Read the Result</a>
         </div>
         <dl class="hero-metrics" id="hero-metrics" aria-label="Headline measurements"></dl>
         <p class="hero-caveat">The coordinate is a provisional source-pixel seed, not a landing pad. 5&nbsp;m Barker/LOLA and 1–2&nbsp;m LROC terrain are still required.</p>
@@ -68,7 +95,6 @@
           <span class="plate-coordinate" id="hero-seed-coordinate">85.4342°S<br>10.5273°W</span>
         </div>
         <p class="plate-note">Rings mark region centroids; the cross marks the provisional seed.</p>
-        <div class="plate-stamp" aria-hidden="true"><span>Provisional</span><small>Not certified</small></div>
       </figure>
     </section>
 
@@ -82,48 +108,7 @@
       </div>
     </section>
 
-    <section class="section result" id="result" aria-labelledby="result-title">
-      <header class="section-head">
-        <p class="section-index">Result</p>
-        <h2 id="result-title">The Winning Region Is a Balance, Not a Certainty.</h2>
-        <p>Candidate Region 1 leads the six refined regions. The headline is a weighted geometric mean; the coordinate is the best ~148&nbsp;m source pixel inside that region.</p>
-      </header>
-
-      <div class="result-layout">
-        <article class="score-panel" aria-labelledby="score-title">
-          <div class="score-line">
-            <div>
-              <p class="label" id="score-title">Weighted geometric mean</p>
-              <p class="big-score"><span id="winner-score">60.15</span><span class="score-denominator">/100</span></p>
-            </div>
-            <p class="score-aside">Top-1 under<br><strong id="winner-top1">39.0%</strong><br>of weight draws</p>
-          </div>
-          <p class="score-summary" id="winner-summary"></p>
-          <div class="indicator-ledger" id="indicator-ledger"></div>
-        </article>
-
-        <article class="seed-panel" aria-labelledby="seed-title">
-          <div class="seed-head">
-            <p class="label" id="seed-title">Provisional seed</p>
-            <span class="stamp-small">Uncertified</span>
-          </div>
-          <p class="seed-coordinate" id="seed-coordinate">85.4342°S<br>10.5273°W</p>
-          <p class="seed-region" id="seed-region"></p>
-          <dl class="seed-facts" id="seed-facts"></dl>
-          <p class="seed-note">The seed is the highest-scoring eligible source pixel in the winning region. It is not a landing ellipse and does not incorporate metre-scale hazards.</p>
-        </article>
-      </div>
-
-      <div class="ranking-panel">
-        <div class="panel-head">
-          <h3>All Six Refined Regions</h3>
-          <p id="ranking-method"></p>
-        </div>
-        <div class="region-table" id="region-table" role="region" tabindex="0" aria-label="Refined candidate regions; scroll horizontally on narrow screens"></div>
-        <p class="scroll-hint" aria-hidden="true">Swipe the table to see all six utilities →</p>
-      </div>
-    </section>
-
+    <!-- SECTION 1: ATLAS -->
     <section class="section atlas" id="atlas" aria-labelledby="atlas-title">
       <header class="section-head">
         <p class="section-index">Atlas</p>
@@ -181,11 +166,12 @@
       </div>
     </section>
 
+    <!-- SECTION 2: SIGNALS -->
     <section class="section signals" id="signals" aria-labelledby="signals-title">
       <header class="section-head">
         <p class="section-index">Signals</p>
         <h2 id="signals-title">Two Years, Six Hours at a Time.</h2>
-        <p>All 17,550 aligned Sun/Earth status samples are drawn below. The date control changes instantaneous clearance; the two-year aggregate ranking does not move.</p>
+        <p>The chart compares six regions across 2,925 aligned six-hour epochs. Each epoch contributes one Sun/Earth record per region; changing the date shows instantaneous clearance, while the two-year aggregate ranking stays fixed.</p>
       </header>
 
       <div class="signals-panel">
@@ -221,6 +207,7 @@
       </div>
     </section>
 
+    <!-- SECTION 3: WEIGHTS -->
     <section class="section weights" id="weights" aria-labelledby="weights-title">
       <header class="section-head">
         <p class="section-index">Weights</p>
@@ -257,6 +244,7 @@
       </div>
     </section>
 
+    <!-- SECTION 4: EVIDENCE -->
     <section class="section evidence" id="evidence" aria-labelledby="evidence-title">
       <header class="section-head">
         <p class="section-index">Evidence</p>
@@ -298,15 +286,116 @@
         </section>
       </div>
     </section>
+
+    <!-- SECTION 5: RESULT -->
+    <section class="section result" id="result" aria-labelledby="result-title">
+      <header class="section-head">
+        <p class="section-index">Result</p>
+        <h2 id="result-title">The Winning Region Is a Balance, Not a Certainty.</h2>
+        <p>Candidate Region 1 leads the six refined regions. The headline is a weighted geometric mean; the coordinate is the best ~148&nbsp;m source pixel inside that region.</p>
+      </header>
+
+      <div class="result-layout">
+        <article class="score-panel" aria-labelledby="score-title">
+          <div class="score-line">
+            <div>
+              <p class="label" id="score-title">Weighted geometric mean</p>
+              <p class="big-score"><span id="winner-score">60.15</span><span class="score-denominator">/100</span></p>
+            </div>
+            <p class="score-aside">Top-1 under<br><strong id="winner-top1">39.0%</strong><br>of weight draws</p>
+          </div>
+          <p class="score-summary" id="winner-summary"></p>
+          <div class="indicator-ledger" id="indicator-ledger"></div>
+        </article>
+
+        <article class="seed-panel" aria-labelledby="seed-title">
+          <div class="seed-head">
+            <p class="label" id="seed-title">Provisional seed</p>
+            <span class="stamp-small">Uncertified</span>
+          </div>
+          <p class="seed-coordinate" id="seed-coordinate">85.4342°S<br>10.5273°W</p>
+          <p class="seed-region" id="seed-region"></p>
+          <dl class="seed-facts" id="seed-facts"></dl>
+          <p class="seed-note">The seed is the highest-scoring eligible source pixel in the winning region. It is not a landing ellipse and does not incorporate metre-scale hazards.</p>
+        </article>
+      </div>
+
+      <div class="ranking-panel">
+        <div class="panel-head">
+          <h3>All Six Refined Regions</h3>
+          <p id="ranking-method"></p>
+        </div>
+        <div class="region-table" id="region-table" role="region" tabindex="0" aria-label="Refined candidate regions; scroll horizontally on narrow screens"></div>
+        <p class="scroll-hint" aria-hidden="true">Swipe the table to see all six utilities →</p>
+      </div>
+    </section>
+
+    <!-- SECTION 6: VISUALISATION -->
+    <section class="section visualisation" id="visualisation" aria-labelledby="visualisation-title">
+      <header class="section-head">
+        <p class="section-index">Visualisation</p>
+        <h2 id="visualisation-title">Interactive 3D Moon System · South Polar Survey.</h2>
+        <p>A procedural Three.js 3D lunar globe featuring the 80°–90°S exploration zone and candidate landing regions R1 through R6.</p>
+      </header>
+
+      <p class="visualisation-intro-lead">
+        Explore the Moon in full 3D with realistic procedural lunar cartography, interactive polar grid overlays, and pinpoint 3D coordinates for all six candidate landing regions. Inspect candidate seed metrics, adjust grazing solar azimuth to study crater shadow relief, and smoothly transition to overhead polar viewpoints.
+      </p>
+
+      <div class="visualisation-concepts">
+        <article class="vis-concept-card">
+          <span class="concept-tag">Solar Power &amp; PSRs</span>
+          <h3>Grazing Sunlight at 85°–90°S</h3>
+          <p>The Moon's axial tilt is only 1.54° relative to the ecliptic. At the south pole, the Sun skims the horizon at sub-degree elevations. Elevated crater rims act as &ldquo;peaks of eternal light,&rdquo; while adjacent crater depths never see sunlight, preserving volatile water ice.</p>
+        </article>
+
+        <article class="vis-concept-card">
+          <span class="concept-tag">Candidate Sites</span>
+          <h3>Six Evaluated Landing Regions</h3>
+          <p>Explore candidate regions R1 through R6 directly on the 3D lunar sphere, matching the screening criteria for solar power, Earth direct visibility, terrain slope safety, and volatile cold-trap rover accessibility.</p>
+        </article>
+
+        <article class="vis-concept-card">
+          <span class="concept-tag">Coordinate Geometry</span>
+          <h3>Interactive Polar Exploration</h3>
+          <p>Rotate, zoom, and inspect lunar coordinates, toggle 80°–90°S polar grids, and inspect candidate seed metrics directly within the Three.js viewport. Seamlessly switches between Dark and Light themes with parent synchronization.</p>
+        </article>
+      </div>
+
+      <div class="vis-simulation-container">
+        <div class="vis-simulation-toolbar">
+          <div class="vis-toolbar-meta">
+            <span class="vis-live-dot" aria-hidden="true"></span>
+            <strong>Moon System 3D</strong>
+            <span>Interactive 3D Three.js Simulation · Moon System Only</span>
+          </div>
+          <div class="vis-toolbar-actions">
+            <a class="button button-primary" href="sun-earth-moon.html" target="_blank" rel="noopener">Open Standalone Fullscreen ↗</a>
+          </div>
+        </div>
+
+        <div class="vis-frame-wrapper">
+          <iframe src="sun-earth-moon.html" title="Interactive 3D simulation of Moon System and South Polar Survey" loading="lazy" allow="fullscreen"></iframe>
+        </div>
+
+        <div class="vis-frame-footer">
+          <span>Controls: Drag to rotate · Scroll to zoom · Click markers or pills to inspect</span>
+          <span>Shortcuts: <kbd>1</kbd>–<kbd>6</kbd> Select Region · <kbd>P</kbd> South Pole · <kbd>R</kbd> Reset · <kbd>Space</kbd> Rotate · <kbd>T</kbd> Theme</span>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">
     <div class="footer-lockup">
-      <img src="assets/nasa-logo.svg" width="48" height="40" alt="NASA" loading="lazy">
+      <span class="agency-marks">
+        <img class="lunaria-mark" src="assets/lunaria-logo.svg" width="40" height="40" alt="" loading="lazy">
+      </span>
       <span><strong translate="no">Lunaria</strong> · South polar survey</span>
     </div>
     <p id="footer-meta"></p>
     <p>Independent analysis using NASA data. NASA does not endorse this product. Screening only; not flight certification.</p>
+    <blockquote class="footer-quote">“made by young devs for the celestials and beyond”</blockquote>
   </footer>
 
   <script src="data.js"></script>
