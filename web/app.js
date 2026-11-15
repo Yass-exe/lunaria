@@ -6,7 +6,7 @@
     const main = document.querySelector("main");
     if (main) {
       main.innerHTML =
-        '<section class="section"><h1>Dashboard data missing</h1><p>Run <code>python3 scripts/build_polar_dashboard.py</code> to generate <code>web/data.js</code>.</p></section>';
+        '<section class="section"><h1>Dashboard data missing</h1><p>Run <code translate="no">python3 scripts/build_polar_dashboard.py</code> to generate <code translate="no">web/data.js</code>.</p></section>';
     }
     return;
   }
@@ -79,10 +79,10 @@
   function bytes(value) {
     const number = Number(value);
     if (!Number.isFinite(number) || number <= 0) return "—";
-    if (number >= 1e9) return num(number / 1e9, 2) + " GB";
-    if (number >= 1e6) return num(number / 1e6, 1) + " MB";
-    if (number >= 1e3) return num(number / 1e3, 1) + " kB";
-    return int(number) + " B";
+    if (number >= 1e9) return num(number / 1e9, 2) + "\u00a0GB";
+    if (number >= 1e6) return num(number / 1e6, 1) + "\u00a0MB";
+    if (number >= 1e3) return num(number / 1e3, 1) + "\u00a0kB";
+    return int(number) + "\u00a0B";
   }
 
   const stampFmt = new Intl.DateTimeFormat("en-US", {
@@ -108,7 +108,7 @@
 
   function stamp(value) {
     const date = new Date(value);
-    return Number.isNaN(date.getTime()) ? String(value || "—") : stampFmt.format(date) + " UTC";
+    return Number.isNaN(date.getTime()) ? String(value || "—") : stampFmt.format(date) + "\u00a0UTC";
   }
 
   function shortDate(value) {
@@ -302,54 +302,12 @@
      Reveal and count helpers
      --------------------------------------------------------------------- */
 
-  function onceVisible(element, callback, threshold) {
-    if (!element) return;
-    if (REDUCED || !("IntersectionObserver" in window)) {
-      callback();
-      return;
-    }
-    const observer = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting) return;
-          observer.disconnect();
-          callback();
-        });
-      },
-      { threshold: threshold == null ? 0.18 : threshold }
-    );
-    observer.observe(element);
-  }
-
-  function animateCount(element) {
-    const target = Number(element.dataset.count);
-    const digits = Number(element.dataset.decimals) || 0;
-    const suffix = element.dataset.suffix || "";
-    if (!Number.isFinite(target)) return;
-    if (REDUCED) {
-      element.textContent = num(target, digits) + suffix;
-      return;
-    }
-    const start = window.performance.now();
-    const duration = 1050;
-    function step(now) {
-      const progress = Math.min(1, (now - start) / duration);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      element.textContent = num(target * eased, digits) + suffix;
-      if (progress < 1) window.requestAnimationFrame(step);
-    }
-    window.requestAnimationFrame(step);
-  }
-
   function countSpan(value, digits, suffix) {
+    const text = num(Number(value), digits == null ? 0 : digits) + (suffix || "");
     return (
-      '<span class="count" data-count="' +
-      Number(value) +
-      '" data-decimals="' +
-      (digits == null ? 0 : digits) +
-      '" data-suffix="' +
-      esc(suffix || "") +
-      '">0</span>'
+      '<span class="count">' +
+      esc(text) +
+      "</span>"
     );
   }
 
@@ -369,7 +327,7 @@
         value: D.meta.cell_count,
         digits: 0,
         suffix: "",
-        label: "1 km cells screened",
+        label: "1\u00a0km cells screened",
       },
       {
         value: D.meta.refined_cell_count,
@@ -437,7 +395,6 @@
 
     $("#hero-overlay").innerHTML = markers + seedMarker;
 
-    $$("#hero-metrics .count").forEach(animateCount);
   }
 
   /* ---------------------------------------------------------------------
@@ -542,10 +499,10 @@
       ["Seed score", num(seed.score * 100, 2) + " / 100"],
       ["Solar illumination", pct(seed.solar_fraction, 2)],
       ["Earth visibility", pct(seed.earth_fraction, 2)],
-      ["Longest dark period", num(seed.longest_dark_days, 2) + " d"],
+      ["Longest dark period", num(seed.longest_dark_days, 2) + "\u00a0d"],
       ["Regional slope p90", num(seed.slope_p90_deg, 2) + "°"],
-      ["PSR edge distance", num(seed.psr_edge_km, 2) + " km"],
-      ["Elevation", num(seed.elevation_m, 2) + " m"],
+      ["PSR edge distance", num(seed.psr_edge_km, 2) + "\u00a0km"],
+      ["Elevation", num(seed.elevation_m, 2) + "\u00a0m"],
       ["Source resolution", num(seed.resolution_m, 2) + " m/px"],
     ];
     $("#seed-facts").innerHTML = seedFacts
@@ -816,8 +773,8 @@
       ["Solar median", pct(stats.solar.median, 1)],
       ["Earth median", pct(stats.earth.median, 1)],
       ["Slope median", num(stats.slope.median, 2) + "°"],
-      ["Dark median", num(stats.dark.median, 1) + " d"],
-      ["PSR edge median", num(stats.psr.median, 2) + " km"],
+      ["Dark median", num(stats.dark.median, 1) + "\u00a0d"],
+      ["PSR edge median", num(stats.psr.median, 2) + "\u00a0km"],
     ];
 
     $("#region-insight").innerHTML =
@@ -922,8 +879,7 @@
      --------------------------------------------------------------------- */
 
   const scatterCanvas = $("#refined-scatter");
-  let scatterProgress = REDUCED ? 1 : 0;
-  let scatterSeen = false;
+  const scatterProgress = 1;
 
   function fitCanvas(canvas, width, height) {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -1034,25 +990,6 @@
     context.restore();
   }
 
-  function animateScatterOnce() {
-    if (scatterSeen) return;
-    scatterSeen = true;
-    if (REDUCED) {
-      scatterProgress = 1;
-      drawScatter();
-      return;
-    }
-    const start = window.performance.now();
-    const duration = 780;
-    function step(now) {
-      const progress = Math.min(1, (now - start) / duration);
-      scatterProgress = 1 - Math.pow(1 - progress, 3);
-      drawScatter();
-      if (progress < 1) window.requestAnimationFrame(step);
-    }
-    window.requestAnimationFrame(step);
-  }
-
   /* ---------------------------------------------------------------------
      Cell distributions
      --------------------------------------------------------------------- */
@@ -1090,15 +1027,15 @@
       key: "dark",
       title: "Longest dark period",
       color: "#5b5a54",
-      format: function (value) { return num(value, 1) + " d"; },
-      axis: function (value) { return num(value, 0) + " d"; },
+      format: function (value) { return num(value, 1) + "\u00a0d"; },
+      axis: function (value) { return num(value, 0) + "\u00a0d"; },
     },
     {
       key: "psr",
       title: "PSR edge distance",
       color: "#6b5b6e",
-      format: function (value) { return num(value, 1) + " km"; },
-      axis: function (value) { return num(value, 0) + " km"; },
+      format: function (value) { return num(value, 1) + "\u00a0km"; },
+      axis: function (value) { return num(value, 0) + "\u00a0km"; },
     },
   ];
 
@@ -1160,8 +1097,8 @@
     }).join("");
 
     DIST_CONFIG.forEach(function (config) {
-      distProgress.set(config.key, REDUCED ? 1 : 0);
-      drawDistribution(config.key, distProgress.get(config.key));
+      distProgress.set(config.key, 1);
+      drawDistribution(config.key, 1);
     });
   }
 
@@ -1229,30 +1166,6 @@
     );
   }
 
-  function animateDistributionsOnce() {
-    if (REDUCED) {
-      DIST_CONFIG.forEach(function (config) {
-        distProgress.set(config.key, 1);
-        drawDistribution(config.key, 1);
-      });
-      return;
-    }
-    const start = window.performance.now();
-    const duration = 720;
-    function step(now) {
-      let running = false;
-      DIST_CONFIG.forEach(function (config, index) {
-        const progress = clamp((now - start - index * 55) / duration, 0, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        distProgress.set(config.key, eased);
-        drawDistribution(config.key, eased);
-        if (progress < 1) running = true;
-      });
-      if (running) window.requestAnimationFrame(step);
-    }
-    window.requestAnimationFrame(step);
-  }
-
   /* ---------------------------------------------------------------------
      Sun/Earth timeline
      --------------------------------------------------------------------- */
@@ -1266,8 +1179,7 @@
     base: document.createElement("canvas"),
     geometry: null,
     baseKey: "",
-    progress: REDUCED ? 1 : 0,
-    seen: false,
+    progress: 1,
     playing: false,
     raf: 0,
     lastTs: 0,
@@ -1619,25 +1531,6 @@
     TIMELINE.raf = window.requestAnimationFrame(playbackStep);
   }
 
-  function revealTimeline() {
-    if (TIMELINE.seen) return;
-    TIMELINE.seen = true;
-    if (REDUCED) {
-      TIMELINE.progress = 1;
-      drawTimelineFrame();
-      return;
-    }
-    const start = window.performance.now();
-    const duration = 1150;
-    function step(now) {
-      const progress = Math.min(1, (now - start) / duration);
-      TIMELINE.progress = 1 - Math.pow(1 - progress, 3);
-      drawTimelineFrame();
-      if (progress < 1) window.requestAnimationFrame(step);
-    }
-    window.requestAnimationFrame(step);
-  }
-
   function renderSignals() {
     if (!TIMELINE.slider) return;
     TIMELINE.slider.max = String(D.timestamps.length - 1);
@@ -1668,7 +1561,6 @@
     }
 
     setTimelineIndex(state.index, { url: false, force: true });
-    onceVisible($("#timeline-wrap"), revealTimeline, 0.25);
   }
 
   /* ---------------------------------------------------------------------
@@ -1691,9 +1583,11 @@
         "</span></label>" +
         '<input id="weight-' +
         key +
+        '" name="mission-priority-' +
+        key +
         '" data-weight="' +
         key +
-        '" type="range" min="0" max="100" step="1" value="' +
+        '" type="range" min="0" max="100" step="1" autocomplete="off" value="' +
         Math.round(state.rawWeights[key]) +
         '">' +
         '<output class="weight-output" id="weight-out-' +
@@ -1764,9 +1658,6 @@
     });
 
     updateWeights(false, false);
-    onceVisible($(".sensitivity-block"), function () {
-      $(".sensitivity-block").classList.add("is-inview");
-    }, 0.3);
   }
 
   function updateWeights(animate, announce) {
@@ -1806,10 +1697,17 @@
       return scores[b.region_id] - scores[a.region_id];
     });
 
+    const shouldAnimate =
+      animate &&
+      !REDUCED &&
+      typeof Element !== "undefined" &&
+      Element.prototype.animate;
     const firstPositions = new Map();
-    liveRows.forEach(function (row, regionId) {
-      firstPositions.set(regionId, row.getBoundingClientRect().top);
-    });
+    if (shouldAnimate) {
+      liveRows.forEach(function (row, regionId) {
+        firstPositions.set(regionId, row.getBoundingClientRect().top);
+      });
+    }
 
     sorted.forEach(function (region, index) {
       const row = liveRows.get(region.region_id);
@@ -1829,11 +1727,17 @@
       if (row) $("#live-ranking").appendChild(row);
     });
 
-    if (animate && !REDUCED && typeof Element !== "undefined" && Element.prototype.animate) {
+    if (shouldAnimate) {
+      const lastPositions = new Map();
       sorted.forEach(function (region) {
         const row = liveRows.get(region.region_id);
         if (!row) return;
-        const delta = firstPositions.get(region.region_id) - row.getBoundingClientRect().top;
+        lastPositions.set(region.region_id, row.getBoundingClientRect().top);
+      });
+      sorted.forEach(function (region) {
+        const row = liveRows.get(region.region_id);
+        if (!row) return;
+        const delta = firstPositions.get(region.region_id) - lastPositions.get(region.region_id);
         if (Math.abs(delta) < 0.5) return;
         row.animate(
           [
@@ -1893,7 +1797,7 @@
           pct(row.legacy_reported, 2) +
           ", nearest-cell offset " +
           num(row.offset_km, 2) +
-          " km. " +
+          "\u00a0km. " +
           esc(row.note) +
           ".</li>"
         );
@@ -1907,6 +1811,7 @@
       .join("");
 
     $("#panel-validation").innerHTML =
+      '<h3 class="visually-hidden">Validation results</h3>' +
       '<div class="validation-grid">' +
       '<article class="check-card"><div class="check-head"><h4>Projection round-trip</h4><span class="status-pill is-pass">Pass</span></div><p class="check-value">' +
       num(projection.max_round_trip_error_m, 4) +
@@ -1947,22 +1852,22 @@
       " d · valid coverage median " +
       pct(distribution.data_coverage.median, 0) +
       ".</p></article>" +
-      '<article class="check-card is-blocked"><div class="check-head"><h4>Barker et al. 5 m validation</h4><span class="status-pill is-blocked">Blocked</span></div><p class="check-value">No pass result claimed</p><p class="check-meta">' +
+      '<article class="check-card is-blocked"><div class="check-head"><h4>Barker et al. 5&nbsp;m validation</h4><span class="status-pill is-blocked">Blocked</span></div><p class="check-value">No pass result claimed</p><p class="check-meta">' +
       esc(barker.reason) +
       " Exact Barker ROI LDEMs, error layers, and valid-pixel masks are required before this check can run.</p></article>" +
       "</div>" +
       '<div class="validation-extra">' +
       "<section><h4>Geometry method</h4><ul class=\"method-list\">" +
-      "<li>Sub-solar and sub-Earth points are evaluated in the Moon body-fixed frame with surface parallax, then compared against a topocentric Horizons observer at <code>89.9°S, 0°E</code>.</li>" +
-      "<li>Ephemeris: <code>" +
+      "<li>Sub-solar and sub-Earth points are evaluated in the Moon body-fixed frame with surface parallax, then compared against a topocentric Horizons observer at <code translate=\"no\">89.9°S, 0°E</code>.</li>" +
+      "<li>Ephemeris: <code translate=\"no\">" +
       int(D.meta.timeline_rows / D.regions.length) +
       "</code> six-hour samples per region, spanning " +
       esc(shortDate(D.meta.window_start)) +
       " to " +
       esc(shortDate(D.meta.window_end)) +
       ".</li>" +
-      "<li>Horizons rays use 96 azimuth bins to 60 km; the highest ~148 m source pixel in each 1 km cell is the optimistic observer.</li>" +
-      "<li>Projection: Moon 2000 south-polar stereographic, 608 × 608 km at 1 km cells.</li>" +
+      "<li>Horizons rays use 96 azimuth bins to 60&nbsp;km; the highest ~148&nbsp;m source pixel in each 1&nbsp;km cell is the optimistic observer.</li>" +
+      "<li>Projection: Moon 2000 south-polar stereographic, 608 × 608&nbsp;km at 1&nbsp;km cells.</li>" +
       "</ul></section>" +
       '<section><h4>Archived site cross-check</h4><ul class="legacy-list">' +
       legacyRows +
@@ -1978,7 +1883,7 @@
       '" target="_blank" rel="noopener noreferrer">NASA candidate-region announcement</a></p></section>' +
       '<section><h4>What remains unvalidated</h4><ul class="method-list">' +
       "<li>Metre-scale slope, roughness, boulders, and landing hazards; no certified landing pad exists here.</li>" +
-      "<li>5 m Barker/LOLA terrain with vertical error and valid-pixel masks.</li>" +
+      "<li>5&nbsp;m Barker/LOLA terrain with vertical error and valid-pixel masks.</li>" +
       "<li>Diviner thermal measurements, LEND/Mini-RF volatiles, and relay link budget.</li>" +
       "<li>Artemis III polygon overlap and mission-specific flight certification.</li>" +
       "<li>Science value (fixed 0.50 placeholder) and thermal stability (latitude proxy).</li>" +
@@ -1987,6 +1892,7 @@
 
   function renderGaps() {
     $("#panel-gaps").innerHTML =
+      '<h3 class="visually-hidden">Data gaps</h3>' +
       '<div class="gap-list">' +
       D.data_gaps
         .map(function (gap) {
@@ -2049,7 +1955,7 @@
           (artifact.rows == null ? "—" : int(artifact.rows)) +
           "</td><td>" +
           bytes(artifact.bytes) +
-          '</td><td><code class="hash" title="' +
+          '</td><td><code class="hash" translate="no" title="' +
           esc(artifact.sha256) +
           '">' +
           esc(artifact.sha256.slice(0, 12)) +
@@ -2059,11 +1965,12 @@
       .join("");
 
     $("#panel-artifacts").innerHTML =
+      '<h3 class="visually-hidden">Generated artifacts</h3>' +
       '<div class="artifact-intro"><p><strong>' +
       D.artifacts.length +
       " tracked files</strong> · " +
       bytes(totalBytes) +
-      " · SHA-256 checksums copied from <code>polar_data_manifest.json</code>. Links are relative to the repository root.</p></div>" +
+      " · SHA-256 checksums copied from <code translate=\"no\">polar_data_manifest.json</code>. Links are relative to the repository root.</p></div>" +
       '<div class="artifact-table-wrap" role="region" tabindex="0" aria-label="Tracked processed artifacts table"><table class="artifact-table"><caption class="visually-hidden">Tracked processed artifacts</caption><thead><tr><th scope="col">Artifact</th><th scope="col">Kind</th><th scope="col">Rows</th><th scope="col">Size</th><th scope="col">SHA-256</th></tr></thead><tbody>' +
       rows +
       '</tbody></table></div><p class="scroll-hint" aria-hidden="true">Scroll the table to inspect every artifact and checksum →</p>';
@@ -2088,7 +1995,7 @@
       return "Linear: 0 at " + pct(utility.low, 0) + ", 1 at " + pct(utility.high, 0) + ".";
     }
     if (key === "longest_dark_period") {
-      return "Linear: 1 at " + num(utility.low_days, 1) + " d, 0 at " + num(utility.high_days, 1) + " d.";
+      return "Linear: 1 at " + num(utility.low_days, 1) + "&nbsp;d, 0 at " + num(utility.high_days, 1) + "&nbsp;d.";
     }
     if (key === "sunlight_continuity") {
       return "Report only; not weighted. Mission-window continuity is not folded into the headline.";
@@ -2103,7 +2010,7 @@
       return "1 below " + num(utility.full_below, 1) + "°; 0 above " + num(utility.zero_above, 1) + "°.";
     }
     if (key === "isru_access") {
-      return "exp(−distance / " + num(utility.scale_km, 1) + " km) to a mapped PSR edge.";
+      return "exp(−distance / " + num(utility.scale_km, 1) + "&nbsp;km) to a mapped PSR edge.";
     }
     if (key === "science_value") {
       return "Fixed at 0.50 until an independent geology or spectral layer is ingested.";
@@ -2142,7 +2049,7 @@
 
     const scopeList = definitionList([
       ["Latitude band", num(scope.latitude_min_deg, 0) + "° to " + num(scope.latitude_max_deg, 0) + "°"],
-      ["Target cell", int(scope.target_cell_size_m) + " m"],
+      ["Target cell", int(scope.target_cell_size_m) + "&nbsp;m"],
       ["Fine DEM", esc(scope.fine_dem_source)],
       ["Pinpoint DEMs", scope.pinpoint_dem_sources.map(esc).join("<br>")],
       ["Policy version", esc(policy.version)],
@@ -2161,7 +2068,7 @@
       ["Headline", "Weighted geometric mean of six independent dimensions"],
       ["Geometric floor", num(scoring.geometric_floor, 2)],
       ["Weighted sum", yesNo(scoring.weighted_sum)],
-      ["Sensitivity", esc(scoring.sensitivity_method) + " · " + int(scoring.sensitivity_draws) + " draws · seed " + int(scoring.random_seed)],
+      ["Sensitivity", esc(scoring.sensitivity_method).replace(/\.\.\./g, "…") + " · " + int(scoring.sensitivity_draws) + " draws · seed " + int(scoring.random_seed)],
       ["Cluster rule", int(scoring.cluster_connectivity) + "-connected · cell score ≥ " + num(scoring.cluster_cell_score_min, 2) + " · minimum " + int(scoring.cluster_min_cells) + " cells"],
       ["Continuity", "Report-only; not part of the headline"],
       ["Cluster note", esc(scoring.cluster_selection_note)],
@@ -2200,6 +2107,7 @@
       .join("");
 
     $("#panel-policy").innerHTML =
+      '<h3 class="visually-hidden">Scoring policy</h3>' +
       '<div class="policy-grid">' +
       '<section class="policy-section"><h4>Scope</h4><p>Operational bounds for the two-stage screen. The context is a screening product, not a flight certification.</p>' +
       scopeList +
@@ -2278,7 +2186,7 @@
   function renderCaveats() {
     const caveats = D.recommendation.caveats.slice();
     caveats.push(
-      "Barker et al. validation is blocked because the exact 5 m ROI LDEMs, error layers, and valid-pixel masks are absent."
+      "Barker et al. validation is blocked because the exact 5\u00a0m ROI LDEMs, error layers, and valid-pixel masks are absent."
     );
     caveats.push(
       "Artemis III candidate-region polygons are unavailable; no spatial overlap is claimed."
@@ -2369,17 +2277,6 @@
     renderCaveats();
     renderFooter();
     applyRegionSelection();
-
-    onceVisible($("#pipeline"), function () {
-      $$("#pipeline .count").forEach(animateCount);
-    }, 0.2);
-
-    onceVisible($(".score-panel"), function () {
-      $(".score-panel").classList.add("is-inview");
-    }, 0.25);
-
-    onceVisible($(".scatter-figure"), animateScatterOnce, 0.25);
-    onceVisible($("#distributions"), animateDistributionsOnce, 0.2);
 
     setupScrollSpy();
     window.addEventListener("resize", handleResize);

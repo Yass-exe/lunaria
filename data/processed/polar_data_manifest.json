@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-14T22:55:54Z",
+  "generated_at": "2026-11-15T06:31:24Z",
   "pipeline": "two-stage south-polar screen",
   "metrics_package": {
     "path": "data/processed/polar_cell_metrics.csv.gz",
@@ -72,7 +72,7 @@
     {
       "path": "data/processed/polar_benchmark.json",
       "bytes": 4156,
-      "sha256": "60925250b5d1dfec4f6721c43bbba644c1f574820f630561e3b430088b2fdc0a"
+      "sha256": "a87414142c1dffe7c95afb4ba7cba8069815138f71fc4cdff317948ed9562d5a"
     },
     {
       "path": "data/processed/polar_terrain_manifest.json",

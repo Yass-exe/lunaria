@@ -4,10 +4,10 @@
 Deliver a validated, NASA-data-driven lunar south-polar landing-site screening and comparison tool for 80–90°S, with an interactive map, date-aware illumination/comms analysis, clustered candidate regions, and a non-certified pinpoint candidate.
 
 ## Next Step
-Recover and finish the in-progress Lunaria frontend, validate its generated data contract and browser behavior, then run the final cached rebuild and guideline review.
+Run the final cached rebuild, verify it preserves the finished frontend, then complete the secret scan and final guideline/code review.
 
 ## Current Phase
-Phase 3
+Phase 4
 
 ## Phases
 
@@ -73,3 +73,10 @@ Phase 3
 | Initial whole-Moon exploration agent could not be read on first attempt. | Read its completed result after its completion notification; no implementation work was delegated. |
 | First plan update patch used stale section text after the stash phase had already changed. | Re-read the selected plan and applied an updated patch against its current contents. |
 | NASA/ArcGIS searches did not locate the authoritative 13-region geometry layer or all requested Barker tiles. | Preserve source gap explicitly; only ingest verified sources and identify the missing inputs in the UI/report. |
+| Recovered dashboard branch had one intentionally red metadata regression test. | Added stable `name` and `autocomplete="off"` metadata at the static HTML/app render seam; focused and seven-test dashboard loops now pass. |
+| Local QA server launch reported port 8765 in use; default Firefox profile was locked by an active process. | Preserve existing processes, verify the existing endpoint once, and use a separate temporary Firefox profile for headless screenshots. |
+| Desktop browser QA appeared to expose live values inconsistent with the final result. | Confirmed all values were the same ~24.7% fraction from a count-up captured mid-flight; removed transient count-up values and verified the correct measurements render on the first frame. |
+| Initial `#atlas` and `#weights` Firefox CLI captures showed document-top content. | Boot tracing found no history write and confirmed hash preservation; classify as a CLI screenshot limitation and use another route for lower-section visual QA if available. |
+| First heading-hierarchy patch used an incorrect artifact-panel string context. | Re-read the four renderer assignment seams and apply the same hidden-panel-heading fix against exact current text. |
+| First unit/layout-read cleanup patch assumed the byte formatter’s exact function context. | No code was changed; inspect the formatter and apply the layout-read optimization separately from copy-unit cleanup. |
+| Hidden-iframe interaction smoke stayed red across three harness-only attempts. | Firefox CLI captured before the hidden child load callback; no product code was implicated. Stop retrying, remove the harness, and rely on successful real page/section renders, HTTP checks, source review, and the full test suite. |

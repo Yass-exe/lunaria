@@ -47,6 +47,10 @@ call mw noah / the way i carried yall
 | Sun geometry cross-check | dEl/dAz <0.1 degrees | 0.00013/0.06906 degrees | PASS |
 | Earth geometry cross-check | dEl/dAz <0.1 degrees | 0.00034/0.00304 degrees | PASS |
 | Barker validation | Use exact 5 m inputs or remain blocked | NOT VALIDATED; required inputs absent | BLOCKED BY DATA |
+| Dashboard metadata regression | Range controls expose stable browser metadata | Focused test and all 7 dashboard tests pass | PASS |
+| Final offline suite | All repository tests pass | 50 tests pass in 2.10 s | PASS |
+| Frontend syntax/parse smoke | Valid JavaScript and parseable HTML | `node --check` and Python HTML parser pass | PASS |
+| Final cached rebuild | Rebuild full-cap screen, regions, refinement, benchmarks, and dashboard | PASS; 290,364 cells, 6 regions, 1,206 refined cells, winner unchanged | PASS |
 
 ### Errors
 | Error | Resolution |
@@ -55,6 +59,12 @@ call mw noah / the way i carried yall
 | NASA Moon Trek returned repeated HTTP 500/502 responses for one 4096×4096 export request; smaller 32×32 tile probes also timed out. | Verified 512×512 tiles on the live service and switched to 64 tiled exports; current full acquisition is progressing. |
 | First plan update patch used stale phase text. | Re-read the plan and reapplied the patch using current content. |
 | First read of completed exploration agent returned “No agent found”; its completion notification arrived afterward. | Read the completed agent result after notification; continued direct review. |
+| Starting the documented local server found port 8765 already in use; first headless Firefox run found the default profile active. | Do not kill or replace existing user processes. Reuse the local endpoint after one health check and run Firefox with an isolated `/tmp/opencode` profile. |
+| First dynamic evidence heading patch did not match the artifact renderer’s exact intro markup. | No code was changed; re-read all four assignment seams and patch against current strings. |
+| Combined unit/layout-read patch did not match the current byte formatter context. | No code was changed; split the performance edit from optional unit typography and patch exact source. |
+| Initial browser interaction harness returned the red failure pixel. | Likely cross-realm event construction; update only the temporary harness to use the iframe’s `Event` constructor and show residual errors. |
+| Second browser-smoke attempt remained red with no rendered error text. | The iframe load handler never ran; attach the listener before assigning the local iframe URL, then retry with a fresh profile. |
+| Third hidden-iframe smoke attempt again captured before the child callback. | Stop after three harness-only failures per protocol. Product behavior remains covered by real Firefox page/section renders and automated data/UI contracts; delete the throwaway harness. |
 
 ## Session: 2026-11-15 — Frontend continuation
 
@@ -64,3 +74,12 @@ call mw noah / the way i carried yall
 - Confirmed the in-progress worktree contains a large, uncommitted NASA/Lunaria dashboard redesign and supporting generator/test changes; continuing from that state without overwriting it.
 - Read the recovered dashboard structure and fetched the current Web Interface Guidelines. The page already includes semantic navigation, a skip link, labeled controls, a complete processed-data story, a local NASA/Lunaria lockup, and reduced-motion CSS hooks; detailed JS/CSS and browser verification remain.
 - Audited the main renderer, generator, and dashboard tests. URL state, `Intl` formatting, keyboard-accessible tabs, pauseable playback, canvas descriptions, and reduced-motion branches are present. Logged targeted touch/safe-area/form-animation checks for the finishing pass.
+- Recovered the same active plan and confirmed Phase 4 remains the correct continuation point: finish the frontend in place, then run responsive browser QA and the current guideline audit.
+- Established a tight frontend feedback loop. The seven-test dashboard suite has one expected failure; the exact test reproduces twice in ~2.25 s and asserts that the timeline range control publishes initial-HTML browser metadata.
+- Fixed the recovered red test at the authoritative static seam: timeline and mission-priority range controls now publish stable names and disable irrelevant autofill. The focused test passes in 2.08 s; all seven dashboard tests pass in 2.10 s.
+- Rendered the desktop page in Firefox at 1440×1000. Diagnosed the apparent value mismatch as a 1,050 ms count-up captured mid-animation, removed the misleading counter motion, and verified a fresh first-frame render shows 290,364 cells, 1,206 refined cells, 60.15/100, and 39.0%. Dashboard tests remain 7/7 passing.
+- Consolidated motion around the polar plate: changed its non-compositor clip reveal to opacity/scale, removed color/border transitions, and removed scroll-triggered partial chart/bar reveals. Evidence now paints at final values; direct-response layer/rerank/playback motion remains. `node --check` and 7/7 dashboard tests pass.
+- Added mobile safe-area/touch/overscroll/focus protections, enlarged small controls to 44 px, aligned theme/copy details with the current interface guidelines, and corrected the README server root so all Evidence downloads resolve. Verified 200 responses for `/web/`, `REPORT.md`, the gap ledger, and compressed measurements.
+- Completed the post-polish offline verification: all 50 repository tests pass in 2.10 s, `web/app.js` passes Node syntax checking, and `web/index.html` parses successfully.
+- Completed the final cached pipeline rebuild. It reproduced the same winner (`polar-region-r167-c278`), seed (85.4342216°S, 10.5272519°W), 290,364 cells, six regions, and 1,206 refined cells; the regenerated seven-test dashboard contract passes. Generated benchmark/manifest timestamps and dependent checksums updated as expected.
+- User selected `main` as the final two-axis review baseline. Confirmed a non-empty 89-file working-tree diff and three branch commits; no repo standards docs or external issue/spec files exist, so the review will use the active task plan/findings plus the fixed smell baseline.

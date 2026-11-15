@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Lunaria processed-data explorer: an animated, reduced-motion-safe reveal of every metric from the south-polar NASA-data screen.">
+  <meta name="theme-color" content="#e9e3d6">
+  <meta name="color-scheme" content="light">
+  <title>Lunaria × NASA — Processed Data Explorer</title>
+  <link rel="preload" href="assets/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/ibm-plex-mono-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.replace("no-js", "js");</script>
+  <style id="dx-anim">
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+      will-change: opacity, transform;
+    }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+    .stagger-child {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
+    }
+    .stagger-child.is-visible { opacity: 1; transform: translateY(0); }
+    .lockup.reveal-title { animation: dx-lockup-rise 0.9s var(--ease-soft) both; }
+    @keyframes dx-lockup-rise {
+      from { opacity: 0; transform: translateY(18px) scale(0.995); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .count { font-variant-numeric: tabular-nums; transition: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .stagger-child, .lockup.reveal-title {
+        animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important;
+      }
+      html { scroll-behavior: auto !important; }
+      * { transition-duration: 0s !important; animation-duration: 0s !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="lockup reveal reveal-title" href="index.html" aria-label="Lunaria — back to the atlas">
+        <img class="nasa-mark" src="assets/nasa-logo.svg" width="54" height="45" alt="NASA" fetchpriority="high">
+        <span class="lockup-divider" aria-hidden="true"></span>
+        <span class="lockup-text">
+          <span class="wordmark" translate="no">Lunaria</span>
+          <span class="lockup-sub">Processed data explorer</span>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Sections">
+        <a href="index.html">Atlas</a>
+        <a href="#data" aria-current="page">Data</a>
+      </nav>
+      <p class="header-note"><span class="signal-dot" aria-hidden="true"></span>Provisional screen · reduced-motion safe</p>
+    </div>
+  </header>
+  <main id="main">
+    <section class="dx-hero" id="top" aria-labelledby="dx-hero-title">
+      <div class="dx-hero-copy reveal">
+        <p class="dateline reveal stagger-child"><span>Processed NASA data</span><span>South polar screen · 2024–2026</span></p>
+        <h1 id="dx-hero-title" class="reveal stagger-child">Every processed number, revealed in order.</h1>
+        <p class="reveal stagger-child">Lunaria screened the lunar south pole from NASA LOLA terrain and JPL Horizons geometry. This page animates every processed metric into view — run metadata, region scores, decision weights, and the provisional seed — with reduced-motion-safe transitions.</p>
+        <dl class="hero-metrics dx-hero-metrics reveal stagger-child" aria-label="Headline measurements"></dl>
+      </div>
+      <figure class="dx-plate reveal stagger-child" aria-labelledby="dx-plate-caption">
+        <strong id="dx-plate-caption" class="sr-only-focusable">Lunaria processed-data plate</strong>
+        <em>80–90°S · weighted field · animated reveal</em>
+      </figure>
+    </section>
+
+    <section class="dx-section reveal" id="group-meta" aria-labelledby="g-meta-title">
+      <div class="dx-head reveal">
+        <p class="dx-index reveal stagger-child">01</p>
+        <h2 id="g-meta-title">Source &amp; run metadata</h2>
+        <p class="reveal stagger-child">Generation context for every processed number below.</p>
+      </div>
+      <div class="dx-grid" id="view-meta"></div>
+    </section>
+
+    <section class="dx-section reveal" id="group-recommendation" aria-labelledby="g-rec-title">
+      <div class="dx-head reveal">
+        <p class="dx-index reveal stagger-child">02</p>
+        <h2 id="g-rec-title">Provisional recommendation</h2>
+        <p class="reveal stagger-child">Ranked result, winning region score, and rank-agreement statistics.</p>
+      </div>
+      <div class="dx-grid" id="view-recommendation"></div>
+    </section>
+
+    <section class="dx-section reveal" id="group-seed" aria-labelledby="g-seed-title">
+      <div class="dx-head reveal">
+        <p class="dx-index reveal stagger-child">03</p>
+        <h2 id="g-seed-title">Provisional seed</h2>
+        <p class="reveal stagger-child">The single coordinate that deserves a closer look.</p>
+      </div>
+      <div class="dx-grid" id="view-seed"></div>
+      <p class="dx-note reveal stagger-child">This coordinate is a provisional source-pixel seed, not a landing pad. 5&nbsp;m Barker/LOLA or 1–2&nbsp;m LROC terrain is still required.</p>
+    </section>
+
+    <section class="dx-section reveal" id="group-refinement" aria-labelledby="g-ref-title">
+      <div class="dx-head reveal">
+        <p class="dx-index reveal stagger-child">04</p>
+        <h2 id="g-ref-title">Two-stage refinement</h2>
+        <p class="reveal stagger-child">Stage-one cell screen and stage-two refined resolution.</p>
+      </div>
+      <div class="dx-grid" id="view-refinement"></div>
+    </section>
+
+    <section class="dx-section reveal" id="group-weights" aria-labelledby="g-weights-title">
+      <div class="dx-head reveal">
+        <p class="dx-index reveal stagger-child">05</p>
+        <h2 id="g-weights-title">Decision weights</h2>
+        <p class="reveal stagger-child">Criteria weights applied to the weighted geometric mean.</p>
+      </div>
+      <div class="dx-grid" id="view-weights"></div>
+    </section>
+
+    <section class="dx-section reveal" id="group-regions" aria-labelledby="g-regions-title">
+      <div class="dx-head reveal">
+        <p class="dx-index reveal stagger-child">06</p>
+        <h2 id="g-regions-title">Refined regions</h2>
+        <p class="reveal stagger-child">All candidate regions produced by the polar screen.</p>
+      </div>
+      <div class="dx-grid" id="view-regions"></div>
+    </section>
+
+    <section class="dx-section reveal" id="group-scoring" aria-labelledby="g-scoring-title">
+      <div class="dx-head reveal">
+        <p class="dx-index reveal stagger-child">07</p>
+        <h2 id="g-scoring-title">Scoring policy</h2>
+        <p class="reveal stagger-child">Headline scoring configuration and geometric floor.</p>
+      </div>
+      <div class="dx-grid" id="view-scoring"></div>
+    </section>
+
+    <section class="dx-section reveal" id="group-artifacts" aria-labelledby="g-artifacts-title">
+      <div class="dx-head reveal">
+        <p class="dx-index reveal stagger-child">08</p>
+        <h2 id="g-artifacts-title">Processed artifacts</h2>
+        <p class="reveal stagger-child">Every file shipped by the pipeline, with labels and byte sizes.</p>
+      </div>
+      <div class="dx-grid" id="view-artifacts"></div>
+      <p class="dx-note reveal stagger-child">Artifacts are listed in <code translate="no">data/processed/</code> and <code translate="no">data/raw/</code>. Sizes are approximate totals where available.</p>
+    </section>
+
+    <section class="dx-section reveal" id="group-limits" aria-labelledby="g-limits-title">
+      <div class="dx-head reveal">
+        <p class="dx-index reveal stagger-child">09</p>
+        <h2 id="g-limits-title">Limits to carry forward</h2>
+        <p class="reveal stagger-child">Caveats that apply to every number on this page.</p>
+      </div>
+      <div class="dx-grid" id="view-limits"></div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="footer-lockup reveal">
+        <img src="assets/nasa-logo.svg" width="48" height="40" alt="NASA" loading="lazy">
+        <span><strong translate="no">Lunaria</strong> · South polar survey</span>
+      </div>
+      <p id="dx-footer-meta" class="reveal"></p>
+      <p>Independent analysis using NASA data. NASA does not endorse this product. Screening only; not flight certification.</p>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="data-explorer.js"></script>
+  </main>
+</body>
+</html>
+

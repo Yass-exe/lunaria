@@ -19,8 +19,8 @@ The complete cached build takes about two minutes on the current machine. It reb
 View the dashboard:
 
 ```bash
-python3 -m http.server 8765 --directory web
-# open http://127.0.0.1:8765/
+python3 -m http.server 8765
+# open http://127.0.0.1:8765/web/
 ```
 
 Run the offline suite:

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="Lunaria is an independent NASA-data-driven screen of lunar south-polar landing regions, with a two-stage terrain model and a provisional seed.">
-  <meta name="theme-color" content="#e7e1d5">
+  <meta name="theme-color" content="#e9e3d6">
   <meta name="color-scheme" content="light">
   <title>Lunaria × NASA — South Polar Field Atlas</title>
   <link rel="preload" href="assets/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -24,7 +24,7 @@
         <img class="nasa-mark" src="assets/nasa-logo.svg" width="54" height="45" alt="NASA" fetchpriority="high">
         <span class="lockup-divider" aria-hidden="true"></span>
         <span class="lockup-text">
-          <span class="wordmark">Lunaria</span>
+          <span class="wordmark" translate="no">Lunaria</span>
           <span class="lockup-sub">South polar survey</span>
         </span>
       </a>
@@ -34,6 +34,7 @@
         <a href="#signals">Signals</a>
         <a href="#weights">Weights</a>
         <a href="#evidence">Evidence</a>
+        <a href="data-explorer.html">Data explorer</a>
       </nav>
       <p class="header-note"><span class="signal-dot" aria-hidden="true"></span>Provisional screen</p>
     </div>
@@ -50,7 +51,7 @@
           <a class="button button-quiet" href="#atlas">Open the Atlas</a>
         </div>
         <dl class="hero-metrics" id="hero-metrics" aria-label="Headline measurements"></dl>
-        <p class="hero-caveat">The coordinate is a provisional source-pixel seed, not a landing pad. 5 m Barker/LOLA and 1–2 m LROC terrain are still required.</p>
+        <p class="hero-caveat">The coordinate is a provisional source-pixel seed, not a landing pad. 5&nbsp;m Barker/LOLA and 1–2&nbsp;m LROC terrain are still required.</p>
       </div>
 
       <figure class="hero-plate" aria-labelledby="hero-plate-caption">
@@ -85,7 +86,7 @@
       <header class="section-head">
         <p class="section-index">Result</p>
         <h2 id="result-title">The Winning Region Is a Balance, Not a Certainty.</h2>
-        <p>Candidate Region 1 leads the six refined regions. The headline is a weighted geometric mean; the coordinate is the best ~148 m source pixel inside that region.</p>
+        <p>Candidate Region 1 leads the six refined regions. The headline is a weighted geometric mean; the coordinate is the best ~148&nbsp;m source pixel inside that region.</p>
       </header>
 
       <div class="result-layout">
@@ -127,7 +128,7 @@
       <header class="section-head">
         <p class="section-index">Atlas</p>
         <h2 id="atlas-title">Every Cell, Not a Sample.</h2>
-        <p>The map is the full 290,364-cell screen at 1 km. The distributions below use every valid cell; the refined cloud uses all 1,206 source cells. Switch layers and regions without changing the candidate set.</p>
+        <p>The map is the full 290,364-cell screen at 1&nbsp;km. The distributions below use every valid cell; the refined cloud uses all 1,206 source cells. Switch layers and regions without changing the candidate set.</p>
       </header>
 
       <div class="atlas-layout">
@@ -193,7 +194,7 @@
             <label for="timeline">Timeline sample</label>
             <output id="timeline-date" for="timeline">1 Jan 2024, 00:00 UTC</output>
           </div>
-          <input id="timeline" type="range" min="0" value="0" step="1" aria-describedby="timeline-desc">
+          <input id="timeline" name="timeline-sample" type="range" min="0" value="0" step="1" autocomplete="off" aria-describedby="timeline-desc">
           <button class="button button-primary play-button" id="play-timeline" type="button" aria-pressed="false">Play Timeline</button>
         </div>
         <div class="timeline-chart" id="timeline-wrap">
@@ -203,7 +204,7 @@
           <span><i class="swatch sun" aria-hidden="true"></i>Sun above terrain</span>
           <span><i class="swatch earth" aria-hidden="true"></i>Earth above terrain</span>
           <span><i class="swatch empty" aria-hidden="true"></i>Below terrain</span>
-          <span class="timeline-note">Step: 6 hours</span>
+          <span class="timeline-note">Step: 6&nbsp;hours</span>
         </div>
         <p id="timeline-desc" class="visually-hidden">A dense two-year availability chart for six candidate regions. Each region has a solar band and an Earth-visibility band; filled areas mean the body is above the local terrain horizon at that six-hour sample.</p>
         <div class="status-table-wrap" role="region" tabindex="0" aria-label="Sun and Earth status for each region; scroll horizontally to see Earth">
@@ -279,7 +280,7 @@
       <div class="provenance-grid">
         <section class="provenance" aria-labelledby="provenance-title">
           <h3 id="provenance-title">Provenance</h3>
-          <p>Terrain: NASA Moon Trek LRO LOLA south-polar DEM, server-resampled to 148.44 m/px. Geometry: JPL Horizons body-fixed sub-solar and sub-Earth points plus Moon-centre range, sampled every six hours from 2024-01-01 through 2026-01-01. PSR edge distance: equivalent-circle approximation from the supplied centroid-and-area catalogue.</p>
+          <p>Terrain: NASA Moon Trek LRO LOLA south-polar DEM, server-resampled to 148.44&nbsp;m/px. Geometry: JPL Horizons body-fixed sub-solar and sub-Earth points plus Moon-centre range, sampled every six hours from 2024-01-01 through 2026-01-01. PSR edge distance: equivalent-circle approximation from the supplied centroid-and-area catalogue.</p>
           <p>NASA data are used here for independent analysis. NASA does not endorse this product or its provisional result.</p>
         </section>
         <section class="caveats" aria-labelledby="caveats-title">
@@ -302,7 +303,7 @@
   <footer class="site-footer">
     <div class="footer-lockup">
       <img src="assets/nasa-logo.svg" width="48" height="40" alt="NASA" loading="lazy">
-      <span><strong>Lunaria</strong> · South polar survey</span>
+      <span><strong translate="no">Lunaria</strong> · South polar survey</span>
     </div>
     <p id="footer-meta"></p>
     <p>Independent analysis using NASA data. NASA does not endorse this product. Screening only; not flight certification.</p>
